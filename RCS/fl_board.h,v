@@ -1,0 +1,546 @@
+head	1.19;
+access;
+symbols
+	version_1_03:1.19
+	version_1_02:1.18
+	version_1_01:1.18
+	version_1_0_1:1.18
+	version_1_0:1.18
+	version_0_99_5:1.18
+	version_0_99_4:1.18
+	version_0_99_3:1.18
+	version_0_99_2:1.17
+	version_0_99_1:1.12;
+locks; strict;
+comment	@ * @;
+
+
+1.19
+date	2000.02.28.19.59.46;	author kurt;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	98.11.26.18.15.28;	author kurt;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	98.11.14.20.53.38;	author kurt;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	98.11.06.16.29.26;	author kurt;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	98.11.01.16.26.18;	author kurt;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	98.11.01.14.12.29;	author kurt;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	98.11.01.11.28.43;	author kurt;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	98.10.27.20.39.25;	author kurt;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	98.10.25.10.35.08;	author kurt;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	98.10.14.18.47.10;	author kurt;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	98.10.13.19.34.19;	author kurt;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	98.09.28.18.25.46;	author kurt;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	98.09.25.12.28.13;	author kurt;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	98.09.24.17.41.41;	author kurt;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	98.09.21.20.14.38;	author kurt;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	98.09.20.14.33.52;	author kurt;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	98.09.20.09.47.59;	author kurt;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	98.09.18.20.09.35;	author kurt;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	98.09.18.19.00.35;	author kurt;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.19
+log
+@changes for executing a move by pressing twice on the same to-position
+@
+text
+@/*
+** $Id: fl_board.h,v 1.18 1998/11/26 18:15:28 kurt Exp kurt $
+*/
+/*
+**    Copyright (C) 1998 Kurt Van den Branden
+**
+** This program is free software; you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation; either version 2 of the License, or
+** (at your option) any later version.
+** 
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+** 
+** You should have received a copy of the GNU General Public License
+** along with this program; if not, write to the Free Software
+** Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  
+*/
+
+#ifndef _fl_board_h_
+#define _fl_board_h_ 1
+
+#include <FL/Fl_Widget.H>
+#include <FL/Fl_Output.H>
+#include <FL/Fl_Return_Button.H>
+#include "board.h"
+#include "linklist.h"
+#include "fl_pile.h"
+
+enum {
+    BOARD_EDIT,
+    BOARD_PLAY,
+    BOARD_NONE
+};
+
+const int FL_DAMAGE_ANIM = 0x10;
+
+class fl_board : public Fl_Widget {
+ private:
+    board * theboard;       // the most important
+    ::position * from;        // from-::position for a new move
+    ::position * to;          // to-::position for a new move
+    listheader * row;       // list of pieces when removing a row
+    int fromtype;           // type of piece a player wants to move
+    int gipfpossible;       // flag to show if a player can enter a gipf-piece
+    int state;              // BOARD_EDIT, BOARD_PLAY, BOARD_NONE
+    char editpiece;         // piece to add when editing a board
+    
+    int xoffset;            // variables for drawing
+    int yoffset;
+    int base;
+    uchar lyellow;          // save the color-index
+
+    int positionhints;      // set to 1 to show the ::position names on the board
+    ::position * showpos;     // variables for showing at what
+    int showflag;           // ::position the mouse is situated
+
+    listheader * animlist;  // variables for move-animation
+    int maxstep;
+    int step;
+    int clip_x, clip_y, clip_w, clip_h;
+    
+    Fl_Output * wpieces;
+    Fl_Output * wlost;
+    fl_pile * wpile;
+    Fl_Output * bpieces;
+    Fl_Output * blost;
+    fl_pile * bpile;
+
+    Fl_Output * t_from;
+    Fl_Output * t_to;
+
+    Fl_Return_Button * execbutton;
+    
+    void calcsizes ();
+    inline void pos2coor (const ::position *, int&, int&);
+    void changecountervalues ();
+    void changefromtovalues ();
+    
+    void drawpiece (::position *, char);
+    void drawpiece (int, int, char);
+    void drawcross (int, int);
+
+    int checkfrompush ();
+    int checktopush ();
+    int checkeditpush ();
+    ::position * getmousepos ();
+    void drawanimpieces (void);
+    void calc_clipping (void );
+    
+ protected:
+    void draw();
+
+ public:
+    fl_board (int, int, int, int, const char * = 0);
+    virtual ~fl_board();
+    int handle (int);
+    void resize (int, int, int, int);
+    void setoutputwidgets (Fl_Output *, Fl_Output *, fl_pile *,
+			   Fl_Output *, Fl_Output *, fl_pile *,
+			   Fl_Output *, Fl_Output *);
+    void setexecbutton (Fl_Return_Button * rbutton)
+	{ execbutton = rbutton; };
+    void setboard (board *);
+    void setfrom (const ::position *);
+    void setto (const ::position *);
+    void setrow (listheader *);
+    void seteditpiece (char);
+    int setlostwhite (int);
+    int setlostblack (int);
+    void setstate (int);
+    void setgipfpossible (int flag);
+    void showmousepos ();
+    void setshowposname (int value) { positionhints = value; };
+    
+    board * getboard (void) { return (theboard); };
+    ::position * getfrom (void) { return (from); };
+    ::position * getto (void) { return (to); };
+    int getptype (void) { return (fromtype); };
+
+    void initanim (int st, listheader * al);
+    void animstep (int st) { step = st; damage (FL_DAMAGE_ANIM); };
+};
+
+#endif
+@
+
+
+1.18
+log
+@patches to compile with the Irix compiler (from Bill Spitzak)
+@
+text
+@d2 1
+a2 1
+** $Id: fl_board.h,v 1.17 1998/11/14 20:53:38 kurt Exp kurt $
+d27 1
+d74 2
+d104 2
+@
+
+
+1.17
+log
+@now there are 2 drawpiece functions, with different parameters
+@
+text
+@d2 1
+a2 1
+** $Id: fl_board.h,v 1.16 1998/11/06 16:29:26 kurt Exp kurt $
+d42 2
+a43 2
+    position * from;        // from-position for a new move
+    position * to;          // to-position for a new move
+d55 3
+a57 3
+    int positionhints;      // set to 1 to show the position names on the board
+    position * showpos;     // variables for showing at what
+    int showflag;           // position the mouse is situated
+d75 1
+a75 1
+    inline void pos2coor (const position *, int&, int&);
+d79 1
+a79 1
+    void drawpiece (position *, char);
+d86 1
+a86 1
+    position * getmousepos ();
+d102 2
+a103 2
+    void setfrom (const position *);
+    void setto (const position *);
+d114 2
+a115 2
+    position * getfrom (void) { return (from); };
+    position * getto (void) { return (to); };
+@
+
+
+1.16
+log
+@changed the definition of setfrom and setto to avoid warnings and errors
+when compiling
+@
+text
+@d2 1
+a2 1
+** $Id: fl_board.h,v 1.15 1998/11/01 16:26:18 kurt Exp kurt $
+d79 1
+@
+
+
+1.15
+log
+@added copyright
+@
+text
+@d2 1
+a2 1
+** $Id: fl_board.h,v 1.14 1998/11/01 14:12:29 kurt Exp kurt $
+d101 2
+a102 2
+    void setfrom (position *);
+    void setto (position *);
+@
+
+
+1.14
+log
+@added variables for clipping to the class
+@
+text
+@d2 18
+a19 1
+** $Id: fl_board.h,v 1.13 1998/11/01 11:28:43 kurt Exp kurt $
+@
+
+
+1.13
+log
+@added items for move-animation to the class
+@
+text
+@d2 1
+a2 1
+** $Id: fl_board.h,v 1.12 1998/10/27 20:39:25 kurt Exp kurt $
+d45 1
+d70 1
+@
+
+
+1.12
+log
+@set_row now expects a list of pieces instead of a rem_row structure.
+@
+text
+@d2 1
+a2 1
+** $Id: fl_board.h,v 1.11 1998/10/25 10:35:08 kurt Exp kurt $
+d19 3
+a21 1
+	
+d41 4
+d68 1
+d97 3
+@
+
+
+1.11
+log
+@added the possibility to turn of the position hints
+@
+text
+@d2 1
+a2 1
+** $Id: fl_board.h,v 1.10 1998/10/14 18:47:10 kurt Exp kurt $
+d77 1
+a77 1
+    void setrow (rem_row *);
+@
+
+
+1.10
+log
+@added setrow()
+@
+text
+@d2 1
+a2 1
+** $Id: fl_board.h,v 1.9 1998/10/13 19:34:19 kurt Exp kurt $
+d36 1
+d84 1
+@
+
+
+1.9
+log
+@added setgipfpossible ()
+@
+text
+@d2 1
+a2 1
+** $Id: fl_board.h,v 1.8 1998/09/28 18:25:46 kurt Exp kurt $
+d76 1
+@
+
+
+1.8
+log
+@added getboard, getfrom, getto, getptype
+some simple inline functions for retrieving info about the board and
+the move to make.
+@
+text
+@d2 1
+a2 1
+** $Id: fl_board.h,v 1.7 1998/09/25 12:28:13 kurt Exp kurt $
+d60 1
+a60 1
+    position * fl_board::getmousepos ();
+d80 2
+a81 1
+    void fl_board::showmousepos ();
+@
+
+
+1.7
+log
+@changed all the calls to fl_color.
+don't use rgb, but choose a color from the predefined color table
+removed the 'inline'-keyword from 3 functions (problems compiling on windows)
+@
+text
+@d2 1
+a2 1
+** $Id: fl_board.h,v 1.6 1998/09/24 17:41:41 kurt Exp kurt $
+d82 4
+@
+
+
+1.6
+log
+@added popup hints to the gameboard
+@
+text
+@d2 1
+a2 1
+** $Id: fl_board.h,v 1.5 1998/09/21 20:14:38 kurt Exp kurt $
+d34 1
+d76 3
+a78 3
+    inline void seteditpiece (char);
+    inline int setlostwhite (int);
+    inline int setlostblack (int);
+@
+
+
+1.5
+log
+@added setstate()
+@
+text
+@d2 1
+a2 1
+** $Id: fl_board.h,v 1.4 1998/09/20 14:33:52 kurt Exp kurt $
+d35 3
+d59 1
+d79 2
+@
+
+
+1.4
+log
+@setlostwhite and setlostblack
+@
+text
+@d2 1
+a2 1
+** $Id: fl_board.h,v 1.3 1998/09/20 09:47:59 kurt Exp kurt $
+d74 1
+@
+
+
+1.3
+log
+@fl_draw is now almost complete for drawing a board and the pieces on it.
+change 'from' and 'to' from a string to a position.
+@
+text
+@d2 1
+a2 1
+** $Id: fl_board.h,v 1.2 1998/09/18 20:09:35 kurt Exp kurt $
+d23 2
+a24 2
+    position * from;           // from-position for a new move
+    position * to;             // to-position for a new move
+d29 1
+d49 1
+d52 4
+d69 5
+a73 2
+    void setfromto (position *, position *);
+    
+@
+
+
+1.2
+log
+@added some of the more important member-functions to the class-definition
+@
+text
+@d2 1
+a2 1
+** $Id: fl_board.h,v 1.1 1998/09/18 19:00:35 kurt Exp kurt $
+d9 1
+d12 1
+d23 2
+a24 2
+    char from[3];           // from-position for a new move
+    char to[3];             // to-position for a new move
+d29 4
+d34 17
+d59 6
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+** $Id$
+d12 6
+d26 4
+d34 2
+a35 1
+
+a36 1
+
+@

@@ -1,0 +1,230 @@
+head	1.6;
+access;
+symbols
+	version_1_03:1.6
+	version_1_02:1.6
+	version_1_01:1.6
+	version_1_0_1:1.6
+	version_1_0:1.6
+	version_0_99_5:1.6
+	version_0_99_4:1.6
+	version_0_99_3:1.5
+	version_0_99_2:1.5
+	version_0_99_1:1.3;
+locks; strict;
+comment	@ * @;
+
+
+1.6
+date	98.12.22.19.59.20;	author kurt;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	98.11.06.16.27.03;	author kurt;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	98.11.01.18.47.00;	author kurt;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	98.10.25.11.50.34;	author kurt;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	98.10.22.16.56.20;	author kurt;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	98.09.05.11.44.48;	author kurt;	state Exp;
+branches;
+next	;
+
+
+desc
+@include-file for linklist.c
+@
+
+
+1.6
+log
+@changes to make the functions llitembynr and pushll faster.
+FASTLLIST must be defined to use this.
+@
+text
+@/*
+**++
+**  FACILITY:  linklist.h
+**
+**  MODULE DESCRIPTION:
+**
+**      header file for the functions from linklist.c
+**
+**  AUTHORS:
+**
+**      Kurt Van den Branden
+**
+**  CREATION DATE:  22/01/97
+**
+**--
+*/
+/*
+**    Copyright (C) 1998 Kurt Van den Branden
+**
+** This program is free software; you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation; either version 2 of the License, or
+** (at your option) any later version.
+** 
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+** 
+** You should have received a copy of the GNU General Public License
+** along with this program; if not, write to the Free Software
+** Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  
+*/
+
+#ifndef _LINKLIST_H_
+#define _LINKLIST_H_ 1
+
+/*
+** use the following define to include some improvements for making
+** some functions faster (llitembynr en pushll)
+*/
+#define FASTLLIST 1
+
+typedef struct _listitem {
+    void	        * itemptr; /* pointer to user data structure */
+    struct _listitem	* next;
+} listitem;
+
+/*
+** header for a list, this is what the user will use to call
+** the functions
+*/
+typedef struct {
+    listitem	* firstitem;
+#ifdef FASTLLIST
+    int curnr;
+    listitem * curptr;
+    listitem * lastptr;
+#endif
+} listheader;
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#ifdef FASTLLIST
+int newlist (listheader * head);
+#else
+#define newlist(x)     x->firstitem = NULL;
+#endif
+    
+int insertll (listheader * head, void * newitem, int (* compfunction)());
+void * searchll (listheader * head, void * item, int (* compfunction)());
+int emptyll (listheader * head, void (* delfunction)(void *));
+int doll (listheader * head, void (* dofunction)());
+void * getnextll (listheader * head, void * item);
+listheader * copyll (listheader * head, void * (* copyfunction)());
+void * llitembynr (listheader * head, int nr);
+void * llrembynr (listheader * head, int nr);
+int pushll (listheader * head, void * newitem);
+int unshiftll (listheader * head, void * newitem);
+void * llremitem (listheader * head, void * newitem, int (* compfunction)());
+int findlastll (listheader * head, int (* checkfunction)());
+int lllength (listheader * head);
+    
+#ifdef __cplusplus
+}
+#endif
+
+#endif
+@
+
+
+1.5
+log
+@small change to the definition of emptyll (),
+to avoid warnings when compiling with C++
+@
+text
+@d38 6
+d55 5
+a61 4
+
+/*int newlist (listheader * head);*/
+#define newlist(x)     x->firstitem = NULL;
+
+d66 6
+@
+
+
+1.4
+log
+@added copyright
+@
+text
+@d61 1
+a61 1
+int emptyll (listheader * head, void (* delfunction)());
+@
+
+
+1.3
+log
+@added lllength (), a fucntion for returning the length of a linked list
+@
+text
+@a0 2
+#ifndef _LINKLIST_H_
+#define _LINKLIST_H_ 1
+d17 20
+@
+
+
+1.2
+log
+@added findlastll ()
+@
+text
+@d53 2
+a54 1
+
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d37 4
+a40 1
+#ifndef __cplusplus
+d52 4
+a55 16
+#else
+extern "C" int insertll (listheader * head, void * newitem, 
+			 int (* compfunction)(void *));
+extern "C" void * searchll (listheader * head, void * item, 
+			    int (* compfunction)(void *));
+extern "C" int emptyll (listheader * head, void (* delfunction)(void *));
+extern "C" int doll (listheader * head, void (* dofunction)(void *));
+extern "C" void * getnextll (listheader * head, void * item);
+extern "C" listheader * copyll (listheader * head, 
+				void * (* copyfunction)(void *));
+extern "C" void * llitembynr (listheader * head, int nr);
+extern "C" void * llrembynr (listheader * head, int nr);
+extern "C" int pushll (listheader * head, void * newitem);
+extern "C" int unshiftll (listheader * head, void * newitem);
+extern "C" void * llremitem (listheader * head, void * newitem, 
+			     int (* compfunction)(void *));
+@

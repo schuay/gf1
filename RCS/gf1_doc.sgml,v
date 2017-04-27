@@ -1,0 +1,826 @@
+head	1.12;
+access;
+symbols
+	version_1_03:1.12
+	version_1_02:1.11
+	version_1_01:1.10
+	version_1_0_1:1.10
+	version_1_0:1.9
+	version_0_99_5:1.9
+	version_0_99_4:1.8
+	version_0_99_3:1.7
+	version_0_99_2:1.5
+	version_0_99_1:1.4;
+locks; strict;
+comment	@# @;
+
+
+1.12
+date	2000.02.22.18.25.08;	author kurt;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2000.01.25.19.04.57;	author kurt;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	99.07.11.16.21.38;	author kurt;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	99.05.09.08.49.05;	author kurt;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	99.03.22.19.45.07;	author kurt;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	98.11.27.16.04.45;	author kurt;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	98.11.26.18.07.01;	author kurt;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	98.11.15.17.52.13;	author kurt;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	98.10.28.20.06.04;	author kurt;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	98.10.24.16.08.38;	author kurt;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	98.10.24.10.43.35;	author kurt;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	98.10.24.10.11.24;	author kurt;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.12
+log
+@updated documentation with new website and mailinglist
+@
+text
+@<!doctype linuxdoc system>
+
+<!-- $Id: gf1_doc.sgml,v 1.11 2000/01/25 19:04:57 kurt Exp kurt $ -->
+
+<article>
+
+<title>GF1 (Gipf for one)
+<author>Kurt Van den Branden (<htmlurl url="mailto:kurtvdb@@village.uunet.be" name="kurtvdb@@village.uunet.be">)
+
+<abstract>
+GF1 is a computer program for playing the 2 player boardgame GIPF.
+The program has a nice and easy to use graphical user interface.
+You can play against another human (but the real game is better for that), 
+against the computer, or let the computer play against itself.
+The computer player is good enough to beat even the best human players at the
+moment (but it doesn't always win :-) ).
+</abstract>
+
+
+<!-- ##################################################################### -->
+<sect>What is this game called GIPF?
+<p>
+GIPF is a strategic game for two players based on a classic
+concept: in turns, players introduce one piece into play until
+achieving four-in-a-row. Players then remove their row and capture
+any of their opponent's pieces which extend that row. This
+principle of capturing pieces creates each time again completely
+changed situations on the board. The purpose is to form successive
+rows of at least 4 pieces, until the opponent has no piece left to
+bring into play.
+
+(This description was copied from the official GIPF web-site. For
+more info about the GIPF-game, check 
+<htmlurl url="http://www.gipf.com" name="http://www.gipf.com">)
+
+<descrip>
+<tag/REMARK:/This manual does not contain the rules for GIPF. If you
+don't know the game yet, go and buy it or check the GIPF homepage.
+</descrip>
+
+<!-- ##################################################################### -->
+<sect>Manual for the impatient
+<p>
+This part of the manual will teach you enough about the program
+to start playing against the computer as quick as possible.
+
+If you want to know everything about all the different menu-options, then
+you will have to read the next chapters.
+
+<sect1>Game Setup
+<p>
+You can change the strength of the computer-player with the "Setup"-option
+in the File-menu.
+
+Choose one of the levels for computer strength and press the OK-button.
+Level 1 is a very bad player, only appropriate for beginners. Level 8 is
+a very, very good player, but one move from the computer make take an hour
+or longer. Level 4 and 5 are strong players which don't take too long thinking
+about their moves.
+
+<sect1>Start a new game
+<p>
+You start a game with the New-option from the File-menu.
+
+The window shown contains several areas: For general things about the new
+game and things that must be setup for each player separatly.
+
+The first thing you should choose is what kind of game to play. The 3
+different games described in the GIPF-rules are available: basic, standard
+and tournament.
+
+The "Timed game"-option allows you to make the game more difficult by
+restricting the time you have for playing a complete game. If you check
+this option, you can also change the time each player has for the game.
+(You can give the players a different time.)
+
+Now you have to choose who will play white and black. For each color you
+can choose if it will be controlled by a human- or a computer-player, 
+you can enter the player-name, and if you chose the "Timed game"-option, 
+then you can also change the time allowed for a game.
+
+When you are happy with your selections, press OK and the game will start.
+
+<sect1>Play the game
+<p>
+single pieces on the board are white (really light yellow)
+and black. Gipf pieces of both colours have an extra gray circle on them.
+
+How to make a move:
+<itemize>
+<item> Click on one of the black circles around the gameboard to set the
+       point from where you want to add a piece.
+       The new piece will be shown on that position
+<item> Click on the point where you want to move your new piece.
+       A red cross will appear there.
+<item> Now click on the 'Execute move'-button under the gameboard and your
+       move will be executed.
+<item> At the beginning of a tournament game you can add gipf-pieces,
+       when you want to stop adding gipf-pieces just click again on the
+       piece you are adding. this will replace the gipf-piece with a normal
+       piece. (Clicking again will change the piece to a gipf again.)
+</itemize>    
+
+In some circumstances the program will ask you if you want to remove a row
+of pieces or gipf-pieces. The relevant pieces are shown on the board with
+a red cross on them.
+
+The program automatically detects if the game is finished and will tell
+you who won and how many moves it took.
+
+<!-- ##################################################################### -->
+<sect>Screen layout
+<p>
+The main GF1-window consists of several sections.
+
+At the top you have the menu-bar and at the bottom you have buttons which 
+differ depending on what you are doing.
+In the middle you can see from left to right:
+<itemize>
+<item>Information about the white player (Player name, timer, number of
+pieces left, number of pieces lost)
+<item>The gipf-board
+<item>Information about the black player
+<item>A log of all the moves
+</itemize>
+
+The player-name with a red background shows whose turn it is.
+
+If you set the "show position names"-option in the setup-window, then you will
+see the position-name of the position you are over appear if you stay over the
+same place on the gameboard for 1/2 a second.
+
+The pieces for playing GIPF are shown on the board as white 
+(really light yellow) and black discs. Gipf pieces (2 normal pieces on
+top of each other) have an extra gray circle on them.
+
+<!-- ##################################################################### -->
+<sect>Moving pieces on the board
+<p>
+Making a move consists of several steps:
+<itemize>
+<item> Click on one of the black circles around the gameboard to set the
+       point from where you want to add a piece.
+       The new piece will be shown on that position
+<item> Click on the point where you want to move your new piece.
+       A red cross will appear there.
+<item> Now click on the 'Execute move'-button under the gameboard and your
+       move will be executed. Pressing &lt;enter&gt; also executes your move.
+       Clicking a second time on the position with the red cross will also
+       execute the move.
+</itemize>    
+
+At the beginning of a tournament game you can add gipf-pieces to the game.
+When you want to stop adding gipf-pieces, just click again on the
+piece you are adding, the gipf-piece will be replaced with a normal piece.
+
+When the computer-player is thinking on what move to make, a window is
+shown with a "thinker" and a button which allows you to interrupt the computer.
+
+<!-- ##################################################################### -->
+<sect>Removing a row of pieces or a gipf-piece
+<p>
+Every time a row of four pieces of the same colours occurs on the board, this
+row is automatically removed from the board by the program.
+
+When more then 1 row of the same colour is on the board at the same time, 
+the program will ask the corresponding player what row to remove first. 
+The row you can remove at that moment will be made clear with red crosses 
+on top of the pieces.
+
+Something similar occurs when you have the chance to remove a gipf-piece from 
+the board. The piece that can be removed will get a red cross and the
+program will ask you if you want to remove it or not.
+
+<descrip>
+<tag/REMARK:/Even when you can remove a gipf-piece from your opponent from the
+board will the program ask you if you want to do this. In some situations it
+can be benificial to leave your opponents gipf on the board.
+</descrip>
+
+<!-- ##################################################################### -->
+<sect>Playing with a timer
+<p>
+Playing a timed game is like playing with a chess-clock.
+
+When it's your turn, your clock will run down. When it's your opponents move,
+your clock will stop and his will start.
+
+When one of the players runs out of time, he loses instantly.
+
+The computer-player is smart enough not to run out of time. When his current
+strenght level would cause him to run out of time, he will automatically 
+switch to a lower setting.
+
+<!-- ##################################################################### -->
+<sect>Edit a gameboard
+<p>
+When you use the "Edit board"-option from the Edit menu, the user-interface
+changes to allow you to edit the gameboard in any way you like.
+
+In this mode you can add or remove pieces or gipf-pieces of any colour and 
+change the "lost pieces"-counters to create any gipf-situation you want.
+
+When you changed the board to your liking, you can start playing from
+that situation.
+
+<sect1>Select what type of piece to add
+<p>
+There are 2 ways to select the type of piece you want to add to the board:
+<itemize>
+<item>At the bottom of the window is a button that shows the currently selected
+piece to be added. Clicking this button allows you to change it to any of
+the possibilities.
+<item>When you right-click with your mouse over the game-board you can also
+select the type of piece to add. This will immediatly be shown on the button
+at the bottom also.
+</itemize>
+
+<sect1>Add or remove a piece from the board
+<p>
+To add a piece, just move the mouse over the position where you want to put the
+new piece and click. This will put the currently selected type of piece at
+that position and adapt the counter of available pieces for the corresponding
+colour.
+
+Removing a piece is just as easy. Move the mouse over the piece you want
+to remove and click. The piece will be removed and the corresponding counter
+adapted.
+
+If you want to replace a piece with a different one then you have to click
+twice, once to remove the old piece and again to place the new piece.
+
+<sect1>Changing the "lost pieces"-counters
+<p>
+For changing the number of pieces lost by each player there are 2 counters
+at the bottom of the window.
+
+Pressing the left-button of a counter will decrease the number (not below 0), 
+pressing the right-button will increase it.
+
+Automatically, the number of available pieces will be updated correctly.
+
+<!-- ##################################################################### -->
+<sect>The menubar
+<p>
+<sect1>File menu
+<p>
+The File menu contains general options for dealing with a game of GIPF.
+
+<descrip>
+<tag/New game/This is the option to use when you want to start a new game. It 
+opens a window allowing you to enter all the settings necessary for a 
+game of GIPF:
+<itemize>
+<item>Game type: Here you choose the type of game you want to play. These
+options correspond to the 3 game-types explained in the official GIPF-rules.
+<item>Timed game: Turn this option on if you want to restrict the time each
+player has for playing a complete game.
+<item>Player (white and black): For each colour you can choose what kind
+of player will use it. Choose human for one colour and computer for the other
+if you want to play against the computer, but both sides human or both
+sides computer are also valid settings.
+<item>Player name (white and black): The names entered here will be shown on
+each side of the game-board.
+<item>Player time (white and black): If you turned on the "Timed game"-option
+then you can change the number of minutes allowed for each player.
+</itemize>
+
+<tag/Load game/Load a game that you saved earlier. If you saved during a game
+then you can resume the game from where you stopped.
+
+<tag/Save game/Save a game in progress. This allows you to return to the game
+later. A window will open where you can enter a filename.
+
+<tag/Save log/If you just finished a memorable game then you can use this
+option to save all your moves to a file. In case you want to see later how
+you won (or lost) that game.
+
+<tag/Setup/Change game settings:
+<itemize>
+<item>Computer strength: From 1 to 8, level one is for absolute beginners, from
+level 4 on the computer plays quite strong. At settings above 5 the computer 
+can take a long time calculating his move. 
+<item>Move animation: If you turn the animation on, every move you make will be
+shown with moving pieces (This makes it easier to understand what is 
+happening). 
+<item>Wait before computer move: To make computer moves easier to understand 
+you can make the program wait before executing each computer move. The program
+will show what move the computer intends to make and wait the number of
+seconds you enter here.
+<item>Wait before removing a row/gipf: To make it easier to understand what
+happens when rows and gipf-pieces are removed from the board, you can set this
+to something different then 0. The computer will then show what it intends to 
+remove and wait a number of seconds.
+<item>Show position names: If you set this option then position-names
+will be shown on the board when you move over it.
+</itemize>
+
+<tag/Exit/Stop the program. Make sure you saved the current game if necessary.
+</descrip>
+
+<sect1>Edit menu
+<p>
+Only the first option from the Edit menu (Edit board) can be used when you are
+not in the edit mode of the program. 'Save board' and 'Make drawing' can also
+be used when you are playing a game. But the others are only available when
+you are editing the game-board.
+
+<descrip>
+<tag/Edit board/Start editing the game-board. (See above for how this works)
+<tag/Start game/Start a game from the board-situation you were editing. A
+window opens allowing you to start a game.
+<tag/Computer move/Have the computer calculate one move from the current
+board-position. You can choose if it is white or black who has to play and
+the strength of the computer (higher is better).
+<tag/Clear board/Empty the board, put it in the same situation like the start
+of a tournament-game.
+<tag/Restore board/Restore the board to the situation before your started
+editing the board. Also exit edit-mode and return to play-mode.
+<tag/Load board/Load a board-position from a file.
+<tag/Save board/Save the current board-position to a file.
+<tag/Make drawing/Make a png-file of the current board-situation. You can
+specify a file-name, the size of the resulting picture and an accompanying
+text.
+</descrip>
+
+<sect1>UNDO
+<p>
+When you use UNDO, the game will be returned to the situation before
+you made your last move. This allows you to try again if you made a stupid
+mistake.
+
+This option from the menubar is only usable under certain conditions:
+<itemize>
+<item>During a game
+<item>When you are not playing a timed game. (this would be too much like
+cheating)
+</itemize>
+
+<bf>REMARK:</bf> You can only do UNDO once at a certain moment in
+the game. It is not possible to press UNDO several times to go back more
+than 1 move.
+
+<sect1>Help menu
+<p>
+This menu contains only 2 options.
+
+The HELP-option opens a window containing the complete GF1-manual.
+At the top you get a list of all the different chapters in the manual. When
+you click on one of the lines, the helptext will immediatly jump to the
+correct chapter. The help-window can be left open while playing.
+
+The ABOUT-option just opens a window showing the version of GF1 you are
+using and the author. Press enter or click on the window to remove it.
+(This is the same window you see when GF1 starts up. At startup, the window 
+goes away automatically after 5 seconds.)
+
+<!-- ##################################################################### -->
+<sect>Contact-information and Copyrights
+<p>
+<sect1>Contact-information
+<p>
+
+<descrip>
+<tag/Author:/Kurt Van den Branden
+<tag/Address:/<verb>
+Heiveldstraat 72
+B-9120 Beveren
+Belgium
+</verb>
+<tag/e-mail:/<htmlurl url="kurtvdb@@village.uunet.be" name="kurtvdb@@village.uunet.be">
+<tag/GF1 homepage:/<tt><htmlurl url="http://gf1.sourceforge.net/" name="http://gf1.sourceforge.net/"></tt> 
+<tag/GF1 users mailinglist:/ If you want to keep up-to-date with GF1 
+developments, subscribe to the mailinglist (<tt><htmlurl url="http://gf1.sourceforge.net/services.html#mailinglist" name="http://gf1.sourceforge.net/services.html#mailinglist"></tt>) 
+</descrip>
+
+<bf>REMARK: </bf>GF1 is free, but please send me a postcard if you like 
+it (a paper postcard, not an electronic one). 
+You can also send me money if you like.
+
+<sect1>Copyrights
+<p>
+<itemize>
+<item>
+GF1 &copy; 1998-2000, Kurt Van den Branden.
+<p>
+You can use this program for what ever you want, but don't come complaining
+to me if it explodes in your face :-).
+<p>
+You can even get the source-code for this program, so you can change it if
+you want. But if you have a useful change, please send it back to me so
+everybody can use it.
+<p>
+<verb>
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  
+</verb>
+<p>
+
+<item>
+GIPF, &copy; en &reg; Don & Co nv, 1997. All rights reserved.
+
+</itemize>
+
+</article>
+@
+
+
+1.11
+log
+@changes for v 1.02
+@
+text
+@d3 1
+a3 1
+<!-- $Id: gf1_doc.sgml,v 1.10 1999/07/11 16:21:38 kurt Exp kurt $ -->
+d149 2
+d372 3
+a374 1
+<tag/GF1 homepage:/<tt><htmlurl url="http://www.crosswinds.net/~gf1/" name="http://www.crosswinds.net/~gf1/"></tt> 
+@
+
+
+1.10
+log
+@updates for version 1
+@
+text
+@d3 1
+a3 1
+<!-- $Id: gf1_doc.sgml,v 1.9 1999/05/09 08:49:05 kurt Exp kurt $ -->
+d320 1
+a320 1
+<tag/Make drawing/Make a gif-file of the current board-situation. You can
+d365 1
+a365 1
+Schoofland 49
+d370 1
+a370 1
+<tag/GF1 homepage:/<tt><htmlurl url="http://www.crosswinds.net/antwerp/~gf1/" name="http://www.crosswinds.net/antwerp/~gf1/"></tt> 
+d381 1
+a381 1
+GF1 &copy; 1998-1999, Kurt Van den Branden.
+@
+
+
+1.9
+log
+@updates for the correct GF1-homepage
+@
+text
+@d3 1
+a3 1
+<!-- $Id: gf1_doc.sgml,v 1.8 1999/03/22 19:45:07 kurt Exp kurt $ -->
+d87 1
+a87 1
+and black, gipf pieces of both colours have an extra gray circle on them.
+d96 1
+a96 1
+<item> Now click on the move-button right under the gameboard and your
+d101 1
+a101 1
+       piece.
+d105 1
+a105 1
+of pieces or a gipf-pieces. The relevant pieces are shown on the board with
+d134 1
+a134 1
+(really light yellow) and black circles. Gipf pieces (2 normal pieces on
+d147 1
+a147 1
+<item> Now click on the move-button right under the gameboard and your
+d151 2
+a152 2
+At the beginning of a tournament game you can add gipf-pieces to the game,
+when you want to stop adding gipf-pieces just click again on the
+a156 2
+(REMARK: The computer doesn't stop immediatly when you press the 
+"stop thinking"-button. Be patient for a few moments.)
+d165 3
+a167 2
+the program will ask the player what row to remove first. The row you can
+remove at that moment will be made clear with red crosses on top of them.
+d173 6
+d189 4
+d228 3
+d236 2
+a237 2
+Pressing the left-button will decrease the number (not below 0), pressing
+the right-button will increase it.
+d267 2
+a268 1
+<tag/Load game/Load a game that you saved earlier.
+d280 2
+a281 2
+level 4 on the computer plays very strong. At settings above 5 the computer can
+take a long time calculating his move. 
+d283 2
+a284 2
+shown with moving pieces. (This makes it easier to understand what is 
+happening.) 
+d297 1
+a297 1
+<tag/Exit/Stop the program, make sure you saved the current game if necessary.
+d303 2
+a304 1
+not in the edit mode of the program. All the others are only available when
+d308 1
+a308 1
+<tag/Edit board/Start editing the game-board.
+d320 3
+a322 1
+<tag/Make drawing/Make a gif-file of the current board-situation.
+d353 2
+a354 2
+(This is the same window you see when GF1 starts up. That window goes
+ away automatically after 5 seconds or when you click on it.)
+@
+
+
+1.8
+log
+@added the "Make Drawing"-option to the documentation
+@
+text
+@d3 1
+a3 1
+<!-- $Id: gf1_doc.sgml,v 1.7 1998/11/27 16:04:45 kurt Exp kurt $ -->
+d354 1
+a354 2
+<tag/GF1 homepage:/<tt><htmlurl url="http://gf1.home.ml.org/" name="http://gf1.home.ml.org/"></tt> 
+(or <tt><htmlurl url="http://www.lowrent.org/gf1/" name="http://www.lowrent.org/gf1/"></tt>)
+d365 1
+a365 1
+GF1 &copy; 1998, Kurt Van den Branden.
+@
+
+
+1.7
+log
+@finished the manual for this version
+(still some work to do for the options from the edit-menu)
+@
+text
+@d3 1
+a3 1
+<!-- $Id: gf1_doc.sgml,v 1.6 1998/11/26 18:07:01 kurt Exp kurt $ -->
+d306 1
+@
+
+
+1.6
+log
+@the documentation is reasonably complete now.
+@
+text
+@d3 1
+a3 1
+<!-- $Id: gf1_doc.sgml,v 1.5 1998/11/15 17:52:13 kurt Exp kurt $ -->
+d52 1
+a52 1
+You can change the strength of the computer-player from the "Setup"-option
+d78 1
+a78 1
+can choose if it will be controled by a human- or a computer-player, 
+d82 1
+a82 1
+When you are happy with your selections, just press OK and the game will start.
+d87 1
+a87 1
+and black, gipf pieces have an extra gray circle on them.
+d104 6
+d159 24
+@
+
+
+1.5
+log
+@some small updates
+@
+text
+@d3 1
+a3 1
+<!-- $Id: gf1_doc.sgml,v 1.4 1998/10/28 20:06:04 kurt Exp kurt $ -->
+d11 6
+a16 1
+empty abstract
+d36 4
+d44 1
+a44 1
+This part of the manual will teach you just enough about the program
+d48 1
+a48 1
+you will have to read the next chapter.
+d52 1
+a52 1
+You can change the strength of the computer-player from the Setup-option
+d58 2
+a59 1
+or longer. Level 4 and 5 are strong players which don't take too long thinking.
+d72 1
+a72 1
+The 'Timed game'-option allows you to make the game more difficult by
+d79 1
+a79 1
+you can enter the player-name, and if you chose the 'Timed game'-option, 
+d100 43
+a142 1
+       piece you are adding. this will make the gray circle disappear.
+d145 8
+d155 1
+a155 1
+<sect>Complete manual
+d157 20
+d178 1
+a178 1
+<sect1>Screen layout
+d180 4
+d185 17
+d204 52
+d259 18
+d280 14
+d297 1
+d299 9
+d317 1
+a317 2
+<tag/Address:/
+<verb>
+d323 2
+a324 1
+<tag/GF1 homepage:/<tt><htmlurl url="http://gf1.home.ml.org/" name="http://gf1.home.ml.org/"></tt>
+d329 1
+a329 1
+You can even send me money if you like.
+d362 1
+a362 1
+GIPF, (C) en (R) Don & Co nv, 1997. All rights reserved.
+d366 1
+a366 1
+</article>@
+
+
+1.4
+log
+@manual for the impatient should be usable now
+@
+text
+@d3 1
+a3 1
+<!-- $Id: gf1_doc.sgml,v 1.3 1998/10/24 16:08:38 kurt Exp kurt $ -->
+d28 1
+a28 1
+more info about GIPF, check 
+d48 1
+a48 1
+a very, very good player, but one move from the computer make take 15 minutes
+d59 1
+a59 1
+different games described in the gipf-rules are available: Basic, standard
+d72 1
+a72 1
+When you are happy with your selection, just press OK and the game will start.
+d83 1
+a83 1
+       The piece will be shown on that position
+@
+
+
+1.3
+log
+@updates
+@
+text
+@d3 1
+a3 1
+<!-- $Id: gf1_doc.sgml,v 1.2 1998/10/24 10:43:35 kurt Exp kurt $ -->
+d43 7
+d53 20
+d76 16
+@
+
+
+1.2
+log
+@first edits to the documentation
+now contains contact and copyright information
+@
+text
+@d3 1
+a3 1
+<!-- $Id: gf1_doc.sgml,v 1.1 1998/10/24 10:11:24 kurt Exp kurt $ -->
+d14 31
+a44 1
+<sect>empty section
+a45 1
+idem
+d47 26
+a72 1
+<sect>Contact-information and Copyright
+d93 1
+a93 1
+<sect1>Copyright
+d95 2
+d100 1
+a100 1
+to me when it explodes in your face :-).
+d123 1
+d125 2
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d3 1
+a3 1
+<! $Id$>
+d8 1
+a8 1
+<author>Kurt Van den Branden
+d11 1
+d14 1
+a14 1
+<sect>
+d16 52
+@

@@ -1,0 +1,202 @@
+head	1.2;
+access;
+symbols
+	version_1_03:1.2
+	version_1_02:1.2;
+locks; strict;
+comment	@ * @;
+
+
+1.2
+date	2000.01.25.19.02.28;	author kurt;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2000.01.10.20.07.58;	author kurt;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@make sure this doesn't get included twice
+@
+text
+@/*
+** $Id: xmlite.h,v 1.1 2000/01/10 20:07:58 kurt Exp kurt $
+**
+** code for reading and writing data in an xml-like format
+**
+** the output from these routines may look a lot like xml, and may even
+** be wel-formed xml, but I don't think you should use it as that.
+*/
+/*
+**    Copyright (C) 2000 Kurt Van den Branden
+**
+** This program is free software; you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation; either version 2 of the License, or
+** (at your option) any later version.
+** 
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+** 
+** You should have received a copy of the GNU General Public License
+** along with this program; if not, write to the Free Software
+** Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  
+*/
+
+/*
+** the following is an example of what you should be able to store:
+
+<gipfgame type="tournament">
+
+<whiteplayer type="human" fulltime="1200" timeleft="1197.562988" gipf="yes">
+White</whiteplayer>
+<blackplayer type="computer" fulltime="1200" timeleft="1196" gipf="no">
+Black</blackplayer>
+<nextplayer>white</nextplayer>
+
+<!-- in between state of removing rows or gipf-pieces -->
+
+<board>
+<whitepieces>16</whitepieces>
+<whitelost>0</whitelost>
+<blackpieces>16</blackpieces>
+<blacklost>0</blacklost>
+<position color="white" type="piece">e2</position>
+<position color="black" type="gipf">d5</position>
+</board>
+
+<gamelog>
+<move nr="1" player="white" type="gipf">e1-e2</move>
+<move nr="1" player="black" type="piece">e1-e3</move>
+<removerow owner="white">
+<position color="black" type="piece">e2</position>
+<position color="white" type="piece">e3</position>
+<position color="white" type="piece">e4</position>
+<position color="white" type="gipf">e5</position>
+</removerow>
+</gamelog>
+
+</gipfgame>
+
+*/
+
+#ifndef _XMLITE_H_
+#define _XMLITE_H_ 1
+
+#include <string>
+#include <hash_map>
+#include <vector>
+
+struct eqstring
+{
+    bool operator()(const string & s1, const string & s2) const
+	{
+	    return (s1 == s2);
+	}
+};
+
+
+struct stringhash
+{
+    bool operator()(const string & s) const
+	{
+	    hash<const char *> H;
+	    return (H (s.c_str()));
+	}
+};
+
+
+class xmlite_entity {
+ public:
+    xmlite_entity (const char * ename);
+    xmlite_entity (const string & ename);
+    xmlite_entity (const xmlite_entity & source)
+	{ (*this) = source; };
+    ~xmlite_entity ();
+
+    xmlite_entity & operator= (const xmlite_entity & source);
+
+    int addcontent (xmlite_entity * newcontent);
+    int addattribute (const string & aname, const string & avalue);
+    int setvalue (const string & newvalue);
+
+    int writetofile (const char * filename);
+
+    string * escapechars (const string & instring);
+    void escapechars (string & instring);
+    string * unescapechars (const string & instring);
+    void unescapechars (string & instring);
+
+    xmlite_entity * getcontentbynr (const int nr = 0);
+    xmlite_entity * getcontentbyname (const string & name,
+				      const int nr = 0);
+    const string & getvalue ()
+	{ return (value); };
+    const string & getname ()
+	{ return (name); };
+    const string & getattribute (const string key)
+	{ return (attributes[key]); };
+    
+ private:
+    string name;
+    string value;
+    vector<xmlite_entity *> contents;
+    hash_map<string, string, stringhash, eqstring> attributes;
+
+    int writetostream (ostream & ostr);
+    void replaceall (string & input, const string & from, const string & to);
+};
+
+
+class xmlite_parser {
+ public:
+    xmlite_parser (istream * inputstream) :
+	mystream (false), istr (inputstream)
+	{ parseerror = "no parsing done yet."; };
+    xmlite_parser (const char * filename);
+    ~xmlite_parser ()
+	{ if (mystream) delete (istr); };
+
+    xmlite_entity * parse ();
+    xmlite_entity * readentity (const string & startname);
+    void getnextc ();
+    void skipwhitespace ();
+    void readstring (string & str, const char * endchar);
+    void readattribute (xmlite_entity * ent);
+    
+    string & geterror ()
+	{ return (parseerror); };
+    
+ private:
+    bool mystream;
+    istream * istr;
+    char nextc;
+    
+    string parseerror;
+};
+
+#endif
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+** $Id$
+d64 3
+d159 1
+@

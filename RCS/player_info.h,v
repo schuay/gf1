@@ -1,0 +1,169 @@
+head	1.5;
+access;
+symbols
+	version_1_03:1.5
+	version_1_02:1.5
+	version_1_01:1.5
+	version_1_0_1:1.5
+	version_1_0:1.5
+	version_0_99_5:1.3
+	version_0_99_4:1.3
+	version_0_99_3:1.3
+	version_0_99_2:1.3
+	version_0_99_1:1.1;
+locks; strict;
+comment	@ * @;
+
+
+1.5
+date	99.06.01.16.48.24;	author kurt;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	99.05.31.16.41.10;	author kurt;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	98.11.15.17.53.57;	author kurt;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	98.11.01.18.57.36;	author kurt;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	98.09.29.18.27.05;	author kurt;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.5
+log
+@updates for correct handling of timed games by the computerplayer
+@
+text
+@/*
+** $Id: player_info.h,v 1.4 1999/05/31 16:41:10 kurt Exp kurt $
+**
+** pointers to data about players
+*/
+/*
+**    Copyright (C) 1998-1999 Kurt Van den Branden
+**
+** This program is free software; you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation; either version 2 of the License, or
+** (at your option) any later version.
+** 
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+** 
+** You should have received a copy of the GNU General Public License
+** along with this program; if not, write to the Free Software
+** Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  
+*/
+
+//#include "ai_minimax.h"
+//#include "ai_mtdf.h"
+#include "win_human.h"
+#include "ai_gipf.h"
+
+struct {
+    char playername[20];
+    void * (* newfunc)(char colour, int game);
+    void (* movefunc)(board * oboard, void * self, float time, 
+		      char * type, char * from, char * to);
+    char (* gipffunc)(board * oboard, void * self, float time,
+		      char * pos);
+    char (* rowfunc)(board * oboard, void * self, float time,
+		     char * start, char * end);
+    void (* endfunc)(void * self);
+} players[] = {
+    {"human", human_new, human_move, human_gipf, human_row, human_end},
+
+//    {"ai minimax", minimax_new, minimax_move, minimax_gipf,
+//     minimax_row, minimax_end}
+    {"ai new", ai_gipf_new, ai_gipf_move, ai_gipf_gipf, ai_gipf_row,
+     ai_gipf_end}
+};
+#define playertypes 2
+
+#define pnr(x)   (x == 'o'? 0 : 1)
+
+@
+
+
+1.4
+log
+@updates for new computer-player
+@
+text
+@d2 1
+a2 1
+** $Id: player_info.h,v 1.3 1998/11/15 17:53:57 kurt Exp kurt $
+d32 1
+a32 1
+    void (* movefunc)(board * oboard, void * self, 
+d34 4
+a37 2
+    char (* gipffunc)(board * oboard, void * self, char * pos);
+    char (* rowfunc)(board * oboard, void * self, char * start, char * end);
+@
+
+
+1.3
+log
+@added ai_mtdf to the list of players
+@
+text
+@d2 1
+a2 1
+** $Id: player_info.h,v 1.2 1998/11/01 18:57:36 kurt Exp kurt $
+d7 1
+a7 1
+**    Copyright (C) 1998 Kurt Van den Branden
+d24 1
+a24 1
+#include "ai_minimax.h"
+d27 1
+d39 6
+a44 3
+//    {"ai mtdf", mtdf_new, mtdf_move, mtdf_gipf, mtdf_row, mtdf_end}};
+    {"ai minimax", minimax_new, minimax_move, minimax_gipf, 
+     minimax_row, minimax_end}};
+@
+
+
+1.2
+log
+@added copyright
+@
+text
+@d2 1
+a2 1
+** $Id: player_info.h,v 1.1 1998/09/29 18:27:05 kurt Exp kurt $
+d25 1
+d38 1
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+** $Id$
+d5 17
+@

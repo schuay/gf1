@@ -1,0 +1,90 @@
+#
+# Makefile for File widgets and example program.
+#
+# Copyright 1999 by Michael Sweet.
+#
+# Permission is granted to use, copy, modify, and redistribute this file as
+# needed.
+#
+
+#
+# Programs...
+#
+
+AR	=	@AR@
+CC	=	@CC@
+CXX	=	@CXX@
+RANLIB	=	@RANLIB@
+RM	=	@RM@ -f
+SHELL	=	/bin/sh
+
+#
+# Program options...
+#
+
+ARFLAGS	=	crvs
+CFLAGS	=	@CFLAGS@
+CXXFLAGS =	@CXXFLAGS@
+LIBS	=	@LIBS@ -lXext -lX11 -lm
+LDFLAGS	=	@LDFLAGS@
+
+#
+# Rules...
+#
+
+.SILENT:
+.SUFFIXES:	.c .cxx .h .o
+.c.o:
+	echo Compiling $<...
+	$(CC) $(CFLAGS) -c $<
+.cxx.o:
+	echo Compiling $<...
+	$(CXX) $(CXXFLAGS) -c $<
+
+#
+# Make all targets...
+#
+
+all:	testfile libflfile.a
+
+#
+# Remove object and target files...
+#
+
+clean:
+	$(RM) *.o
+	$(RM) testfile
+	$(RM) libflfile.a
+
+#
+# Make the foo test program.
+#
+
+testfile:	libflfile.a testfile.o
+	echo Linking $@...
+	$(CXX) $(LDFLAGS) -o testfile testfile.o libflfile.a $(LIBS)
+
+testfile.o:	FileBrowser.h FileChooser.h FileIcon.h FileInput.h
+
+#
+# Make the foo widget library.
+#
+
+FLFILE_OBJS	=	FileBrowser.o FileChooser.o FileChooser2.o \
+			FileIcon.o FileInput.o
+
+libflfile.a:	$(FLFILE_OBJS)
+	echo Building library $@...
+	$(RM) libflfile.a
+	$(AR) $(ARFLAGS) libflfile.a $(FLFILE_OBJS)
+	$(RANLIB) libflfile.a
+
+FileBrowser.o:		FileBrowser.h FileIcon.h
+FileChooser2.o:		FileBrowser.h FileChooser.h FileIcon.h FileInput.h
+FileChooser.o:		FileBrowser.h FileChooser.h FileIcon.h FileInput.h
+FileIcon.o:		FileIcon.h
+FileInput.o:		FileInput.h
+
+#
+# End of Makefile.
+#

@@ -1,0 +1,52 @@
+ how to compile GF1 from source
+================================
+Since this is the first time I distribute source for one of my programs,
+these instructions may be incomplete.
+If you have problems, let me know and I will try to help.
+
+what do you need
+----------------
++ source for GF1
+  you can find the latest version on the GF1-website,
+  the name of the file should be something like:
+     gf1_src_<version>.zip
+
++ the fltk-library
+  this can be found on the FLTK-website (http://fltk.easysw.com/)
+  the latest available version should be OK.
+
+If you want to implement the 'Make drawing'-option:
++ the gd-library
+  can be found on the website of Thomas Boutell (http://fltk.boutell.com/gd/)
+  the latest available version should be OK.
+  (you will also need libpng and zlib)
+
+compiling on Linux
+------------------
++ compile and install the fltk-library according to the instructions included
+  with FLTK.
+
++ unzip the gf1 source-archive and type make.
+
+If you want to implement the 'Make drawing'-option:
++ do a normal install of gd, libpng and zlib
+
+If you don't want to implement the 'Make drawing'-option, then you
+should check the start of the make-file and put the corresponding line
+about the GD-library in comment.
+
+compiling on MS windows
+-----------------------
++ compile the fltk-library according to the instructions included with FLTK.
+
+If you want to implement the 'Make drawing'-option:
++ compile the libraries in a subdirectory (same name as the library)
+
++ I used the mingw32-compiler and gnu make to compile FLTK, If you want to
+  use an other compiler, you are on your own.
+
+  You will probably have to change the linker-flags in the makefile to
+  get the compilation to succeed.
+
+**********************************************
+$Id: INSTALL.txt,v 1.4 2000/01/25 19:12:25 kurt Exp $

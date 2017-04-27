@@ -1,0 +1,849 @@
+head	1.12;
+access;
+symbols
+	version_1_03:1.12
+	version_1_02:1.12
+	version_1_01:1.12
+	version_1_0_1:1.12
+	version_1_0:1.12
+	version_0_99_5:1.12
+	version_0_99_4:1.12
+	version_0_99_3:1.11
+	version_0_99_2:1.10
+	version_0_99_1:1.8;
+locks; strict;
+comment	@ * @;
+
+
+1.12
+date	98.11.28.13.19.52;	author kurt;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	98.11.26.18.15.53;	author kurt;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	98.11.03.18.50.16;	author kurt;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	98.11.01.18.44.37;	author kurt;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	98.10.22.16.54.48;	author kurt;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	98.10.10.12.09.34;	author kurt;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	98.10.09.15.54.49;	author kurt;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	98.09.07.17.57.47;	author kurt;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	98.09.06.19.52.32;	author kurt;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	98.09.06.19.25.53;	author kurt;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	98.09.06.17.52.46;	author kurt;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	98.09.06.09.37.06;	author kurt;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.12
+log
+@remlastmove now returns the number of items deleted from the gamelog
+@
+text
+@/*
+** $Id: gamelog.c,v 1.11 1998/11/26 18:15:53 kurt Exp kurt $
+**
+** a lot of things for dealing with the log from a gipf-game
+*/
+/*
+**    Copyright (C) 1998 Kurt Van den Branden
+**
+** This program is free software; you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation; either version 2 of the License, or
+** (at your option) any later version.
+** 
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+** 
+** You should have received a copy of the GNU General Public License
+** along with this program; if not, write to the Free Software
+** Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  
+*/
+
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+#include <malloc.h>
+
+#include "gamelog.h"
+
+/*
+** create a new, empty log structure
+**
+** parameters:
+**    type: gametype (string)
+**    wname: name of the player with white
+**    bname: name of the player with black
+*/
+gamelog * newlog (char * type, char * wname, char * bname)
+{
+    gamelog * log;
+
+    log = (gamelog *) malloc (sizeof (gamelog));
+    log->gametype = strdup (type);
+    log->whitename = strdup (wname);
+    log->blackname = strdup (bname);
+
+    log->moves = (listheader *) malloc (sizeof (listheader));
+    newlist (log->moves);
+
+    return (log);
+}
+
+
+/*
+** delete a complete gamelog structure
+*/
+void deletelog (gamelog * log)
+{
+    logitem * item;
+    char * pos;
+    
+    free (log->gametype);
+    free (log->whitename);
+    free (log->blackname);
+
+    while ((item = (logitem *) llrembynr (log->moves, 1)) != NULL)
+    {
+	if (item->plist != NULL)
+	{
+	    while ((pos = (char *) llrembynr (item->plist, 1)) != NULL)
+	    {
+		free (pos);
+	    }
+	    free (item->plist);
+	}
+
+	free (item);
+    }
+    free (log->moves);
+
+    return;
+}
+
+/*
+** add to the gamelog
+**
+** the contents of 'data' depend on 'type'
+**    LOGMOVE:  <piece>:<from>:<last moved piece>
+**    LOGREMGIPF: <gipfowner>:<gipf position><piece>
+**    LOGREMROW: <rowowner>:<rowstart>:<rowend>:[<piece position><piece>:]...
+**         (remark: the data for LOGREMROW must end on ':')
+*/
+int addtolog (gamelog * log, int type, char * data)
+{
+    logitem * item;
+    char * kar,
+	piece,
+	start[10]="  ",
+	end[10]="  ",
+	pos[10]="  ";
+
+    item = (logitem *) malloc (sizeof (logitem));
+    item->plist = NULL;
+    item->type = type;
+    
+    switch (type)
+    {
+    case LOGMOVE:
+	if (sscanf (data, "%c:%2s:%2s", &piece, start, end) != 3)
+	{
+	    free (item);
+	    return (-1);
+	}
+	break;
+    case LOGREMGIPF:
+	if (sscanf (data, "%c:%3s", &piece, pos) != 2)
+	{
+	    free (item);
+	    return (-1);
+	}
+	item->plist = (listheader *) malloc (sizeof (listheader));
+	newlist (item->plist);
+	pushll (item->plist, (void *) strdup (pos));
+	break;
+    case LOGREMROW:
+	if (sscanf (data, "%c:%2s:%2s:", &piece, start, end) != 3)
+	{
+	    free (item);
+	    return (-1);
+	}
+	item->plist = (listheader *) malloc (sizeof (listheader));
+	newlist (item->plist);
+       	kar = data + 8;
+	while (kar[0] != '\0')
+	{
+	    strncpy (pos, kar, 3);
+	    pushll (item->plist, (void *) strdup (pos));
+	    kar += 4;
+	}
+	break;
+    }
+    item->player = piece;
+    strcpy (item->start, start);
+    strcpy (item->end, end);
+
+    pushll (log->moves, (void *) item);
+    return (0);
+}
+
+
+/*
+** write contents of a gamelog-structure to a file
+**
+** parameters:
+**    log: gamelog structure
+**    fp: pointer to an open file
+*/
+int logtofile (gamelog * log, FILE * fp)
+{
+    logitem * item;
+    char * pos;
+    int counter = 1,
+	counter2;
+
+    if (log == NULL)
+    {
+	return (-1);
+    }
+    
+    fprintf (fp, "game: %s\n", log->gametype);
+    fprintf (fp, "white player: %s\n", log->whitename);
+    fprintf (fp, "black player: %s\n", log->blackname);
+    fprintf (fp, "\nmoves:\n");
+    
+    while ((item = (logitem *) llitembynr (log->moves, counter)) != NULL)
+    {
+	counter++;
+
+	switch (item->type)
+	{
+	case LOGMOVE:
+	    fprintf (fp, "%c: %s-%s\n", item->player, item->start, item->end);
+	    break;
+	case LOGREMGIPF:
+	    pos = (char *) llitembynr (item->plist, 1);
+	    fprintf (fp, "  %c removegipf: %s\n", item->player, pos);
+	    break;
+	case LOGREMROW:
+	    fprintf (fp, "  %c removerow (%s-%s):", item->player,
+		     item->start, item->end);
+	    counter2 = 1;
+	    while ((pos = (char *) llitembynr (item->plist, counter2)) != NULL)
+	    {
+		counter2++;
+		fprintf (fp, " %s", pos);
+	    }
+	    fprintf (fp, "\n");
+	    break;
+	default: ;
+	}
+    }
+
+    fprintf (fp, "end of gamelog\n");
+	
+    return (0);
+}
+
+
+/*
+** read log from a file and put it in a gamelog-structure
+** (the layout must be the same as written by logtofile)
+**
+** the inputfile must already be open and should be at the first
+** line from the gamelog
+*/
+gamelog * logfromfile (FILE * fp)
+{
+    gamelog * log;
+    char buffer[100],
+	type[100],
+	wname[100],
+	bname[100];
+    logitem * item;
+    char * kar,
+	piece,
+	start[10]="  ",
+	end[10]="  ",
+	pos[10]="  ";
+
+    if (fgets (buffer, 100, fp) == NULL)
+	return (NULL);
+    buffer[strlen(buffer)-1] = '\0';
+    if (strncmp (buffer, "game: ", 6) != 0)
+	return (NULL);
+    strcpy (type, buffer+6);
+    
+    if (fgets (buffer, 100, fp) == NULL)
+	return (NULL);
+    buffer[strlen(buffer)-1] = '\0';
+    if (strncmp (buffer, "white player: ", 14) != 0)
+	return (NULL);
+    strcpy (wname, buffer+14);
+    
+    if (fgets (buffer, 100, fp) == NULL)
+	return (NULL);
+    buffer[strlen(buffer)-1] = '\0';
+    if (strncmp (buffer, "black player: ", 14) != 0)
+	return (NULL);
+    strcpy (bname, buffer+14);
+
+    log = newlog (type, wname, bname);
+    
+    fgets (buffer, 100, fp);
+    fgets (buffer, 100, fp);
+
+    while (1)
+    {
+	if (fgets (buffer, 100, fp) == NULL)
+	{
+	    deletelog (log);
+	    return (NULL);
+	}
+	if (strncmp (buffer, "end of gamelog", 14) == 0)
+	    break;
+
+	item = (logitem *) malloc (sizeof (logitem));
+	item->plist = NULL;
+	
+	if (sscanf (buffer, "%c: %2s-%2s", &piece, start, end) == 3)
+	{
+	    item->type = LOGMOVE;
+	}
+	else if (sscanf (buffer, " %c removegipf: %3s", &piece, pos) == 2)
+	{
+	    item->type = LOGREMGIPF;
+	    item->plist = (listheader *) malloc (sizeof (listheader));
+	    newlist (item->plist);
+	    pushll (item->plist, (void *) strdup (pos));
+	}
+	else if (sscanf (buffer, " %c removerow (%2s-%2s):",
+			 &piece, start, end) == 3)
+	{
+	    item->type = LOGREMROW;
+	    item->plist = (listheader *) malloc (sizeof (listheader));
+	    newlist (item->plist);
+
+	    /* find pieces */
+	    kar = strchr (buffer, ':');
+	    kar++;
+	    while (1)
+	    {
+		while (isspace ((int) kar[0]))
+		    kar++;
+		if (sscanf (kar, "%3s", pos) != 1)
+		    break;
+		pushll (item->plist, (void *) strdup (pos));
+		kar += 4;
+	    }
+	}
+	item->player = piece;
+	strcpy (item->start, start);
+	strcpy (item->end, end);
+	
+	pushll (log->moves, (void *) item);
+    }
+    
+    return (log);
+}
+
+
+/*
+** take the contents of a gamelog-structure and format it in
+** a nice way to show in an fltk browser-widget
+**
+** this function returs a list of lines that can be sent to the
+** widget without change
+**
+** !! don't forget to cleanup the list !!
+*/
+listheader * logtobrowser (gamelog * log)
+{
+    listheader * lines;
+    char * newline,
+	whitepieces[50] = "",
+	blackpieces[50] = "",
+	owner = ' ',
+	* tempstr;
+    int movecounter = 0,
+	count = 1,
+	count2;
+    logitem * item;
+
+    lines = (listheader *) malloc (sizeof (listheader));
+    newlist (lines);
+
+    newline = (char *) malloc (40); /* is 40 always enough ? */
+    sprintf (newline, "@@b%s", log->gametype);
+    pushll (lines, newline);
+    newline = (char *) malloc (1);
+    newline[0] = '\0';
+    pushll (lines, newline);
+
+    newline = (char *) malloc (40); /* is 40 always enough ? */
+    sprintf (newline, "@@iwhite: %s", log->whitename);
+    pushll (lines, newline);
+    newline = (char *) malloc (40); /* is 40 always enough ? */
+    sprintf (newline, "@@iblack: %s", log->blackname);
+    pushll (lines, newline);
+    newline = (char *) malloc (1);
+    newline[0] = '\0';
+    pushll (lines, newline);
+
+    while ((item = (logitem *) llitembynr (log->moves, count)) != NULL)
+    {
+	count++;
+
+	if ((owner != ' ') &&
+	    ((item->type == LOGMOVE) || (item->type == LOGREMROW)))
+	{
+	    newline = (char *) malloc (50); /* is 50 enough ? */
+	    if (owner == 'o')
+		sprintf (newline, "@@s   w: %sx %s",
+			 whitepieces, blackpieces);
+	    else
+		sprintf (newline, "@@s   b: %sx %s",
+			 blackpieces, whitepieces);
+
+	    pushll (lines, newline);
+	    
+	    owner = ' ';
+	    whitepieces[0] = '\0';
+	    blackpieces[0] = '\0';
+	}
+	
+	if (item->type == LOGMOVE)
+	{
+	    if ((movecounter % 2) == 0)
+	    {   /* need to show the nr of the move here */
+		newline = (char *) malloc (40); /* is 40 always enough ? */
+		sprintf (newline, "@@c@@b%d", movecounter/2 + 1);
+		pushll (lines, newline);
+	    }
+	    movecounter++;
+
+	    newline = (char *) malloc (40); /* is 40 always enough ? */
+	    if (tolower (item->player) == 'o')
+		sprintf (newline, "white: ");
+	    else
+		sprintf (newline, "black: ");
+
+	    if ((item->player == 'O') || (item->player == 'X'))
+		sprintf (newline + 7, "G");
+	    
+	    sprintf (newline + strlen (newline), "%2s-%2s",
+		     item->start, item->end);
+	    
+	    pushll (lines, newline);
+	}
+	else if (item->type == LOGREMGIPF)
+	{
+	    tempstr = (char *) llitembynr (item->plist, 1);
+	    if (tolower (tempstr[2]) == 'o')
+		sprintf (whitepieces + strlen (whitepieces), "G%2.2s ",
+			 tempstr);
+	    else
+		sprintf (blackpieces + strlen (blackpieces), "G%2.2s ",
+			 tempstr);
+	}
+	else /* must be LOGREMROW now */
+	{
+	    count2 = 1;
+	    owner = tolower (item->player);
+	    
+	    while ((tempstr = (char *) llitembynr (item->plist, count2))
+		   != NULL)
+	    {
+		count2++;
+		if (tolower (tempstr[2]) == 'o')
+		    sprintf (whitepieces + strlen (whitepieces), "%2.2s ",
+			     tempstr);
+		else
+		    sprintf (blackpieces + strlen (blackpieces), "%2.2s ",
+			     tempstr);
+	    }
+	}
+    }
+
+    if (owner != ' ')
+    {
+	newline = (char *) malloc (50); /* is 50 enough ? */
+	if (owner == 'o')
+	    sprintf (newline, "@@s   w: %sx %s",
+		     whitepieces, blackpieces);
+	else
+	    sprintf (newline, "@@s   b: %sx %s",
+		     blackpieces, whitepieces);
+
+	pushll (lines, newline);
+    }
+
+    return (lines);
+}
+
+
+/*
+** return 1 if this logitem represents a move
+*/
+int isamove (void * data)
+{
+    logitem * item = data;
+
+    if (item->type == LOGMOVE)
+	return (1);
+
+    return (0);
+}
+
+
+/*
+** remove the last move from a gamelog
+** (include all the removerows and removegipfs)
+**
+** returns:
+**    -1: error
+**    number of items removed from the log
+*/
+int remlastmove (gamelog * log)
+{
+    int nr,
+	counter = 0;
+    logitem * item;
+    char * pos;
+    
+    if ((nr = findlastll (log->moves, isamove)) == 0)
+    {
+	return (-1);
+    }
+
+    /* delete everything from the last move to the end of the list */
+    while ((item = (logitem *) llrembynr (log->moves, nr)) != NULL)
+    {
+	if (item->plist != NULL)
+	{
+	    while ((pos = (char *) llrembynr (item->plist, 1)) != NULL)
+	    {
+		free (pos);
+	    }
+	    free (item->plist);
+	}
+
+	free (item);
+	counter++;
+    }
+    
+    return (counter);
+}
+@
+
+
+1.11
+log
+@patches to compile with the Irix compiler (from Bill Spitzak)
+@
+text
+@d2 1
+a2 1
+** $Id: gamelog.c,v 1.10 1998/11/03 18:50:16 kurt Exp kurt $
+a464 1
+**    0 : OK
+d466 1
+d470 2
+a471 1
+    int nr;
+d493 1
+d496 1
+a496 1
+    return (0);
+@
+
+
+1.10
+log
+@changed white and black to w and b when listing a row of removed pieces
+@
+text
+@d2 1
+a2 1
+** $Id: gamelog.c,v 1.9 1998/11/01 18:44:37 kurt Exp kurt $
+d200 1
+a200 1
+	default:
+@
+
+
+1.9
+log
+@added copyright
+@
+text
+@d2 1
+a2 1
+** $Id: gamelog.c,v 1.8 1998/10/22 16:54:48 kurt Exp kurt $
+d363 1
+a363 1
+		sprintf (newline, "@@s   white: %sx %s",
+d366 1
+a366 1
+		sprintf (newline, "@@s   black: %sx %s",
+d433 1
+a433 1
+	    sprintf (newline, "@@s   white: %sx %s",
+d436 1
+a436 1
+	    sprintf (newline, "@@s   black: %sx %s",
+@
+
+
+1.8
+log
+@added remlastmove (), removes the last move from a logfilestructure
+@
+text
+@d2 1
+a2 1
+** $Id: gamelog.c,v 1.7 1998/10/10 12:09:34 kurt Exp kurt $
+d5 17
+@
+
+
+1.7
+log
+@logfromfile is about finished now
+@
+text
+@d2 1
+a2 1
+** $Id: gamelog.c,v 1.6 1998/10/09 15:54:49 kurt Exp kurt $
+d426 52
+@
+
+
+1.6
+log
+@change in the interface from addtolog
+when a piece-position is given (for LOGREMGIPF or LOGREMROW) the position
+also contains the position itself.
+if this was not changed, I couldn't make a logfile like the official output.
+@
+text
+@d2 1
+a2 1
+** $Id: gamelog.c,v 1.5 1998/09/07 17:57:47 kurt Exp kurt $
+d251 2
+a252 1
+
+d257 1
+a257 1
+	else if (sscanf (buffer, " %c removegipf: %2s", &piece, start) == 2)
+d260 3
+d278 1
+a278 1
+		if (sscanf (kar, "%2s", pos) != 1)
+d281 1
+a281 1
+		kar += 2;
+d307 5
+a311 1
+    char * newline;
+d313 2
+a314 1
+	count = 1;
+d321 1
+a321 1
+    sprintf (newline, "gametype: @@b%s", log->gametype);
+d328 1
+a328 1
+    sprintf (newline, "white: @@i%s", log->whitename);
+d331 1
+a331 1
+    sprintf (newline, "black: @@i%s", log->blackname);
+d337 1
+a337 1
+    while ((item == llitembynr (log->moves, count)) != NULL)
+d340 18
+d368 14
+d385 7
+d395 14
+d410 13
+@
+
+
+1.5
+log
+@finished logfromfile
+done some light testing also
+@
+text
+@d2 1
+a2 1
+** $Id: gamelog.c,v 1.4 1998/09/06 19:52:32 kurt Exp kurt $
+d52 1
+a52 1
+	if ((item->type == LOGREMROW) && (item->plist != NULL))
+d73 2
+a74 2
+**    LOGREMGIPF: <gipfowner>:<gipf position>
+**    LOGREMROW: <rowowner>:<rowstart>:<rowend>:[<piece>:]...
+d100 1
+a100 1
+	if (sscanf (data, "%c:%2s", &piece, start) != 2)
+d105 3
+d120 1
+a120 1
+	    strncpy (pos, kar, 2);
+d122 1
+a122 1
+	    kar += 3;
+d169 2
+a170 1
+	    fprintf (fp, "  %c removegipf: %s\n", item->player, item->start);
+d288 63
+@
+
+
+1.4
+log
+@more editing in logfromfile, still not finished
+@
+text
+@d2 1
+a2 1
+** $Id: gamelog.c,v 1.3 1998/09/06 19:25:53 kurt Exp kurt $
+d9 2
+d124 2
+a125 4
+    strncpy (item->start, start, 2);
+    item->start[2] = '\0';
+    strncpy (item->end, end, 2);
+    item->end[2] = '\0';
+d193 2
+a194 1
+** the inputfile must already be open
+a199 1
+	tempstr[100],
+d227 1
+a227 1
+    if (strncmp (buffer, "white player: ", 14) != 0)
+d252 1
+a252 1
+	else if (sscanf (buffer, " %c removegipf: %2s", &piece, start) == 3)
+d264 11
+d276 5
+@
+
+
+1.3
+log
+@added the addtolog-function
+@
+text
+@d2 1
+a2 1
+** $Id: gamelog.c,v 1.2 1998/09/06 17:52:46 kurt Exp kurt $
+d193 1
+a193 1
+** the file must already be open
+d204 5
+a208 1
+    char * pos;
+a246 3
+/*
+** find out what line we found
+*/
+d248 17
+@
+
+
+1.2
+log
+@first edits for gamelog
+create a gamelog structure, delete a structure, write a logfile
+@
+text
+@d2 1
+a2 1
+** $Id: gamelog.c,v 1.1 1998/09/06 09:37:06 kurt Exp kurt $
+d20 1
+a20 1
+gamelog * newlog (char * type, char * wname, char * bname);
+d32 1
+a32 1
+    return (log)
+d66 60
+d127 2
+a128 2
+int addtolog (int type, char * data)
+{
+d209 1
+a209 1
+    if (strncmp (buffer, "game: ", 6) != NULL)
+d216 1
+a216 1
+    if (strncmp (buffer, "white player: ", 14) != NULL)
+d223 1
+a223 1
+    if (strncmp (buffer, "white player: ", 14) != NULL)
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+** $Id$
+d8 1
+d12 55
+d69 121
+@

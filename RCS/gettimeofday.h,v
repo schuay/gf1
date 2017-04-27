@@ -1,0 +1,123 @@
+head	1.3;
+access;
+symbols
+	version_1_03:1.3
+	version_1_02:1.3
+	version_1_01:1.3
+	version_1_0_1:1.3
+	version_1_0:1.3
+	version_0_99_5:1.3
+	version_0_99_4:1.3;
+locks; strict;
+comment	@ * @;
+
+
+1.3
+date	99.01.17.14.03.49;	author kurt;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	99.01.07.12.39.33;	author kurt;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	99.01.07.12.33.06;	author kurt;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@added include-file for time_t and ifdef for compiling with c++ compiler
+@
+text
+@/*
+** $Id: gettimeofday.h,v 1.2 1999/01/07 12:39:33 kurt Exp kurt $
+**
+** implement gettimeofday() using ftime()
+** to be used on systems that don't have a gettimeofday() but
+** have an ftime() with a resolution smaller than 1 second
+**
+**   => Windows
+*/
+/*
+**    Copyright (C) 1998 Kurt Van den Branden
+**
+** This program is free software; you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation; either version 2 of the License, or
+** (at your option) any later version.
+** 
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+** 
+** You should have received a copy of the GNU General Public License
+** along with this program; if not, write to the Free Software
+** Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  
+*/
+
+#ifndef _GETTIMEOFDAY_H_
+#define _GETTIMEOFDAY_H_ 1
+
+#include <sys/timeb.h>
+#include <time.h>
+
+#ifndef timeval
+struct timeval {
+    time_t tv_sec;              /* Seconds.  */
+    time_t tv_usec;             /* Microseconds.  */
+};
+#endif
+
+#ifndef timezone
+struct timezone {
+    int tz_minuteswest;         /* Minutes west of GMT.  */
+    int tz_dsttime;             /* Nonzero if DST is ever in effect.  */
+};
+#endif
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+int gettimeofday (struct timeval * tv, struct timezone * tz);
+#ifdef __cplusplus
+}
+#endif
+
+#endif
+@
+
+
+1.2
+log
+@added #ifndef at the start
+@
+text
+@d2 1
+a2 1
+** $Id: gettimeofday.h,v 1.1 1999/01/07 12:33:06 kurt Exp kurt $
+d32 1
+d48 3
+d52 3
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+** $Id$
+d28 3
+d48 2
+@

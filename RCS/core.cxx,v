@@ -1,0 +1,2052 @@
+head	1.42;
+access;
+symbols
+	version_1_03:1.42
+	version_1_02:1.41
+	version_1_01:1.40
+	version_1_0_1:1.40
+	version_1_0:1.39
+	version_0_99_5:1.38
+	version_0_99_4:1.36
+	version_0_99_3:1.31
+	version_0_99_2:1.29
+	version_0_99_1:1.25;
+locks; strict;
+comment	@// @;
+
+
+1.42
+date	2000.02.28.19.52.14;	author kurt;	state Exp;
+branches;
+next	1.41;
+
+1.41
+date	2000.01.25.19.00.52;	author kurt;	state Exp;
+branches;
+next	1.40;
+
+1.40
+date	99.07.11.15.47.18;	author kurt;	state Exp;
+branches;
+next	1.39;
+
+1.39
+date	99.06.01.16.51.04;	author kurt;	state Exp;
+branches;
+next	1.38;
+
+1.38
+date	99.05.18.19.05.19;	author kurt;	state Exp;
+branches;
+next	1.37;
+
+1.37
+date	99.05.09.14.51.20;	author kurt;	state Exp;
+branches;
+next	1.36;
+
+1.36
+date	99.03.28.09.54.54;	author kurt;	state Exp;
+branches;
+next	1.35;
+
+1.35
+date	99.03.21.18.04.46;	author kurt;	state Exp;
+branches;
+next	1.34;
+
+1.34
+date	98.12.13.17.36.36;	author kurt;	state Exp;
+branches;
+next	1.33;
+
+1.33
+date	98.12.13.15.48.49;	author kurt;	state Exp;
+branches;
+next	1.32;
+
+1.32
+date	98.11.28.13.19.23;	author kurt;	state Exp;
+branches;
+next	1.31;
+
+1.31
+date	98.11.27.13.44.51;	author kurt;	state Exp;
+branches;
+next	1.30;
+
+1.30
+date	98.11.26.17.51.24;	author kurt;	state Exp;
+branches;
+next	1.29;
+
+1.29
+date	98.11.15.12.00.22;	author kurt;	state Exp;
+branches;
+next	1.28;
+
+1.28
+date	98.11.09.20.34.12;	author kurt;	state Exp;
+branches;
+next	1.27;
+
+1.27
+date	98.11.01.16.26.42;	author kurt;	state Exp;
+branches;
+next	1.26;
+
+1.26
+date	98.11.01.11.29.17;	author kurt;	state Exp;
+branches;
+next	1.25;
+
+1.25
+date	98.10.28.18.27.56;	author kurt;	state Exp;
+branches;
+next	1.24;
+
+1.24
+date	98.10.25.20.14.24;	author kurt;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	98.10.25.10.35.18;	author kurt;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	98.10.24.16.07.22;	author kurt;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	98.10.22.17.14.25;	author kurt;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	98.10.20.20.07.58;	author kurt;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	98.10.20.17.45.37;	author kurt;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	98.10.19.19.42.27;	author kurt;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	98.10.18.18.01.43;	author kurt;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	98.10.15.16.31.54;	author kurt;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	98.10.14.19.13.00;	author kurt;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	98.10.12.19.15.28;	author kurt;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	98.10.11.19.18.47;	author kurt;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	98.10.10.12.09.11;	author kurt;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	98.10.01.16.07.12;	author kurt;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	98.10.01.15.47.41;	author kurt;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	98.09.29.18.02.28;	author kurt;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	98.09.23.17.15.09;	author kurt;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	98.09.22.19.20.01;	author kurt;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	98.09.21.20.14.23;	author kurt;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	98.09.20.14.33.20;	author kurt;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	98.09.18.18.25.48;	author kurt;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	98.09.15.19.44.45;	author kurt;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	98.09.13.14.11.37;	author kurt;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	98.09.05.11.37.13;	author kurt;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.42
+log
+@use new filechooser widget
+make it possible to execute a move by clicking twice on the to-position
+@
+text
+@/*
+** $Id: core.cxx,v 1.41 2000/01/25 19:00:52 kurt Exp kurt $
+**
+** the core routines for the program
+** compile it with C++ but most of it will probably be C
+*/
+/*
+**    Copyright (C) 1998-1999 Kurt Van den Branden
+**
+** This program is free software; you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation; either version 2 of the License, or
+** (at your option) any later version.
+** 
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+** 
+** You should have received a copy of the GNU General Public License
+** along with this program; if not, write to the Free Software
+** Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  
+*/
+
+char versiontext[] = "Gipf for one  v 1.03 (28/02/2000)";
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#include <FL/Fl_Menu_Button.H>
+
+#include "fl_board.h"
+#include "gipf_ui.H"
+#include "callbacks.h"
+#include "setup_win.h"
+#include "thegame.h"
+#include "configfile.h"
+
+//#define GIPF_ICON 1
+#ifdef GIPF_ICON
+#include <FL/x.H>
+#include "i_blauw.xpm"
+#endif
+
+#ifdef MSWIN // for the icon
+#define GF1_ICON 345
+#include <FL/x.H>
+#endif
+
+int stop_program = 0; /* set by the callback from the main window */
+
+board * loadboard (void);
+void saveboard (board * boardptr);
+void savelog (gamelog * logptr);
+
+
+int main (int argc, char ** argv)
+{
+    int theend = 0,
+	newval;
+    Fl_Window * mainwin,
+	* helpwin;
+    configvalues gf1_config;
+    gamestruct * currentgame = NULL,
+	* newgame = NULL;
+#ifdef GIPF_ICON
+    Pixmap p;
+#endif
+
+    // new random seed
+    srand (time (NULL));
+
+    /* read configuration */
+    retrieveconfig (& gf1_config);
+
+    /* create the main window */
+    mainwin = create_mainwindow();
+
+#ifdef GIPF_ICON
+    /* set the icon */
+    p = XCreateBitmapFromData(fl_display, DefaultRootWindow(fl_display),
+			      (char *) i_blauw_xpm, 64, 64);
+    mainwin->icon((char *)p);
+#endif
+
+#ifdef MSWIN
+    if (fl_display == 0)
+	fl_display = GetModuleHandle (NULL);
+
+    mainwin->icon((char *)LoadIcon(fl_display, MAKEINTRESOURCE(GF1_ICON)));
+#endif
+
+    /* setup the gameboard */
+    gameboard->setoutputwidgets(whitepieces, lostwhite, drawwhite,
+				blackpieces, lostblack, drawblack,
+				text_from, text_to);
+    gameboard->setexecbutton (button_execute);
+    gameboard->setshowposname (gf1_config.showposname);
+
+    /* create helpwindow but don't show it */
+    helpwin = gf1_help ();
+
+    /* set interface-items */
+    changeinterface (INTERFACE_PLAY, NULL);
+
+    /* show the main window */
+    Fl::visual (FL_DOUBLE|FL_INDEX);
+    Fl::background (0xb0, 0xb0, 0xb0);
+    mainwin->show();
+//    mainwin->show(argc, argv);   // don't do this, uses default user
+                                   // colors on windows
+
+    /*
+    ** on windows95 the window doesn't stay on for 5 seconds
+    ** if I don't add the following line
+    */
+    Fl::wait();
+    /* show the about-window, it will go away after 5 seconds */
+    show_about (1);
+
+    while (!theend)
+    {
+	/* The program must be stopped when wait() returns 0 */
+	if (Fl::wait() == 0)
+	{
+	    break;
+	}
+
+	Fl_Widget *x;
+	while ((x = Fl::readqueue())) 
+	{
+	    if (x == gf1_window)
+	    {
+//		printf ("mainwin event\n");
+	    }
+	    else if (x == menubar)
+	    {
+		const Fl_Menu * z;
+		Fl_Menu_Bar * y = (Fl_Menu_Bar *) x;
+
+		z = y->mvalue ();
+		if (z == menu_new)
+		{
+		    newgame = show_new (currentgame);
+		    if (newgame != NULL)
+		    {
+			stoptimer (currentgame);
+			delete_game (currentgame);
+			currentgame = newgame;
+			currentgame->config = & gf1_config;
+
+			gameboard->setboard (currentgame->boards[0]);
+
+			setupmove (currentgame);
+		    }
+		}
+		else if (z == menu_loadgame)
+		{
+		    newgame = loadgame ();
+		    if (newgame != NULL)
+		    {
+			stoptimer (currentgame);
+			delete_game (currentgame);
+			currentgame = newgame;
+			currentgame->config = & gf1_config;
+
+			gameboard->setboard (newgame->boards[0]);
+
+			setupmove (currentgame);
+		    }
+		}
+		else if (z == menu_savegame)
+		{
+		    savegame (currentgame);
+		}
+		else if (z == menu_savelog)
+		{
+		    if (currentgame != NULL)
+			savelog (currentgame->movelog);
+		    else
+			savelog (NULL);
+		}
+		else if (z == menu_setup)
+		{
+		    if (show_setup (&gf1_config))
+		    {
+			writeconfig (&gf1_config);
+			gameboard->setshowposname (gf1_config.showposname);
+		    }
+		}
+		else if (z == menu_exit)
+		{
+		    theend = 1;
+		}
+		else if (z == menu_edit)
+		{
+		    board * tempboard;
+
+		    stoptimer (currentgame);
+		    if (currentgame == NULL)
+		    {
+			tempboard = b_new (T_TOURNAMENT);
+			gameboard->setboard (tempboard);
+			b_del (tempboard);
+		    }
+		    else
+		    {   /* convert board to tournament configuration */
+			tempboard = b_copy (gameboard->getboard ());
+			if (b_white_gipf (gameboard->getboard ()) == -1)
+			{
+			    tempboard->gipfwhite = 0;
+			    tempboard->gipfblack = 0;
+			    tempboard->white += 3;
+			    tempboard->black += 3;
+			}
+			tempboard->movecounter = 0;
+			gameboard->setboard (tempboard);
+			b_del (tempboard);
+		    }
+		    changeinterface (INTERFACE_EDIT, currentgame);
+
+		    setlostcounters ();
+		}
+		else if (z == menu_start)
+		{
+		    newgame = show_start (gameboard->getboard ());
+		    if (newgame != NULL)
+		    {
+			delete_game (currentgame);
+			currentgame = newgame;
+			currentgame->config = & gf1_config;
+
+			gameboard->setboard (currentgame->boards[0]);
+
+			setupmove (currentgame);
+		    }
+		}
+		else if (z == menu_compumove)
+		{
+		    newgame = show_onemove (gameboard->getboard (), 
+					    & gf1_config);
+		    if (newgame != NULL)
+		    {
+			delete_game (currentgame);
+			currentgame = newgame;
+		    }
+		}
+		else if (z == menu_clear)
+		{
+		    board * tempboard;
+
+		    tempboard = b_new (T_TOURNAMENT);
+		    gameboard->setboard (tempboard);
+		    b_del (tempboard);
+		    setlostcounters ();
+		}
+		else if (z == menu_restore)
+		{
+		    changeinterface (INTERFACE_PLAY, currentgame);
+		    if (currentgame == NULL)
+		    {
+			gameboard->setboard (NULL);
+		    }
+		    else
+		    {
+			gameboard->setboard (currentgame->boards[0]);
+
+			setupmove (currentgame);
+		    }
+		}
+		else if (z == menu_loadboard)
+		{
+		    board * tempboard = NULL;
+		    
+		    if ((tempboard = loadboard ()) != NULL)
+		    {
+			gameboard->setboard (tempboard);
+			b_del (tempboard);
+
+			setlostcounters ();
+		    }
+		}
+		else if (z == menu_saveboard)
+		{
+		    saveboard (gameboard->getboard());
+		}
+		else if (z == menu_makedrawing)
+		{
+		    show_makegif (gameboard->getboard ());
+		}
+		else if (z == menu_undo)
+		{
+		    if ((currentgame != NULL) &&
+			(currentgame->boards[2] != NULL))
+		    {
+			b_del (currentgame->boards[0]);
+			b_del (currentgame->boards[1]);
+			currentgame->boards[0] = currentgame->boards[2];
+			currentgame->boards[1] = NULL;
+			currentgame->boards[2] = NULL;
+			currentgame->movecounter -= 
+			    remlastmove (currentgame->movelog);
+			currentgame->movecounter -= 
+			    remlastmove (currentgame->movelog);
+
+			setupmove (currentgame);
+			gameboard->setboard (currentgame->boards[0]);
+		    }
+		}
+		else if (z == menu_help)
+		{
+		    helpwin->show();
+		}
+		else if (z == menu_about)
+		{
+		    show_about (0);
+		}
+	    }
+	    else if (x == choice_piecetype)
+	    {
+		const Fl_Menu * z;
+		Fl_Choice * y = (Fl_Choice *) x;
+
+		z = y->mvalue ();
+		if (z == choice_white)
+		{
+		    gameboard->seteditpiece ('o');
+		}
+		else if (z == choice_whitegipf)
+		{
+		    gameboard->seteditpiece ('O');
+		}
+		else if (z == choice_black)
+		{
+		    gameboard->seteditpiece ('x');
+		}
+		else if (z == choice_blackgipf)
+		{
+		    gameboard->seteditpiece ('X');
+		}
+	    }
+	    else if (x == menu_piecetype)
+	    {
+		const Fl_Menu * z;
+		Fl_Menu_Button * y = (Fl_Menu_Button *) x;
+
+		z = y->mvalue ();
+		if (z == menu_white)
+		{
+		    choice_piecetype->value (0);
+		    gameboard->seteditpiece ('o');
+		}
+		else if (z == menu_whitegipf)
+		{
+		    choice_piecetype->value (1);
+		    gameboard->seteditpiece ('O');
+		}
+		else if (z == menu_black)
+		{
+		    choice_piecetype->value (2);
+		    gameboard->seteditpiece ('x');
+		}
+		else if (z == menu_blackgipf)
+		{
+		    choice_piecetype->value (3);
+		    gameboard->seteditpiece ('X');
+		}
+	    }
+	    else if (x == count_lostwhite)
+	    {
+		newval = gameboard->setlostwhite 
+		    ((int) count_lostwhite->value());
+		/* just in case the new value is not valid */
+		count_lostwhite->value ((double) newval);
+	    }
+	    else if (x == count_lostblack)
+	    {
+		newval = gameboard->setlostblack 
+		    ((int) count_lostblack->value());
+		/* just in case the new value is not valid */
+		count_lostblack->value ((double) newval);
+	    }
+	    else if (x == button_execute)
+	    {
+		if (currentgame != NULL)
+		{
+		    if (humanmove (currentgame) != 0)
+			gf1_alert (
+			    "invalid move, check the from- and to-position !");
+
+		    setupmove (currentgame);
+		}
+	    }
+	}
+
+	if (stop_program)
+	{
+	    theend = 1;
+	}
+    }
+
+    stoptimer (currentgame);
+    delete_game (currentgame);
+    delete helpwin;
+    delete mainwin;
+    clearconfiglist (gf1_config.configlist);
+
+    return (0);
+}
+
+
+/* 
+** load a board from a file
+**
+** return NULL if nothing loaded
+*/
+board * loadboard (void)
+{
+    char * filename;
+    board * newboard;
+    xmlite_entity * root;
+    xmlite_parser * theparser;
+
+    // ask for filename
+    if ((filename = file_chooser ("load board", "*.brd", NULL)) == NULL)
+    {
+	return (NULL);
+    }
+
+    theparser = new xmlite_parser (filename);
+    root = theparser->parse();
+    delete (theparser);
+    if (root == NULL)
+    {
+	gf1_alert (" ERROR: wrong inputfile format");
+	return (NULL);
+    }
+
+    newboard = b_from_xml (root);
+    delete (root);
+
+    return (newboard);
+}
+
+
+/* 
+** save a board to a file
+*/
+void saveboard (board * boardptr)
+{
+    char * filename;
+    xmlite_entity * root;
+
+    if (boardptr == NULL)
+    {
+	gf1_alert (" no current board to be saved");
+	return;
+    }
+
+    // ask for filename
+    if ((filename = file_chooser ("save board", "*.brd", "./board.brd")) 
+	== NULL)
+    {
+	return;
+    }
+
+    root = b_to_xml (boardptr);
+    root->writetofile (filename);
+    delete (root);
+
+    return;
+}
+
+
+/* 
+** save a gamelog to a file
+*/
+void savelog (gamelog * logptr)
+{
+    char * filename;
+    FILE * fp;
+
+    if (logptr == NULL)
+    {
+	gf1_alert (" no gamelog to be saved");
+	return;
+    }
+
+    // ask for filename
+    if ((filename = file_chooser ("save board", "*.log", "./gamelog.log")) 
+	== NULL)
+    {
+	return;
+    }
+
+    if ((fp = fopen (filename, "w")) == NULL)
+    {
+	gf1_alert (" ERROR: Can't create the file");
+	return;
+    }
+
+    logtofile (logptr, fp);
+
+    fclose (fp);
+
+    return;
+}
+
+extern "C" void checkwindowevents (void);
+
+void checkwindowevents (void)
+{
+    Fl::check ();
+
+    return;
+}
+
+@
+
+
+1.41
+log
+@changes for v 1.02
+mainly for saving and loading a game
+@
+text
+@d2 1
+a2 1
+** $Id: core.cxx,v 1.40 1999/07/11 15:47:18 kurt Exp kurt $
+d25 1
+a25 1
+char versiontext[] = "Gipf for one  v 1.02 (25/01/2000)";
+a30 1
+#include <FL/fl_file_chooser.H>
+d97 1
+d425 1
+a425 1
+    if ((filename = fl_file_chooser ("load board", "*.brd", NULL)) == NULL)
+d461 1
+a461 1
+    if ((filename = fl_file_chooser ("save board", "*.brd", "board.brd")) 
+d490 1
+a490 1
+    if ((filename = fl_file_chooser ("save board", "*.log", "gamelog.log")) 
+d517 1
+@
+
+
+1.40
+log
+@version 1.01
++ small cleanups
+@
+text
+@d2 1
+a2 1
+** $Id: core.cxx,v 1.39 1999/06/01 16:51:04 kurt Exp kurt $
+d25 1
+a25 1
+char versiontext[] = "Gipf for one  v 1.01 (11/07/1999)";
+a419 1
+    FILE * fp;
+d421 2
+d430 4
+a433 1
+    if ((fp = fopen (filename, "r")) == NULL)
+d435 1
+a435 1
+	gf1_alert (" ERROR: Can't open the file");
+d439 2
+a440 6
+    if ((newboard = b_from_file (fp)) == NULL)
+    {
+	gf1_alert (" ERROR: wrong inputfile format");
+	return (NULL);
+    }
+    fclose (fp);
+d452 1
+a452 1
+    FILE * fp;
+d467 3
+a469 9
+    if ((fp = fopen (filename, "w")) == NULL)
+    {
+	gf1_alert (" ERROR: Can't create the file");
+	return;
+    }
+
+    b_to_file (boardptr, fp);
+
+    fclose (fp);
+@
+
+
+1.39
+log
+@version 1.0 (finally)
+@
+text
+@d2 1
+a2 1
+** $Id: core.cxx,v 1.38 1999/05/18 19:05:19 kurt Exp kurt $
+d25 1
+a25 1
+char versiontext[] = "Gipf for one  v 1.0 (01/06/1999)";
+d38 1
+d134 1
+a134 1
+		printf ("mainwin event\n");
+a170 1
+		    printf ("menu: loadgame\n");
+@
+
+
+1.38
+log
+@changes for adding an icon to the MS Windows version
+@
+text
+@d2 1
+a2 1
+** $Id: core.cxx,v 1.37 1999/05/09 14:51:20 kurt Exp kurt $
+d25 1
+a25 1
+char versiontext[] = "Gipf for one  v 0.99.5 (18/05/1999)";
+a56 4
+#ifdef MSWIN
+int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance,
+		    LPSTR lpCmdLine, int nCmdShow)
+#else
+a57 1
+#endif
+d87 3
+a89 1
+    fl_display = hInstance;
+d406 1
+@
+
+
+1.37
+log
+@program will now stop when stop_program is set.
+the flag is set from the mainwindow callback.
+(as far as I could see, this callback is only called when the window is
+ killed)
+@
+text
+@d2 1
+a2 1
+** $Id: core.cxx,v 1.36 1999/03/28 09:54:54 kurt Exp kurt $
+d25 1
+a25 1
+char versiontext[] = "Gipf for one  v 0.99.5 (09/05/1999)";
+d45 5
+d57 4
+d62 1
+d89 5
+@
+
+
+1.36
+log
+@set the version-date correct for v 0.99.4
+first tests for adding an icon
+@
+text
+@d2 1
+a2 1
+** $Id: core.cxx,v 1.35 1999/03/21 18:04:46 kurt Exp kurt $
+d8 1
+a8 1
+**    Copyright (C) 1998 Kurt Van den Branden
+d25 1
+a25 1
+char versiontext[] = "Gipf for one  v 0.99.4 (22/03/1999)";
+d45 2
+d112 1
+d114 1
+d119 5
+a123 1
+	    if (x == menubar)
+d382 5
+@
+
+
+1.35
+log
+@leave the main program loop when Fl::wait() returns 0.
+this solves the problem of gf1 not quitting correctly when you don't use the
+exit-menuoption on windows.
+@
+text
+@d2 1
+a2 1
+** $Id: core.cxx,v 1.34 1998/12/13 17:36:36 kurt Exp kurt $
+d25 1
+a25 1
+char versiontext[] = "Gipf for one  v 0.99.4 (13/12/1998)";
+d39 5
+d59 3
+d71 7
+@
+
+
+1.34
+log
+@changed versiontext to 0.99.4
+@
+text
+@d2 1
+a2 1
+** $Id: core.cxx,v 1.33 1998/12/13 15:48:49 kurt Exp kurt $
+d93 3
+a95 1
+	Fl::wait();    
+@
+
+
+1.33
+log
+@added code for reacting to the make drawing menu-option
+@
+text
+@d2 1
+a2 1
+** $Id: core.cxx,v 1.32 1998/11/28 13:19:23 kurt Exp kurt $
+d25 1
+a25 1
+char versiontext[] = "Gipf for one  v 0.99.3 (27/11/1998)";
+@
+
+
+1.32
+log
+@movecounter in gamestruct wasn't corrected when UNDO occured.
+resulting in showmove not working correctly.
+@
+text
+@d2 1
+a2 1
+** $Id: core.cxx,v 1.31 1998/11/27 13:44:51 kurt Exp kurt $
+d249 4
+@
+
+
+1.31
+log
+@counter in board must be reset to 0 when editing a board
+lost counters must be corrected when "clear board" is done
+@
+text
+@d2 1
+a2 1
+** $Id: core.cxx,v 1.30 1998/11/26 17:51:24 kurt Exp kurt $
+d260 4
+a263 2
+			remlastmove (currentgame->movelog);
+			remlastmove (currentgame->movelog);
+@
+
+
+1.30
+log
+@options "Start game" and "Computer move" work now
+changes to the helpwindow to allow it to be kept open during a game
+@
+text
+@d2 1
+a2 1
+** $Id: core.cxx,v 1.29 1998/11/15 12:00:22 kurt Exp kurt $
+d25 1
+a25 1
+char versiontext[] = "Gipf for one  v 0.99.3 (25/11/1998)";
+d171 1
+a173 1
+			    tempboard = b_copy (gameboard->getboard ());
+a177 3
+
+			    gameboard->setboard (tempboard);
+			    b_del (tempboard);
+d179 3
+d218 1
+@
+
+
+1.29
+log
+@changed versiontext
+@
+text
+@d2 1
+a2 1
+** $Id: core.cxx,v 1.28 1998/11/09 20:34:12 kurt Exp kurt $
+d25 1
+a25 1
+char versiontext[] = "Gipf for one  v 0.99.2 (15/11/1998)";
+d49 2
+a50 1
+    Fl_Window * mainwin;
+d70 3
+d160 2
+a164 2
+			board * tempboard;
+
+d169 14
+d189 11
+a199 1
+		    show_start (gameboard->getboard ());
+d203 7
+a209 1
+		    show_onemove (gameboard->getboard ());
+d268 1
+a268 1
+		    gf1_help ();
+d355 1
+@
+
+
+1.28
+log
+@show a message if the human player entered an invalid move
+@
+text
+@d2 1
+a2 1
+** $Id: core.cxx,v 1.27 1998/11/01 16:26:42 kurt Exp kurt $
+d25 1
+a25 1
+char versiontext[] = "Gipf for one  v 0.99.2 (01/11/1998)";
+d171 1
+a171 1
+		    gf1_alert ("start game from board not implemented yet.");
+d175 1
+a175 1
+		    gf1_alert ("one computer move not implemented yet.");
+@
+
+
+1.27
+log
+@added copyright
+@
+text
+@d2 1
+a2 1
+** $Id: core.cxx,v 1.26 1998/11/01 11:29:17 kurt Exp kurt $
+d309 3
+a311 1
+		    humanmove (currentgame);
+@
+
+
+1.26
+log
+@changed versiontext-string
+@
+text
+@d2 1
+a2 1
+** $Id: core.cxx,v 1.25 1998/10/28 18:27:56 kurt Exp kurt $
+d6 17
+@
+
+
+1.25
+log
+@add pointer to configuration values to each game that is played
+@
+text
+@d2 1
+a2 1
+** $Id: core.cxx,v 1.24 1998/10/25 20:14:24 kurt Exp kurt $
+d8 1
+a8 1
+char versiontext[] = "Gipf for one  v 0.99.1 (28/10/1998)";
+@
+
+
+1.24
+log
+@minute changes
+@
+text
+@d2 1
+a2 1
+** $Id: core.cxx,v 1.23 1998/10/25 10:35:18 kurt Exp kurt $
+d8 1
+a8 1
+char versiontext[] = "Gipf for one  v 0.99.1 (24/10/1998)";
+d57 1
+a57 1
+    Fl::background (0xc0, 0xc0, 0xc0);
+d91 3
+a93 1
+			gameboard->setboard (newgame->boards[0]);
+d106 2
+@
+
+
+1.23
+log
+@added the possibility to turn of the position hints
+@
+text
+@d2 1
+a2 1
+** $Id: core.cxx,v 1.22 1998/10/24 16:07:22 kurt Exp kurt $
+d56 1
+@
+
+
+1.22
+log
+@misc changes and cleanups
+@
+text
+@d2 1
+a2 1
+** $Id: core.cxx,v 1.21 1998/10/22 17:14:25 kurt Exp kurt $
+d50 2
+d125 1
+@
+
+
+1.21
+log
+@added versiontext[] for showing in the about-window
+changed undo, it also removes the last 2 moves from the log
+@
+text
+@d2 1
+a2 1
+** $Id: core.cxx,v 1.20 1998/10/20 20:07:58 kurt Exp kurt $
+d8 1
+a8 1
+char versiontext[] = "Gipf for one  v 0.99.1 (22/10/1998)";
+d11 1
+d37 3
+d54 4
+a57 1
+    mainwin->show(argc, argv);
+a87 1
+//			changeinterface (INTERFACE_PLAY, currentgame);
+a100 1
+//			changeinterface (INTERFACE_PLAY, currentgame);
+d146 1
+a146 1
+		    printf ("menu: start game from board\n");
+d150 1
+a150 1
+		    printf ("menu: one computer move\n");
+a204 1
+// how do I reset the movelog 2 moves ?			    
+a205 1
+		    printf ("menu: undo move\n");
+d209 1
+a209 3
+		    gf1_alert ("this is supposed to be a help-message");
+
+		    printf ("menu: help\n");
+d282 3
+a284 1
+		humanmove (currentgame);
+d286 2
+a287 1
+		setupmove (currentgame);
+@
+
+
+1.20
+log
+@changes for keeping a state for each game (GAME_GO, GAME_STOP)
+@
+text
+@d2 1
+a2 1
+** $Id: core.cxx,v 1.19 1998/10/20 17:45:37 kurt Exp kurt $
+d8 2
+d195 3
+a197 1
+			
+@
+
+
+1.19
+log
+@changes for getting the timers working correctly
+@
+text
+@d2 1
+a2 1
+** $Id: core.cxx,v 1.18 1998/10/19 19:42:27 kurt Exp kurt $
+a43 2
+    gameboard->setstate (BOARD_NONE);
+
+a80 1
+			gameboard->setstate (BOARD_PLAY);
+a94 1
+			gameboard->setstate (BOARD_PLAY);
+a132 1
+		    gameboard->setstate (BOARD_EDIT);
+a158 1
+			gameboard->setstate (BOARD_NONE);
+a162 1
+			gameboard->setstate (BOARD_PLAY);
+@
+
+
+1.18
+log
+@misc changes and updates
+@
+text
+@d2 1
+a2 1
+** $Id: core.cxx,v 1.17 1998/10/18 18:01:43 kurt Exp kurt $
+d78 1
+d93 1
+d128 1
+d291 1
+@
+
+
+1.17
+log
+@misc. changes angd bugfixes
+@
+text
+@d2 1
+a2 1
+** $Id: core.cxx,v 1.16 1998/10/15 16:31:54 kurt Exp kurt $
+a74 7
+		    if ((currentgame != NULL) && 
+			(currentgame->computerthinking != 0))
+		    {
+			currentgame->pendingnew = 1;
+			continue;
+		    }
+
+a77 3
+			if (currentgame != NULL)
+			    stoptimer (currentgame);
+
+a121 7
+		    if ((currentgame != NULL) && 
+			(currentgame->computerthinking != 0))
+		    {
+			currentgame->pendingexit = 1;
+			continue;
+		    }
+
+@
+
+
+1.16
+log
+@you can play a real game now !!!
+@
+text
+@d2 1
+a2 1
+** $Id: core.cxx,v 1.15 1998/10/14 19:13:00 kurt Exp $
+d59 1
+a59 1
+    
+d85 3
+d411 9
+@
+
+
+1.15
+log
+@first version that allows a minimal amount of playing
+(with a lot of errors)
+@
+text
+@d2 1
+a2 1
+** $Id: core.cxx,v 1.14 1998/10/12 19:15:28 kurt Exp kurt $
+a18 5
+void changeinterface (int flag, gamestruct * curgame);
+enum { /* interface types */
+    INTERFACE_PLAY,
+    INTERFACE_EDIT
+};
+a22 1
+void setlostcounters (void);
+a59 6
+//    myboard = b_new (T_STANDARD);
+//    gameboard->setboard (myboard);
+
+// remove this when done testing
+//menu_savegame->activate();
+
+a71 2
+		printf ("menubar!\n");
+
+d75 7
+d87 1
+a87 1
+			changeinterface (INTERFACE_PLAY, currentgame);
+d101 1
+a101 1
+			changeinterface (INTERFACE_PLAY, currentgame);
+d103 1
+a103 1
+//			gameboard->setstate (BOARD_PLAY);
+d129 7
+a135 1
+		    printf ("menu: exit\n");
+d140 1
+a140 1
+		    if (gameboard->getboard () == NULL)
+a151 2
+
+		    printf ("menu: edit board\n");
+a167 2
+
+		    printf ("menu: clear board\n");
+d181 2
+a183 2
+
+		    printf ("menu: restore board\n");
+d203 13
+d220 1
+a220 2
+//		    gf1_alert ("this is supposed to be a help-message");
+		    gf1_question ("line 1", "line 2");
+d283 1
+d290 1
+d296 2
+a297 1
+		printf ("execute move\n");
+a308 166
+void changeinterface (int flag, gamestruct * curgame)
+{
+    listheader * loglines;
+    char * line,
+	tempstr[100];
+
+    if (flag == INTERFACE_PLAY)
+    {
+	/* interface items for playing */
+	count_lostwhite->hide();
+	count_lostblack->hide();
+	choice_piecetype->hide();
+	menu_piecetype->hide();
+
+	text_to->show();
+	text_from->show();
+	button_execute->show();
+
+	/* the browser widget for logging */
+	logbrowser->clear();
+	if (curgame != NULL)
+	{
+	    logbrowser->color (FL_WHITE);
+	    loglines = logtobrowser (curgame->movelog);
+	    while ((line = (char *) llrembynr (loglines, 1)) != NULL)
+	    {
+		logbrowser->add (line);
+		free (line);
+	    }
+	    free (loglines);
+	}
+	else
+	    logbrowser->color (FL_GRAY);
+//	logbrowser->topline (logbrowser->size());
+
+	/* player names and timers */
+	if (curgame != NULL)
+	{
+	    whitename->value (curgame->player[0].name);
+	    blackname->value (curgame->player[1].name);
+	    if (curgame->player[0].fulltime == -1)
+	    {
+		whitetimer->value ("-:--:--");
+		blacktimer->value ("-:--:--");
+	    }
+	    else
+	    {
+		sprintf (tempstr, "%d:%02d:%02d", 
+			 curgame->player[0].timer / 3600,
+			 (curgame->player[0].timer % 3600) / 60,
+			 curgame->player[0].timer % 60);
+		whitetimer->value (tempstr);
+		sprintf (tempstr, "%d:%02d:%02d", 
+			 curgame->player[1].timer / 3600,
+			 (curgame->player[1].timer % 3600) / 60,
+			 curgame->player[1].timer % 60);
+		blacktimer->value (tempstr);
+	    }
+	    /* background color for player-names shows whose turn it is */
+	    if (b_next_piece (curgame->boards[0]) == 'o')
+	    {
+		whitename->color (FL_RED);
+		blackname->color (FL_GRAY);
+	    }
+	    else
+	    {
+		whitename->color (FL_GRAY);
+		blackname->color (FL_RED);
+	    }
+	    whitename->redraw ();
+	    blackname->redraw ();
+	}
+	else
+	{
+	    whitename->value ("");
+	    blackname->value ("");
+	    whitetimer->value ("");
+	    blacktimer->value ("");
+	    whitename->color (FL_GRAY);
+	    blackname->color (FL_GRAY);
+	    whitename->redraw ();
+	    blackname->redraw ();
+	}
+
+	/* menu items for playing */
+	menu_new->activate();
+	menu_loadgame->activate();
+	if (curgame != NULL)
+	{
+	    menu_savegame->activate();
+	    menu_savelog->activate();
+	    /*
+	    ** show the undo-button when there is a board to restore and
+	    ** when we are not playing a timed game
+	    */
+	    if ((curgame->boards[2] != NULL) &&
+		(curgame->player[0].fulltime != -1))
+		menu_undo->activate();
+	    else
+		menu_undo->deactivate();
+	}
+	else
+	{
+	    menu_savegame->deactivate();
+	    menu_savelog->deactivate();
+	    menu_undo->deactivate();
+	}
+	menu_edit->activate();
+	menu_start->deactivate();
+	menu_compumove->deactivate();
+	menu_clear->deactivate();
+	menu_restore->deactivate();
+	menu_loadboard->deactivate();
+	menu_saveboard->deactivate();
+    }
+    else
+    {
+	/* interface items for editing */
+	text_to->hide();
+	text_from->hide();
+	button_execute->hide();
+
+	count_lostwhite->show();
+	count_lostblack->show();
+	choice_piecetype->show();
+	menu_piecetype->show();
+
+	/* the browser widget for logging */
+	logbrowser->clear();
+	logbrowser->color (FL_GRAY);
+
+	/* player names and timers */
+	whitename->value ("");
+	blackname->value ("");
+	whitetimer->value ("");
+	blacktimer->value ("");
+	whitename->color (FL_GRAY);
+	blackname->color (FL_GRAY);
+	whitename->redraw ();
+	blackname->redraw ();
+
+	/* menu items for editing */
+	menu_new->deactivate();
+	menu_loadgame->deactivate();
+	menu_savegame->deactivate();
+	menu_savelog->deactivate();
+	menu_edit->deactivate();
+	menu_start->activate();
+	menu_compumove->activate();
+	menu_clear->activate();
+	menu_restore->activate();
+	menu_loadboard->activate();
+	menu_saveboard->activate();
+	menu_undo->deactivate();
+    }
+
+    /* always allowed menu items */
+    menu_setup->activate();
+    menu_exit->activate();
+    menu_help->activate();
+    menu_about->activate();
+	
+    return;
+}
+
+
+a407 21
+
+    return;
+}
+
+
+void setlostcounters (void)
+{
+    board * tempboard;
+
+    tempboard = gameboard->getboard ();
+
+    if (tempboard == NULL)
+    {
+	count_lostwhite->value (0);
+	count_lostblack->value (0);
+    }
+    else
+    {
+	count_lostwhite->value (b_white_lost (tempboard));
+	count_lostblack->value (b_black_lost (tempboard));
+    }
+@
+
+
+1.14
+log
+@you have to do redraw after using color ()
+@
+text
+@d2 1
+a2 1
+** $Id: core.cxx,v 1.13 1998/10/11 19:18:47 kurt Exp kurt $
+d97 2
+d111 2
+d286 1
+@
+
+
+1.13
+log
+@several changes
+@
+text
+@d2 1
+a2 1
+** $Id: core.cxx,v 1.12 1998/10/10 12:09:11 kurt Exp kurt $
+d363 2
+d374 2
+d432 2
+@
+
+
+1.12
+log
+@added code to changeinterface to display the gamelog in the browserwidget
+@
+text
+@d2 1
+a2 1
+** $Id: core.cxx,v 1.11 1998/10/01 16:07:12 kurt Exp kurt $
+a46 1
+    gameboard->setstate (BOARD_NONE);
+d50 1
+a171 1
+		    gameboard->setstate (BOARD_NONE);
+d174 1
+d176 2
+d179 1
+d181 2
+d297 2
+a298 1
+    char * line;
+d316 1
+d325 2
+d329 45
+d381 6
+a386 1
+	    if (curgame->boards[2] != NULL)
+d419 9
+d503 2
+a504 1
+    if ((filename = fl_file_chooser ("save board", "*.brd", NULL)) == NULL)
+d538 2
+a539 1
+    if ((filename = fl_file_chooser ("save board", "*.log", NULL)) == NULL)
+@
+
+
+1.11
+log
+@added savelog
+@
+text
+@d2 1
+a2 1
+** $Id: core.cxx,v 1.10 1998/10/01 15:47:41 kurt Exp kurt $
+a35 1
+//    board * myboard;
+d203 3
+a205 1
+		    gf1_alert ("this is supposed to be a help-message");
+d282 3
+d291 3
+d306 14
+d357 3
+@
+
+
+1.10
+log
+@removed changemenu completely and integrated its function in changeinterface
+@
+text
+@d2 1
+a2 1
+** $Id: core.cxx,v 1.9 1998/09/29 18:02:28 kurt Exp kurt $
+d27 1
+d95 1
+d107 1
+d119 4
+a122 1
+		    printf ("menu: savelog\n");
+d423 34
+@
+
+
+1.9
+log
+@added some save and load-functions.
+@
+text
+@d2 1
+a2 1
+** $Id: core.cxx,v 1.8 1998/09/23 17:15:09 kurt Exp kurt $
+d19 1
+a19 1
+void changeinterface (int flag);
+a24 6
+void changemenu (int type);
+enum { /* menu settings */
+    MENU_DEFAULT,
+    MENU_EDIT
+};
+
+d53 1
+a53 3
+    changeinterface (INTERFACE_PLAY);
+    /* set menu */
+    changemenu (MENU_DEFAULT);
+d141 1
+a141 2
+		    changeinterface (INTERFACE_EDIT);
+		    changemenu (MENU_EDIT);
+d168 1
+a168 2
+		    changeinterface (INTERFACE_PLAY);
+		    changemenu (MENU_DEFAULT);
+d279 1
+a279 1
+void changeinterface (int flag)
+d283 1
+d292 26
+d321 1
+a329 1
+    }
+d331 1
+a331 26
+    return;
+}
+
+void changemenu (int type)
+{
+    switch (type)
+    {
+    case MENU_DEFAULT:
+	menu_new->activate();
+	menu_loadgame->activate();
+	menu_savegame->deactivate();
+	menu_savelog->deactivate();
+	menu_setup->activate();
+	menu_exit->activate();
+	menu_edit->activate();
+	menu_start->deactivate();
+	menu_compumove->deactivate();
+	menu_clear->deactivate();
+	menu_restore->deactivate();
+	menu_loadboard->deactivate();
+	menu_saveboard->deactivate();
+	menu_undo->deactivate();
+	menu_help->activate();
+	menu_about->activate();
+	break;
+    case MENU_EDIT:
+a335 2
+	menu_setup->activate();
+	menu_exit->activate();
+a343 3
+	menu_help->activate();
+	menu_about->activate();
+	break;
+d346 6
+@
+
+
+1.8
+log
+@you can now select the piece to add when editing a board when clicking
+the right mouse-button on the gameboard.
+@
+text
+@d2 1
+a2 1
+** $Id: core.cxx,v 1.7 1998/09/22 19:20:01 kurt Exp kurt $
+d11 1
+d31 5
+d41 1
+a41 1
+    board * myboard;
+d43 2
+a44 1
+    gamestruct * newgame;
+d66 5
+d74 5
+a78 2
+    myboard = b_new (T_STANDARD);
+    gameboard->setboard (myboard);
+d97 8
+a104 3
+		    newgame = show_new (NULL);
+		    gameboard->setstate (BOARD_PLAY);
+		    printf ("menu: new\n");
+d108 8
+d120 1
+a120 1
+		    printf ("menu: savegame\n");
+a131 1
+		    printf ("menu: setup\n");
+d140 8
+d151 3
+d166 6
+d179 5
+d188 9
+a196 1
+		    printf ("menu: load board\n");
+d200 1
+a200 1
+		    printf ("menu: save board\n");
+d208 1
+a270 1
+		printf ("counter: lost white\n");
+a276 1
+		printf ("counter: lost black\n");
+d363 87
+@
+
+
+1.7
+log
+@first edits for getting a new game going.
+@
+text
+@d2 1
+a2 1
+** $Id: core.cxx,v 1.6 1998/09/21 20:14:23 kurt Exp kurt $
+d132 1
+d181 27
+d240 1
+d255 1
+@
+
+
+1.6
+log
+@started work for getting the configuration and setup working correctly
+(moved all the code to setup_win.cxx)
+@
+text
+@d2 1
+a2 1
+** $Id: core.cxx,v 1.5 1998/09/20 14:33:20 kurt Exp kurt $
+d16 1
+d37 1
+d82 1
+@
+
+
+1.5
+log
+@changes for editing a board (mostly testing)
+@
+text
+@d2 1
+a2 1
+** $Id: core.cxx,v 1.4 1998/09/18 18:25:48 kurt Exp kurt $
+d12 1
+d15 1
+d35 4
+d43 2
+d80 1
+d97 4
+d110 1
+d272 2
+@
+
+
+1.4
+log
+@completely new approach to the changing user interface parts,
+all the widgets are in the window, but only the currently needed ones
+are shown.
+this avoid the problems I had when creating the widgets each time when
+they were needed.
+@
+text
+@d2 1
+a2 1
+** $Id: core.cxx,v 1.3 1998/09/15 19:44:45 kurt Exp kurt $
+d12 1
+a12 1
+#include "gipf_ui.h"
+d29 2
+a30 1
+    int theend = 0;
+d32 1
+d37 4
+d52 3
+a144 2
+		printf ("choicemenu!\n");
+
+d148 1
+a148 1
+		    printf ("choice: white piece\n");
+d152 1
+a152 1
+		    printf ("choice: white gipf\n");
+d156 1
+a156 1
+		    printf ("choice: black\n");
+d160 1
+a160 1
+		    printf ("choice: black gipf\n");
+d165 3
+d172 3
+a209 2
+
+//    interfacegroup1->parent()->redraw();
+@
+
+
+1.3
+log
+@added changeinterface, the function that takes care of including
+the interface-elements that change between the play and edit-mode
+(not finished yet)
+@
+text
+@d2 1
+a2 1
+** $Id: core.cxx,v 1.2 1998/09/13 14:11:37 kurt Exp kurt $
+d15 11
+a25 3
+void changeinterface (const int flag);
+const int INTERFACE_PLAY = 0;
+const int INTERFACE_EDIT = 1;
+d37 2
+d86 36
+d131 37
+a173 7
+Fl_Menu menu_edit[] = {
+ {"White", 0,  0, 0, 0, 0, 0, 14, 0},
+ {"White gipf", 0,  0, 0, 0, 0, 0, 14, 0},
+ {"Black", 0,  0, 0, 0, 0, 0, 14, 0},
+ {"Black gipf", 0,  0, 0, 0, 0, 0, 14, 0},
+ {0}
+};
+a176 20
+    Fl_Widget * todelete;
+    Fl_Output * output;
+    Fl_Return_Button * return_button;
+    Fl_Counter * counter;
+    Fl_Menu_Button * menu_button;
+    Fl_Button * toresize;
+
+    while (interfacegroup1->children() != 0)
+    {   /* delete previous interface */
+	todelete = interfacegroup1->child (0);
+	interfacegroup1->remove (todelete);
+	delete (todelete);
+    }
+    while (interfacegroup2->children() != 0)
+    {   /* delete previous interface */
+	todelete = interfacegroup2->child (0);
+	interfacegroup2->remove (todelete);
+	delete (todelete);
+    }
+
+d179 7
+a185 34
+	toresize = new Fl_Button (interfacegroup1->x(), 
+				interfacegroup1->y(), 
+				5, interfacegroup1->h(), "");
+	toresize->box (FL_NO_BOX);
+	interfacegroup1->add (toresize);
+	interfacegroup1->resizable (toresize);
+	/* from-output */
+	output = new Fl_Output (interfacegroup1->x() + 
+				interfacegroup1->w() - 90, 
+				interfacegroup1->y() + 10, 
+				30, 20, "From:");
+	output->labelfont (FL_HELVETICA + FL_BOLD);
+	interfacegroup1->add (output);
+	/* to-output */
+	output = new Fl_Output (interfacegroup1->x() + 
+				interfacegroup1->w() - 30, 
+				interfacegroup1->y() + 10, 
+				30, 20, "To:");
+	output->labelfont (FL_HELVETICA + FL_BOLD);
+	interfacegroup1->add (output);
+
+	toresize = new Fl_Button (interfacegroup2->x()+ 
+				interfacegroup2->w() - 5, 
+				interfacegroup2->y(), 
+				5, interfacegroup2->h(), "");
+	toresize->box (FL_NO_BOX);
+	interfacegroup2->add (toresize);
+	interfacegroup2->resizable (toresize);
+	/* execute-button */
+	return_button = new Fl_Return_Button (interfacegroup2->x() + 10, 
+				interfacegroup2->y(), 
+				110, 40, "Execute move");
+	return_button->labelfont (FL_HELVETICA + FL_BOLD);
+	interfacegroup2->add (return_button);
+d189 54
+a242 45
+	toresize = new Fl_Button (interfacegroup1->x(), 
+				interfacegroup1->y(), 
+				5, interfacegroup1->h(), "");
+	toresize->box (FL_NO_BOX);
+	interfacegroup1->add (toresize);
+	interfacegroup1->resizable (toresize);
+	/* lost white-counter */
+	counter = new Fl_Counter (interfacegroup1->x() + 
+				interfacegroup1->w() - 70, 
+				interfacegroup1->y(), 
+				70, 20, "Lost white:");
+	counter->type (FL_SIMPLE_COUNTER);
+	counter->align (FL_ALIGN_LEFT);
+ 	counter->range (0, 18);
+	counter->step (1);
+	counter->labelfont (FL_HELVETICA + FL_BOLD);
+	interfacegroup1->add (counter);
+	/* lost black-counter */
+	counter = new Fl_Counter (interfacegroup1->x() + 
+				interfacegroup1->w() - 70, 
+				interfacegroup1->y() + 20, 
+				70, 20, "Lost black:");
+	counter->type (FL_SIMPLE_COUNTER);
+	counter->align (FL_ALIGN_LEFT);
+ 	counter->range (0, 18);
+	counter->step (1);
+	counter->labelfont (FL_HELVETICA + FL_BOLD);
+	interfacegroup1->add (counter);
+
+	toresize = new Fl_Button (interfacegroup2->x()+ 
+				interfacegroup2->w() - 5, 
+				interfacegroup2->y(), 
+				5, interfacegroup2->h(), "");
+	toresize->box (FL_NO_BOX);
+	interfacegroup2->add (toresize);
+	interfacegroup2->resizable (toresize);
+	/* piece-menubutton */
+	menu_button = new Fl_Menu_Button (interfacegroup2->x() + 10, 
+				interfacegroup2->y() + 10, 
+				110, 30, "Piece:");
+	menu_button->align (FL_ALIGN_TOP);
+	menu_button->menu (menu_edit);
+	menu_button->labelfont (FL_HELVETICA + FL_BOLD);
+	menu_button->textfont (FL_HELVETICA + FL_BOLD);
+	interfacegroup2->add (menu_button);
+@
+
+
+1.2
+log
+@finally got the splash/about window working correctly
+(I can get on with the serious work now)
+@
+text
+@d2 1
+a2 1
+** $Id: core.cxx,v 1.1 1998/09/05 11:37:13 kurt Exp kurt $
+d10 2
+d15 4
+d24 1
+d26 5
+d33 1
+a81 1
+		    printf ("menu: about\n");
+d89 119
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+** $Id$
+d11 1
+d15 61
+@

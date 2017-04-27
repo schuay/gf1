@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+ <META NAME="GENERATOR" CONTENT="SGML-Tools 1.0.9">
+ <TITLE>GF1 (Gipf for one): The menubar</TITLE>
+ <LINK HREF="gf1_doc-9.html" REL=next>
+ <LINK HREF="gf1_doc-7.html" REL=previous>
+ <LINK HREF="gf1_doc.html#toc8" REL=contents>
+</HEAD>
+<BODY>
+<A HREF="gf1_doc-9.html">Next</A>
+<A HREF="gf1_doc-7.html">Previous</A>
+<A HREF="gf1_doc.html#toc8">Contents</A>
+<HR>
+<H2><A NAME="s8">8. The menubar</A></H2>
+
+<P>
+<H2><A NAME="ss8.1">8.1 File menu</A>
+</H2>
+
+<P>The File menu contains general options for dealing with a game of GIPF.
+<P>
+<DL>
+<DT><B>New game</B><DD><P>This is the option to use when you want to start a new game. It 
+opens a window allowing you to enter all the settings necessary for a 
+game of GIPF:
+<UL>
+<LI>Game type: Here you choose the type of game you want to play. These
+options correspond to the 3 game-types explained in the official GIPF-rules.</LI>
+<LI>Timed game: Turn this option on if you want to restrict the time each
+player has for playing a complete game.</LI>
+<LI>Player (white and black): For each colour you can choose what kind
+of player will use it. Choose human for one colour and computer for the other
+if you want to play against the computer, but both sides human or both
+sides computer are also valid settings.</LI>
+<LI>Player name (white and black): The names entered here will be shown on
+each side of the game-board.</LI>
+<LI>Player time (white and black): If you turned on the "Timed game"-option
+then you can change the number of minutes allowed for each player.</LI>
+</UL>
+<P>
+<DT><B>Load game</B><DD><P>Load a game that you saved earlier. If you saved during a game
+then you can resume the game from where you stopped.
+<P>
+<DT><B>Save game</B><DD><P>Save a game in progress. This allows you to return to the game
+later. A window will open where you can enter a filename.
+<P>
+<DT><B>Save log</B><DD><P>If you just finished a memorable game then you can use this
+option to save all your moves to a file. In case you want to see later how
+you won (or lost) that game.
+<P>
+<DT><B>Setup</B><DD><P>Change game settings:
+<UL>
+<LI>Computer strength: From 1 to 8, level one is for absolute beginners, from
+level 4 on the computer plays quite strong. At settings above 5 the computer 
+can take a long time calculating his move. </LI>
+<LI>Move animation: If you turn the animation on, every move you make will be
+shown with moving pieces (This makes it easier to understand what is 
+happening). </LI>
+<LI>Wait before computer move: To make computer moves easier to understand 
+you can make the program wait before executing each computer move. The program
+will show what move the computer intends to make and wait the number of
+seconds you enter here.</LI>
+<LI>Wait before removing a row/gipf: To make it easier to understand what
+happens when rows and gipf-pieces are removed from the board, you can set this
+to something different then 0. The computer will then show what it intends to 
+remove and wait a number of seconds.</LI>
+<LI>Show position names: If you set this option then position-names
+will be shown on the board when you move over it.</LI>
+</UL>
+<P>
+<DT><B>Exit</B><DD><P>Stop the program. Make sure you saved the current game if necessary.
+</DL>
+<P>
+<H2><A NAME="ss8.2">8.2 Edit menu</A>
+</H2>
+
+<P>Only the first option from the Edit menu (Edit board) can be used when you are
+not in the edit mode of the program. 'Save board' and 'Make drawing' can also
+be used when you are playing a game. But the others are only available when
+you are editing the game-board.
+<P>
+<DL>
+<DT><B>Edit board</B><DD><P>Start editing the game-board. (See above for how this works)
+<DT><B>Start game</B><DD><P>Start a game from the board-situation you were editing. A
+window opens allowing you to start a game.
+<DT><B>Computer move</B><DD><P>Have the computer calculate one move from the current
+board-position. You can choose if it is white or black who has to play and
+the strength of the computer (higher is better).
+<DT><B>Clear board</B><DD><P>Empty the board, put it in the same situation like the start
+of a tournament-game.
+<DT><B>Restore board</B><DD><P>Restore the board to the situation before your started
+editing the board. Also exit edit-mode and return to play-mode.
+<DT><B>Load board</B><DD><P>Load a board-position from a file.
+<DT><B>Save board</B><DD><P>Save the current board-position to a file.
+<DT><B>Make drawing</B><DD><P>Make a png-file of the current board-situation. You can
+specify a file-name, the size of the resulting picture and an accompanying
+text.
+</DL>
+<P>
+<H2><A NAME="ss8.3">8.3 UNDO</A>
+</H2>
+
+<P>When you use UNDO, the game will be returned to the situation before
+you made your last move. This allows you to try again if you made a stupid
+mistake.
+<P>This option from the menubar is only usable under certain conditions:
+<UL>
+<LI>During a game</LI>
+<LI>When you are not playing a timed game. (this would be too much like
+cheating)</LI>
+</UL>
+<P><B>REMARK:</B> You can only do UNDO once at a certain moment in
+the game. It is not possible to press UNDO several times to go back more
+than 1 move.
+<P>
+<H2><A NAME="ss8.4">8.4 Help menu</A>
+</H2>
+
+<P>This menu contains only 2 options.
+<P>The HELP-option opens a window containing the complete GF1-manual.
+At the top you get a list of all the different chapters in the manual. When
+you click on one of the lines, the helptext will immediatly jump to the
+correct chapter. The help-window can be left open while playing.
+<P>The ABOUT-option just opens a window showing the version of GF1 you are
+using and the author. Press enter or click on the window to remove it.
+(This is the same window you see when GF1 starts up. At startup, the window 
+goes away automatically after 5 seconds.)
+<P>
+<HR>
+<A HREF="gf1_doc-9.html">Next</A>
+<A HREF="gf1_doc-7.html">Previous</A>
+<A HREF="gf1_doc.html#toc8">Contents</A>
+</BODY>
+</HTML>

@@ -1,0 +1,227 @@
+head	1.9;
+access;
+symbols
+	version_1_03:1.9
+	version_1_02:1.9
+	version_1_01:1.8
+	version_1_0_1:1.8
+	version_1_0:1.8
+	version_0_99_5:1.7
+	version_0_99_4:1.7
+	version_0_99_3:1.5
+	version_0_99_2:1.4;
+locks; strict;
+comment	@# @;
+
+
+1.9
+date	2000.01.25.19.13.54;	author kurt;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	99.06.01.16.57.02;	author kurt;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	99.03.22.19.41.03;	author kurt;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	99.01.06.20.22.08;	author kurt;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	98.11.27.15.43.57;	author kurt;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	98.11.15.17.49.01;	author kurt;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	98.11.09.20.31.11;	author kurt;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	98.11.09.17.08.20;	author kurt;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	98.11.03.20.42.40;	author kurt;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.9
+log
+@what's needed for a gf1-server
+@
+text
+@- ask for confirmation of exit or when pressing ESC
+  subclassing of Fl_Window necessary (I think)
+
+- ask for confirmation when starting a new game if a game
+  is already in progress.
+
+- add setup for the computer player -> advanced settings
+     + separate settings for white and black computer-player
+     + nr of gipf-pieces for tournament-game
+     + memory-depth (only for ai_mtdf)
+     + random choose
+
+- update the computer player to use a transposition table
+  (should improve the speed, but I'm not sure)
+
+- make a network playable version: this means changes to GF1 and
+  a new program to work as server.
+
+  features of the server:
+     + play a game
+     + messages between players
+     + save games played via the server
+     + always play against first available player, or possibility
+       to choose opponent?
+       when connection is made, list connected players (without a game)
+       3 possibilities:
+          - choose player
+          - choose random player
+          - wait (added to list of connected player)
+            => maybe this doesn't have to be an explicit option.
+               just update the list every minute or so and always add
+               the player to the connected list immediatly
+
+- show the gipf-board using openGL to add a nice 3D-look
+
+**************
+$Id: TODO.txt,v 1.8 1999/06/01 16:57:02 kurt Exp kurt $
+@
+
+
+1.8
+log
+@version 1.0, most things implemented.
+@
+text
+@d4 3
+d13 21
+d37 1
+a37 1
+$Id: TODO.txt,v 1.7 1999/03/22 19:41:03 kurt Exp kurt $
+@
+
+
+1.7
+log
+@updates
+@
+text
+@a3 8
+- replace ai_minimax with ai_mtdf when all the bugs are removed from
+  ai_mtdf
+
+- add iterative deepening to the computer-player, so it is possible to
+  have the computer stop before running out of time
+
+- make the computer stop thinking IMMEDIATLY when the user wants to stop
+
+a11 3
+- the computer-player (ai_minimax or ai_mtdf) only has to generate an
+  accurate move if we are searching at depth 1.
+
+d13 1
+a13 1
+$Id: TODO.txt,v 1.6 1999/01/06 20:22:08 kurt Exp kurt $
+@
+
+
+1.6
+log
+@changes
+@
+text
+@a3 3
+- problem of the process not going away when you stop the program on Windows
+  with the left/top button instead of the normal exit-option.
+
+d24 1
+a24 1
+$Id: TODO.txt,v 1.5 1998/11/27 15:43:57 kurt Exp kurt $
+@
+
+
+1.5
+log
+@updates
+@
+text
+@d2 4
+a5 1
+  subclassing of Fl_Window necessary
+d27 1
+a27 1
+$Id: TODO.txt,v 1.4 1998/11/15 17:49:01 kurt Exp kurt $
+@
+
+
+1.4
+log
+@updates
+@
+text
+@d1 2
+a2 2
+- draw pieces and the board using the complex shape functions
+  instead of the fast shapes.
+d24 1
+a24 1
+$Id: TODO.txt,v 1.3 1998/11/09 20:31:11 kurt Exp kurt $
+@
+
+
+1.3
+log
+@updates
+@
+text
+@d1 3
+d24 1
+a24 1
+$Id: TODO.txt,v 1.2 1998/11/09 17:08:20 kurt Exp kurt $
+@
+
+
+1.2
+log
+@updates
+@
+text
+@a8 2
+- add a timer to show a message when a human player runs out of time
+
+d21 1
+a21 1
+$Id: TODO.txt,v 1.1 1998/11/03 20:42:40 kurt Exp kurt $
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d9 12
+d23 1
+a23 1
+$Id$@

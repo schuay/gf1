@@ -1,0 +1,134 @@
+head	1.4;
+access;
+symbols
+	version_1_03:1.4
+	version_1_02:1.4
+	version_1_01:1.4
+	version_1_0_1:1.4
+	version_1_0:1.4
+	version_0_99_5:1.4
+	version_0_99_4:1.4
+	version_0_99_3:1.3
+	version_0_99_2:1.3
+	version_0_99_1:1.2;
+locks; strict;
+comment	@ * @;
+
+
+1.4
+date	99.03.02.20.25.45;	author kurt;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	98.11.01.18.55.29;	author kurt;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	98.09.07.18.28.28;	author kurt;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	98.09.05.11.47.07;	author kurt;	state Exp;
+branches;
+next	;
+
+
+desc
+@include-file for rem_row.c
+@
+
+
+1.4
+log
+@added some comments
+@
+text
+@/*
+** $Id: rem_row.h,v 1.3 1998/11/01 18:55:29 kurt Exp kurt $
+*/
+/*
+**    Copyright (C) 1998 Kurt Van den Branden
+**
+** This program is free software; you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation; either version 2 of the License, or
+** (at your option) any later version.
+** 
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+** 
+** You should have received a copy of the GNU General Public License
+** along with this program; if not, write to the Free Software
+** Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  
+*/
+
+#ifndef _REM_ROW_H_
+#define _REM_ROW_H_ 1
+
+#include <stdio.h>
+#include "position.h"
+#include "linklist.h"
+
+typedef struct {
+    position * startpos;
+    position * endpos;
+    listheader * piecelist;
+    int rowindex;
+    char owner;     /* the owner is always lowercase */
+} rem_row;
+
+#define new_rem_row()   (rem_row *) malloc (sizeof (rem_row))
+#define row_owner(x)    x->owner
+#define row_start(x)    x->startpos
+#define row_end(x)      x->endpos
+
+#ifndef __cplusplus
+void * copy_rem_row (void * orig);
+listheader * copy_rem_row_row (listheader * orig);
+void del_rem_row (void * orig);
+#else
+extern "C" void * copy_rem_row (void * orig);
+extern "C" listheader * copy_rem_row_row (listheader * orig);
+extern "C" void del_rem_row (void * orig);
+#endif
+
+#endif
+@
+
+
+1.3
+log
+@added copyright
+@
+text
+@d2 1
+a2 1
+** $Id$
+d34 1
+a34 1
+    char owner;
+@
+
+
+1.2
+log
+@added row_start and row_end, for easy access to the start and the
+end-position of a row.
+@
+text
+@d1 21
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d18 2
+@

@@ -1,0 +1,130 @@
+head	1.4;
+access;
+symbols
+	version_1_03:1.4
+	version_1_02:1.4
+	version_1_01:1.4
+	version_1_0_1:1.4
+	version_1_0:1.4
+	version_0_99_5:1.3
+	version_0_99_4:1.3
+	version_0_99_3:1.3
+	version_0_99_2:1.3
+	version_0_99_1:1.2;
+locks; strict;
+comment	@ * @;
+
+
+1.4
+date	99.06.01.17.03.45;	author kurt;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	98.11.01.16.33.03;	author kurt;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	98.09.28.18.04.37;	author kurt;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	98.09.28.17.43.25;	author kurt;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.4
+log
+@updates for correct handling of timed games by the computerplayer
+@
+text
+@/*
+** $Id: win_human.h,v 1.3 1998/11/01 16:33:03 kurt Exp kurt $
+*/
+/*
+**    Copyright (C) 1998 Kurt Van den Branden
+**
+** This program is free software; you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation; either version 2 of the License, or
+** (at your option) any later version.
+** 
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+** 
+** You should have received a copy of the GNU General Public License
+** along with this program; if not, write to the Free Software
+** Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  
+*/
+
+#ifndef _WIN_HUMAN_H_
+#define _WIN_HUMAN_H_ 1
+
+#include "board.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void * human_new (char colour, int game);
+void human_move (board * oboard, void * self, float timeleft, 
+		 char * type, char * from, char * to);
+char human_gipf (board * oboard, void * self, float timeleft, char * pos);
+char human_row (board * oboard, void * self, float timeleft,
+		char * start, char * end);
+void human_end (void * self);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif
+@
+
+
+1.3
+log
+@added copyright
+@
+text
+@d2 1
+a2 1
+** $Id$
+d32 1
+a32 1
+void human_move (board * oboard, void * self, 
+d34 3
+a36 3
+char human_gipf (board * oboard, void * self, char * pos);
+char human_row (board * oboard, void * self, char * start, 
+		char * end);
+@
+
+
+1.2
+log
+@small errors in the ifdef's
+@
+text
+@d1 21
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d8 1
+a8 1
+#else
+@

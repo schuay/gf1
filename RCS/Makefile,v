@@ -1,0 +1,1083 @@
+head	1.38;
+access;
+symbols
+	version_1_03:1.38
+	version_1_02:1.37
+	version_1_01:1.36
+	version_1_0_1:1.36
+	version_1_0:1.35
+	version_0_99_5:1.33
+	version_0_99_4:1.32
+	version_0_99_3:1.27
+	version_0_99_2:1.26
+	version_0_99_1:1.23;
+locks; strict;
+comment	@# @;
+
+
+1.38
+date	2000.02.26.21.16.05;	author kurt;	state Exp;
+branches;
+next	1.37;
+
+1.37
+date	2000.01.25.18.59.49;	author kurt;	state Exp;
+branches;
+next	1.36;
+
+1.36
+date	99.07.11.16.13.00;	author kurt;	state Exp;
+branches;
+next	1.35;
+
+1.35
+date	99.06.01.18.34.52;	author kurt;	state Exp;
+branches;
+next	1.34;
+
+1.34
+date	99.06.01.16.53.14;	author kurt;	state Exp;
+branches;
+next	1.33;
+
+1.33
+date	99.05.18.19.11.38;	author kurt;	state Exp;
+branches;
+next	1.32;
+
+1.32
+date	99.03.22.20.34.57;	author kurt;	state Exp;
+branches;
+next	1.31;
+
+1.31
+date	99.03.22.19.31.14;	author kurt;	state Exp;
+branches;
+next	1.30;
+
+1.30
+date	99.01.07.12.40.11;	author kurt;	state Exp;
+branches;
+next	1.29;
+
+1.29
+date	98.12.13.16.48.08;	author kurt;	state Exp;
+branches;
+next	1.28;
+
+1.28
+date	98.12.13.15.48.12;	author kurt;	state Exp;
+branches;
+next	1.27;
+
+1.27
+date	98.11.27.16.11.52;	author kurt;	state Exp;
+branches;
+next	1.26;
+
+1.26
+date	98.11.15.15.47.19;	author kurt;	state Exp;
+branches;
+next	1.25;
+
+1.25
+date	98.11.03.19.55.11;	author kurt;	state Exp;
+branches;
+next	1.24;
+
+1.24
+date	98.11.01.20.18.21;	author kurt;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	98.10.29.17.29.33;	author kurt;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	98.10.28.18.28.46;	author kurt;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	98.10.24.16.05.40;	author kurt;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	98.10.24.12.42.44;	author kurt;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	98.10.19.19.58.53;	author kurt;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	98.10.19.19.49.17;	author kurt;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	98.10.18.18.14.58;	author kurt;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	98.10.18.18.04.25;	author kurt;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	98.10.11.19.17.44;	author kurt;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	98.09.29.16.04.24;	author kurt;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	98.09.24.17.01.11;	author kurt;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	98.09.22.17.06.35;	author kurt;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	98.09.21.20.22.47;	author kurt;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	98.09.21.20.16.40;	author kurt;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	98.09.21.19.47.57;	author kurt;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	98.09.19.11.36.47;	author kurt;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	98.09.18.19.05.44;	author kurt;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	98.09.07.16.54.59;	author kurt;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	98.09.06.19.26.49;	author kurt;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	98.09.05.11.56.36;	author kurt;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	98.09.04.18.32.30;	author kurt;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	98.09.04.18.31.03;	author kurt;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	98.09.04.18.07.17;	author kurt;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.38
+log
+@added filechooser
+general cleanup and reorganisation
+@
+text
+@# 
+# $Id: Makefile,v 1.37 2000/01/25 18:59:49 kurt Exp kurt $
+#
+
+# put the next line in comment if you don't have the gd-library
+GDLIB = -DHAVEGD
+
+# put the next line in comment if not compiling for MS Windows
+#MSWIN = -DMSWIN
+
+# this uses the new filechooser widget
+NEWFILECHOOSER = -DNEWFILECHOOSER
+FCDIR = FileChooser-1.4.1
+
+# set your compile-options here
+COMPILEFLAGS = -O3
+#COMPILEFLAGS = -O0 -g -Wall #-pg
+
+###########################################
+# no user servicable parts after this line
+###########################################
+
+# are there any extra include paths
+ifdef GDLIB
+  ifdef MSWIN
+    EXTRAINCLUDES = -I./gd -I./libpng -I./zlib
+  else
+    EXTRAINCLUDES = -I/usr/local/include
+  endif
+endif
+
+ifdef NEWFILECHOOSER
+  EXTRAINCLUDES += -I./$(FCDIR)
+endif
+
+# what libraries to link with
+ifdef GDLIB
+  ifndef MSWIN
+    gd_libs =  -L/usr/local/lib -lgd -lpng -lz
+  else
+    gd_libs =  -L./gd -lgd -L./libpng -lpng -L./zlib -lz
+  endif
+endif
+
+ifdef MSWIN
+  libs = -lgdi32 -luser32 -lfltk -lwsock32 -mwindows $(gd_libs)
+else
+  libs = -L/usr/X11R6/lib -lX11 -lXext -lm -lfltk $(gd_libs)
+#  libs += -L/usr/local/lib /usr/local/lib/ccmalloc.o $(gd_libs) \
+#  -lccmalloc -ldl 
+endif
+
+DEFINES = -DWINGIPF $(MSWIN) $(GDLIB) $(NEWFILECHOOSER) $(EXTRAINCLUDES)
+
+CFLAGS = $(COMPILEFLAGS) $(DEFINES)
+DATE = `date +'%Y%m%d'`
+CC = gcc
+CXX = g++
+FLUID = fluid
+PERL = perl
+WINDRES = windres
+
+# sources
+sources_c = configfile.c linklist.c position.c \
+            rem_gipf.c rem_row.c gettimeofday.c
+sources_cxx = gipf_ui.cxx callbacks.cxx core.cxx fl_board.cxx fl_pile.cxx \
+              setup_win.cxx thegame.cxx win_human.cxx drawgif.cxx \
+              ai_player.cxx ai_gipf.cxx xmlite.cxx board2.cxx gamelog2.cxx
+
+ifdef NEWFILECHOOSER
+sources_filechooser = $(FCDIR)/FileBrowser.cxx $(FCDIR)/FileChooser.cxx \
+                      $(FCDIR)/FileChooser2.cxx $(FCDIR)/FileIcon.cxx \
+                      $(FCDIR)/FileInput.cxx
+endif
+
+# objectfiles
+objects = $(sources_c:.c=.o) $(sources_cxx:.cxx=.o) \
+          $(sources_filechooser:.cxx=.o)
+ifdef MSWIN
+  objects += icons.o
+endif
+
+# executable-name
+ifdef MSWIN
+  program = gf1.exe
+else
+  program = gf1
+endif
+
+.SUFFIXES: .cxx .o
+.cxx.o:
+	$(CXX) $(CFLAGS) -c -o $@@ $*.cxx
+
+.PHONY: all clean realclean fullzip winzip linuxzip doc
+
+all: $(program)
+
+clean:
+	- rm $(program) $(objects) 
+
+realclean: clean
+	- rm *.d gipf_ui.H gipf_ui.cxx helptext.h gf1_doc.txt gf1_doc*.html
+
+fullzip:
+	zip gf1_src_$(DATE) RCS/* * $(FCDIR)/* \
+	                     -x core \*.o \*.zip \*~ $(program)
+
+winzip:
+	zip gf1_wexe gf1.exe gf1_doc.txt README.txt COPYING.txt HISTORY.txt \
+            gf1_doc*.html TODO.txt small_logo.png
+
+linuxzip:
+	zip gf1_lexe gf1 gf1_doc.txt README.txt COPYING.txt HISTORY.txt \
+            gf1_doc*.html TODO.txt small_logo.png
+
+doc: gf1_doc.html
+
+$(program): $(objects)
+	$(CXX) $(CFLAGS) -o $@@ $^ $(libs) 
+
+gipf_ui.H gipf_ui.cxx: gipf_ui.fl
+	$(FLUID) -c gipf_ui.fl
+	mv gipf_ui.C gipf_ui.cxx
+
+helptext.h: gf1_doc.txt
+	$(PERL) makehelptext.pl $< $@@
+
+gf1_doc.txt: gf1_doc.sgml
+	sgml2txt -f $<
+
+gf1_doc.html: gf1_doc.sgml
+	sgml2html $<
+
+icons.o: icons.rc win_icon.ico
+	$(WINDRES) $< $@@
+
+
+ifndef MSWIN
+
+# some things for automatic dependency generation
+%.d: %.c
+	$(SHELL) -ec '$(CC) -MM $(CPPFLAGS) $(DEFINES) $< \
+		| sed '\''s/$*\\.o[ :]*/& $@@/g'\'' > $@@'
+
+%.d: %.cxx
+	$(SHELL) -ec '$(CXX) -MM $(CPPFLAGS) $(DEFINES) $< \
+		| sed '\''s/$*\\.o[ :]*/& $@@/g'\'' > $@@'
+
+include $(sources_c:.c=.d)
+include $(sources_cxx:.cxx=.d)
+
+# not all dependencies can be added automatically
+# so I add some here myself
+win_human.cxx thegame.cxx setup_win.cxx core.cxx: gipf_ui.H
+callbacks.cxx: helptext.h
+
+endif
+@
+
+
+1.37
+log
+@changes for v 1.02
+@
+text
+@d2 1
+a2 1
+# $Id: Makefile,v 1.36 1999/07/11 16:13:00 kurt Exp kurt $
+d11 23
+a33 2
+ifdef MSWIN
+EXTRAINCLUDES = -I./gd -I./libpng -I./zlib
+d36 1
+d39 1
+a39 1
+  gd_libs =  -L/usr/local/lib -lgd -lpng -lz
+d41 1
+a41 1
+  gd_libs =  -L./gd -lgd -L./libpng -lpng -L./zlib -lz
+a42 2
+else
+gd_libs =
+d46 1
+a46 1
+    libs = -lgdi32 -luser32 -lfltk -lwsock32 -mwindows $(gd_libs)
+d48 3
+a50 3
+    libs = -L/usr/X11R6/lib -lX11 -lXext -lm -lfltk $(gd_libs)
+#    libs += -L/usr/local/lib /usr/local/lib/ccmalloc.o $(gd_libs) \
+#	-lccmalloc -ldl 
+d53 3
+a56 4
+DEFINES = -DWINGIPF $(MSWIN)
+
+CFLAGS = -O3 $(DEFINES) $(GDLIB) $(EXTRAINCLUDES)
+#CFLAGS = -O0 -g -Wall $(DEFINES) $(GDLIB) $(EXTRAINCLUDES) -pg
+d63 1
+d70 9
+a78 1
+objects = $(sources_c:.c=.o) $(sources_cxx:.cxx=.o)
+d80 1
+a80 1
+    objects += icons.o
+d83 6
+a88 1
+program = gf1
+d102 1
+a102 1
+	- rm *.d gipf_ui.H gipf_ui.cxx helptext.h gf1_doc.txt
+d105 1
+a105 1
+	zip gf1_src_$(DATE) RCS/* * \
+d110 1
+a110 1
+            gf1_doc*.html TODO.txt small_logo.gif
+d114 1
+a114 1
+            gf1_doc*.html TODO.txt small_logo.gif
+@
+
+
+1.36
+log
+@make sure the automatically generated dependencies aren't used when
+compiling on MS windows. (too much problems)
+
+add small_logo.gif to the linux and windows archives (logo on gif-files)
+@
+text
+@d2 1
+a2 1
+# $Id$
+d11 22
+d36 2
+a37 2
+CFLAGS = -O3 $(DEFINES) $(GDLIB)
+#CFLAGS = -O0 -g -Wall $(DEFINES) $(GDLIB) -pg
+d44 2
+a45 9
+ifdef MSWIN
+    libs = -lgdi32 -luser32 -lfltk -lwsock32 -mwindows
+else
+    libs = -L/usr/X11R6/lib -lX11 -lXext -lm -lfltk
+#    libs += -L/usr/local/lib /usr/local/lib/ccmalloc.o -lccmalloc -ldl 
+endif
+
+sources_c = board.c configfile.c linklist.c position.c \
+            rem_gipf.c rem_row.c gamelog.c gettimeofday.c
+d48 1
+a48 7
+              ai_player.cxx ai_gipf.cxx
+ifdef GDLIB
+sources_gd = gd/gd.c gd/gdfontg.c gd/gdfontl.c gd/gdfontmb.c \
+             gd/gdfonts.c gd/gdfontt.c 
+else
+sources_gd =
+endif
+d50 1
+a50 1
+objects = $(sources_c:.c=.o) $(sources_cxx:.cxx=.o) $(sources_gd:.c=.o)
+d72 2
+a73 2
+	zip gf1_src_$(DATE) RCS/* gd/* * \
+	                     -x \*.o \*.zip \*~ $(program)
+@
+
+
+1.35
+log
+@I don't know why
+@
+text
+@d2 1
+a2 1
+# $Id: Makefile,v 1.34 1999/06/01 16:53:14 kurt Exp kurt $
+d68 1
+a68 1
+            gf1_doc*.html TODO.txt
+d72 1
+a72 1
+            gf1_doc*.html TODO.txt
+d95 3
+d114 2
+@
+
+
+1.34
+log
+@changed list of objects (new computer-player)
+@
+text
+@d2 1
+a2 1
+# $Id: Makefile,v 1.33 1999/05/18 19:11:38 kurt Exp kurt $
+d14 2
+a15 2
+#CFLAGS = -O3 $(DEFINES) $(GDLIB)
+CFLAGS = -O0 -g -Wall $(DEFINES) $(GDLIB) -pg
+d63 1
+a63 1
+	zip gf1_fltk_$(DATE) RCS/* gd/* * \
+@
+
+
+1.33
+log
+@changed the Makefile for easier compilation on MS Windows.
+also added a rule for icons.rc, for adding an icon to the windows-version.
+@
+text
+@d2 1
+a2 1
+# $Id$
+d15 1
+a15 1
+CFLAGS = -O0 -g -Wall $(DEFINES) $(GDLIB)
+d26 1
+a26 2
+#    libs = -L/usr/local/lib -lccmalloc -ldl \
+#           -L/usr/X11R6/lib -lX11 -lXext -lm -lfltk
+d29 2
+a30 2
+sources_c = board.c ai_minimax.c configfile.c linklist.c position.c \
+            rem_gipf.c rem_row.c gamelog.c ai_mtdf.c gettimeofday.c
+d32 2
+a33 1
+              setup_win.cxx thegame.cxx win_human.cxx drawgif.cxx 
+@
+
+
+1.32
+log
+@changed the winzip and linuxzip rules to add the documentation in html
+to the zipfiles
+@
+text
+@d2 1
+a2 1
+# $Id: Makefile,v 1.31 1999/03/22 19:31:14 kurt Exp kurt $
+d8 3
+d12 2
+a13 1
+DEFINES = -DWINGIPF  # -DMSWIN
+d20 9
+a28 3
+libs = -L/usr/X11R6/lib -lX11 -lXext -lm -lfltk
+#libs = -L/usr/local/lib -lccmalloc -ldl \
+#       -L/usr/X11R6/lib -lX11 -lXext -lm -lfltk
+d42 4
+d92 3
+d110 1
+a110 1
+callbacks.cxx: helptext.h@
+
+
+1.31
+log
+@added some fixed dependencies to solve compile-problems when building
+from scratch.
+@
+text
+@d2 1
+a2 1
+# $Id: Makefile,v 1.30 1999/01/07 12:40:11 kurt Exp kurt $
+d54 1
+a54 1
+                     TODO.txt
+d58 1
+a58 1
+                     TODO.txt
+@
+
+
+1.30
+log
+@added gettimeofday.c to the c-sources
+@
+text
+@d2 1
+a2 1
+# $Id: Makefile,v 1.29 1998/12/13 16:48:08 kurt Exp kurt $
+d89 5
+@
+
+
+1.29
+log
+@added gd-directory to the fullzip rule
+@
+text
+@d2 1
+a2 1
+# $Id: Makefile,v 1.28 1998/12/13 15:48:12 kurt Exp kurt $
+d21 1
+a21 1
+            rem_gipf.c rem_row.c gamelog.c ai_mtdf.c
+@
+
+
+1.28
+log
+@added things for the drawgif-class
+@
+text
+@d2 1
+a2 1
+# $Id: Makefile,v 1.27 1998/11/27 16:11:52 kurt Exp kurt $
+d49 1
+a49 1
+	zip gf1_fltk_$(DATE) RCS/* * \
+@
+
+
+1.27
+log
+@changed the rule for executing makehelptext.pl
+to avoid problems with perl being in different places, the perl-interpreter
+is used explicitely to turn the program
+@
+text
+@d2 1
+a2 1
+# $Id$
+d5 3
+d10 2
+a11 2
+#CFLAGS = -O3 $(DEFINES)
+CFLAGS = -O0 -g -Wall $(DEFINES)
+d23 9
+a31 2
+              setup_win.cxx thegame.cxx win_human.cxx
+objects = $(sources_c:.c=.o) $(sources_cxx:.cxx=.o)
+@
+
+
+1.26
+log
+@added rules winzip and linuxzip to make distribution zipfiles with
+executables
+@
+text
+@d2 1
+a2 1
+# $Id: Makefile,v 1.25 1998/11/03 19:55:11 kurt Exp kurt $
+d12 1
+a40 1
+#	zip gf1_fltk_$(DATE) RCS/* *.xpm gipf_ui.cxx gipf_ui.H
+d44 1
+a44 1
+                     TODO.TXT
+d48 1
+a48 1
+                     TODO.TXT
+d60 1
+a60 1
+	./makehelptext.pl $< $@@
+@
+
+
+1.25
+log
+@added ai_mtdf.c to the c-sources
+@
+text
+@d2 1
+a2 1
+# $Id: Makefile,v 1.24 1998/11/01 20:18:21 kurt Exp kurt $
+d27 1
+a27 1
+.PHONY: all clean realclean fullzip winzip doc
+d43 6
+a48 2
+	zip gf1_win_$(DATE) Makefile *.c *.cxx *.h *.H *.d *.xpm \
+	                    gf1_doc.txt gf1_doc.sgml
+@
+
+
+1.24
+log
+@changed the fullzip-rule and added a doc-rule
+@
+text
+@d2 1
+a2 1
+# $Id: Makefile,v 1.23 1998/10/29 17:29:33 kurt Exp kurt $
+d17 1
+a17 1
+            rem_gipf.c rem_row.c gamelog.c
+@
+
+
+1.23
+log
+@added a rule for realclean, deletes all the files that can be reproduced
+@
+text
+@d2 1
+a2 1
+# $Id: Makefile,v 1.22 1998/10/28 18:28:46 kurt Exp kurt $
+d27 1
+a27 1
+.PHONY: all clean realclean fullzip winzip
+d38 3
+a40 1
+	zip gf1_fltk_$(DATE) RCS/* *.xpm gipf_ui.cxx gipf_ui.H
+d46 2
+d60 3
+@
+
+
+1.22
+log
+@small changes for easy compilation on MSWIN
+@
+text
+@d2 1
+a2 1
+# $Id: Makefile,v 1.21 1998/10/24 16:05:40 kurt Exp kurt $
+d27 1
+a27 1
+.PHONY: all clean fullzip winzip
+d33 3
+@
+
+
+1.21
+log
+@changes to the winzip rule
+@
+text
+@d2 1
+a2 1
+# $Id: Makefile,v 1.20 1998/10/24 12:42:44 kurt Exp kurt $
+d6 1
+a6 1
+DEFINES = -DWINGIPF
+d38 2
+a39 1
+	zip gf1_win_$(DATE) Makefile *.c *.cxx *.h *.H *.d *.xpm gf1_doc.txt
+@
+
+
+1.20
+log
+@added rules for creating helptext.h and gf1_doc.txt
+@
+text
+@d2 1
+a2 1
+# $Id: Makefile,v 1.19 1998/10/19 19:58:53 kurt Exp kurt $
+d38 1
+a38 1
+	zip gf1_win_$(DATE) Makefile *.c *.cxx *.h *.H *.d *.xpm
+@
+
+
+1.19
+log
+@changed the the CFLAGS for when you compile with optimisation
+@
+text
+@d2 1
+a2 1
+# $Id: Makefile,v 1.18 1998/10/19 19:49:17 kurt Exp kurt $
+d46 6
+@
+
+
+1.18
+log
+@added a variable for the fluid-executable
+@
+text
+@d2 1
+a2 1
+# $Id: Makefile,v 1.17 1998/10/18 18:14:58 kurt Exp kurt $
+d7 1
+a7 1
+#CFLAGS = -O3
+@
+
+
+1.17
+log
+@changed date-format for making the zipfiles
+@
+text
+@d2 1
+a2 1
+# $Id: Makefile,v 1.16 1998/10/18 18:04:25 kurt Exp kurt $
+d11 1
+d44 1
+a44 1
+	fluid -c gipf_ui.fl
+@
+
+
+1.16
+log
+@added a define : WINGIPF
+@
+text
+@d2 1
+a2 1
+# $Id: Makefile,v 1.15 1998/10/11 19:17:44 kurt Exp kurt $
+d5 1
+a5 1
+DATE = `date +'%d%m%Y'`
+@
+
+
+1.15
+log
+@added rules for fullzip & winzip
+@
+text
+@d2 1
+a2 1
+# $Id: Makefile,v 1.14 1998/09/29 16:04:24 kurt Exp kurt $
+d6 1
+d8 1
+a8 1
+CFLAGS = -O0 -g -Wall
+@
+
+
+1.14
+log
+@added win_human.cxx
+@
+text
+@d2 1
+a2 1
+# $Id: Makefile,v 1.13 1998/09/24 17:01:11 kurt Exp kurt $
+d5 1
+d25 1
+a25 1
+.PHONY: all clean
+d31 6
+@
+
+
+1.13
+log
+@replaced the specific rules for compiling the c++-files with one generic
+rule for c++
+@
+text
+@d2 1
+a2 1
+# $Id: Makefile,v 1.12 1998/09/22 17:06:35 kurt Exp kurt $
+d16 1
+a16 1
+              setup_win.cxx thegame.cxx
+@
+
+
+1.12
+log
+@added thegame.cxx
+@
+text
+@d2 1
+a2 1
+# $Id: Makefile,v 1.11 1998/09/21 20:22:47 kurt Exp kurt $
+d10 2
+d20 4
+a36 21
+
+gipf_ui.o:
+	$(CXX) $(CFLAGS) -c $<
+
+callbacks.o:
+	$(CXX) $(CFLAGS) -c $<
+
+core.o:
+	$(CXX) $(CFLAGS) -c $<
+
+fl_board.o:
+	$(CXX) $(CFLAGS) -c $<
+
+fl_pile.o:
+	$(CXX) $(CFLAGS) -c $<
+
+setup_win.o:
+	$(CXX) $(CFLAGS) -c $<
+
+thegame.o:
+	$(CXX) $(CFLAGS) -c $<
+@
+
+
+1.11
+log
+@solved a little problem with the rule for creating gipf_ui.cxx and gipf_ui.H
+@
+text
+@d2 1
+a2 1
+# $Id: Makefile,v 1.10 1998/09/21 20:16:40 kurt Exp kurt $
+d14 1
+a14 1
+              setup_win.cxx
+d28 1
+a28 1
+gipf_ui.H, gipf_ui.cxx: gipf_ui.fl
+d48 3
+@
+
+
+1.10
+log
+@added a rule for creating gipf_ui.cxx from gipf_ui.fl
+@
+text
+@d2 1
+a2 1
+# $Id: Makefile,v 1.9 1998/09/21 19:47:57 kurt Exp kurt $
+d28 1
+a28 1
+gipf_ui.cxx: gipf_ui.fl
+@
+
+
+1.9
+log
+@added setup_win.cxx
+@
+text
+@d2 1
+a2 1
+# $Id: Makefile,v 1.8 1998/09/19 11:36:47 kurt Exp kurt $
+d27 4
+@
+
+
+1.8
+log
+@added the fl_pile class
+@
+text
+@d2 1
+a2 1
+# $Id: Makefile,v 1.7 1998/09/18 19:05:44 kurt Exp kurt $
+d13 2
+a14 1
+sources_cxx = gipf_ui.cxx callbacks.cxx core.cxx fl_board.cxx fl_pile.cxx
+d41 3
+@
+
+
+1.7
+log
+@added fl_board, the class for drawing the gipf-board
+@
+text
+@d2 1
+a2 1
+# $Id: Makefile,v 1.6 1998/09/07 16:54:59 kurt Exp kurt $
+d13 1
+a13 1
+sources_cxx = gipf_ui.cxx callbacks.cxx core.cxx fl_board.cxx
+d37 3
+@
+
+
+1.6
+log
+@added -Wall to CFLAGS (more compiler warnings)
+@
+text
+@d2 1
+a2 1
+# $Id: Makefile,v 1.5 1998/09/06 19:26:49 kurt Exp kurt $
+d13 1
+a13 1
+sources_cxx = gipf_ui.cxx callbacks.cxx core.cxx
+d34 3
+@
+
+
+1.5
+log
+@added gamelog.c to sources_c
+@
+text
+@d2 1
+a2 1
+# $Id: Makefile,v 1.4 1998/09/05 11:56:36 kurt Exp kurt $
+d6 1
+a6 1
+CFLAGS = -O0 -g
+@
+
+
+1.4
+log
+@added all the c-sources from gipf_v
+added callbacks.cxx and core.cxx to the c++-sources
+@
+text
+@d2 1
+a2 1
+# $Id: Makefile,v 1.3 1998/09/04 18:32:30 kurt Exp kurt $
+d12 1
+a12 1
+            rem_gipf.c rem_row.c
+@
+
+
+1.3
+log
+@do I have to put the I for the $Id$ in capitals?
+@
+text
+@d2 1
+a2 1
+# $Id$
+d11 3
+a13 2
+sources_c = 
+sources_cxx = gipf_ui.cxx
+d28 6
+@
+
+
+1.2
+log
+@prepared the basis for the Makefile
+all I normally should have to do now is add the different source-files
+(separate rules have to be prepared for compiling the c++ sources)
+@
+text
+@d2 1
+a2 1
+# $id$
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 4
+d7 10
+d18 1
+a18 1
+all: gf1
+d21 7
+a27 1
+	rm *.o
+d29 4
+a32 2
+gipf2: gipf2_fltk.o gipf_ui.o
+	c++ $(CFLAGS) -o gipf2 gipf2_fltk.o gipf_ui.o -L/usr/X11R6/lib -lX11 -lXext -lm -lfltk
+d34 3
+a36 2
+gipf2_fltk.o: gipf2_fltk.C gipf2_fltk.H
+	c++ $(CFLAGS) -c gipf2_fltk.C
+d38 2
+a39 2
+gipf_ui.o: gipf_ui.C gipf2_fltk.H
+	c++ $(CFLAGS) -c gipf_ui.C
+@

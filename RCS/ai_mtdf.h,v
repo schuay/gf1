@@ -1,0 +1,76 @@
+head	1.1;
+access;
+symbols
+	version_1_03:1.1
+	version_1_02:1.1
+	version_1_01:1.1
+	version_1_0_1:1.1
+	version_1_0:1.1
+	version_0_99_5:1.1
+	version_0_99_4:1.1
+	version_0_99_3:1.1
+	version_0_99_2:1.1;
+locks; strict;
+comment	@ * @;
+
+
+1.1
+date	98.11.02.17.58.48;	author kurt;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@/*
+** $Id$
+*/
+/*
+**    Copyright (C) 1998 Kurt Van den Branden
+**
+** This program is free software; you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation; either version 2 of the License, or
+** (at your option) any later version.
+** 
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+** 
+** You should have received a copy of the GNU General Public License
+** along with this program; if not, write to the Free Software
+** Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  
+*/
+
+#ifndef _AI_MTDF_H_
+#define _AI_MTDF_H_ 1
+
+#include <stdio.h>
+#include <stdlib.h>
+#include "linklist.h"
+#include "board.h"
+#include "configfile.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+void * mtdf_new (char colour, int game);
+void mtdf_move (board * oboard, void * self, 
+		 char * type, char * from, char * to);
+char mtdf_gipf (board * oboard, void * self, char * pos);
+char mtdf_row (board * oboard, void * self, char * start, char * end);
+void mtdf_end (void * self);
+#ifdef __cplusplus
+}
+#endif
+
+#endif
+@

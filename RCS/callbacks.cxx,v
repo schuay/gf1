@@ -1,0 +1,1124 @@
+head	1.24;
+access;
+symbols
+	version_1_03:1.24
+	version_1_02:1.23
+	version_1_01:1.22
+	version_1_0_1:1.22
+	version_1_0:1.22
+	version_0_99_5:1.21
+	version_0_99_4:1.20
+	version_0_99_3:1.18
+	version_0_99_2:1.17
+	version_0_99_1:1.15;
+locks; strict;
+comment	@// @;
+
+
+1.24
+date	2000.02.28.19.57.42;	author kurt;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	2000.01.25.19.15.47;	author kurt;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	99.06.01.17.01.30;	author kurt;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	99.05.09.18.34.00;	author kurt;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	99.01.06.20.28.40;	author kurt;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	98.12.13.15.49.25;	author kurt;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	98.11.26.17.59.53;	author kurt;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	98.11.09.20.33.32;	author kurt;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	98.11.01.16.29.47;	author kurt;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	98.10.24.16.02.49;	author kurt;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	98.10.24.13.11.35;	author kurt;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	98.10.22.17.14.55;	author kurt;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	98.10.22.17.01.12;	author kurt;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	98.10.20.20.07.47;	author kurt;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	98.10.20.17.45.16;	author kurt;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	98.10.19.19.43.30;	author kurt;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	98.10.18.18.03.38;	author kurt;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	98.10.15.16.30.45;	author kurt;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	98.10.05.15.19.21;	author kurt;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	98.09.27.18.24.10;	author kurt;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	98.09.22.17.01.59;	author kurt;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	98.09.21.19.50.41;	author kurt;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	98.09.13.14.13.13;	author kurt;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	98.09.05.11.55.01;	author kurt;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.24
+log
+@added code for using the new filechooser
+added code for remembering the name of the last file loaded or saved
+@
+text
+@/*
+** $Id: callbacks.cxx,v 1.23 2000/01/25 19:15:47 kurt Exp kurt $
+*/
+/*
+**    Copyright (C) 1998 Kurt Van den Branden
+**
+** This program is free software; you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation; either version 2 of the License, or
+** (at your option) any later version.
+** 
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+** 
+** You should have received a copy of the GNU General Public License
+** along with this program; if not, write to the Free Software
+** Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  
+*/
+
+#include <stdio.h>
+#include <time.h>
+#include <FL/Fl.H>
+#include <FL/fl_ask.H>
+
+#ifdef NEWFILECHOOSER
+#include <FileChooser.h>
+#else
+#include <FL/fl_file_chooser.H>
+#endif
+
+#include "callbacks.h"
+#include "thegame.h"
+#include "helptext.h"
+
+extern char versiontext[];
+int interrupt_computer = 0;
+char currentfilename[100] = "";
+
+void show_about (int flag)
+{
+    Fl_Window * aboutw;
+
+    aboutw = make_aboutwindow ();
+    box_versiontext->label (versiontext);
+    aboutw->show();
+
+    if (flag)
+    {
+	Fl::add_timeout (5.0, remove_about, (void *) aboutw);
+	return;
+    }
+
+    return;
+}
+
+void remove_about (void * aboutwindow)
+{
+    Fl_Window * aboutw = (Fl_Window *) aboutwindow;
+
+    Fl::remove_timeout (remove_about, aboutwindow);
+    delete aboutw;
+
+    return;
+}
+
+
+void gf1_alert (char * message)
+{
+    Fl_Widget * icon;
+
+    icon = fl_message_icon ();
+    icon->box (FL_ENGRAVED_BOX);
+    icon->color (FL_GRAY);
+
+    fl_alert (message);
+
+    return;
+}
+
+
+/*
+** returns:
+**    1 : yes was pressed
+**    0 : no was pressed
+**
+** position of the window will be just under the gameboard
+*/
+int gf1_question (char * line1, char * line2)
+{
+    Fl_Window * questionw;
+    int theend = 0,
+	value;
+    Fl_Widget * mainwin;
+
+    questionw = make_questionwindow ();
+    mainwin = gameboard->parent ();
+    questionw->position (mainwin->x() + gameboard->x(),
+			 mainwin->y() + mainwin->h() - questionw->h());
+    qtext1->label (line1);
+    qtext2->label (line2);
+
+    questionw->show();
+
+    while (!theend)
+    {
+	Fl::wait();    
+
+	Fl_Widget *x;
+	while ((x = Fl::readqueue())) 
+	{
+	    if (x == button_qyes)
+	    {
+		value = 1;
+		theend = 1;
+	    }
+	    else if (x == button_qno)
+	    {
+		value = 0;
+		theend = 1;
+	    }
+	}
+    }
+
+    delete questionw;
+
+    return (value);
+}
+
+
+/*
+** returns:
+**    2 : save was pressed
+**    1 : yes was pressed
+**    0 : no was pressed
+**
+** position of the window will be just under the gameboard
+*/
+int gf1_questionsave (char * line1, char * line2)
+{
+    Fl_Window * questionw;
+    int theend = 0,
+	value;
+    Fl_Widget * mainwin;
+
+    questionw = make_questionsavewindow ();
+    mainwin = gameboard->parent ();
+    questionw->position (mainwin->x() + gameboard->x(),
+			 mainwin->y() + mainwin->h() - questionw->h());
+    qstext1->label (line1);
+    qstext2->label (line2);
+
+    questionw->show();
+
+    while (!theend)
+    {
+	Fl::wait();    
+
+	Fl_Widget *x;
+	while ((x = Fl::readqueue())) 
+	{
+	    if (x == button_qsyes)
+	    {
+		value = 1;
+		theend = 1;
+	    }
+	    else if (x == button_qsno)
+	    {
+		value = 0;
+		theend = 1;
+	    }
+	    else if (x == button_qssave)
+	    {
+		value = 2;
+		theend = 1;
+	    }
+	}
+    }
+
+    delete questionw;
+
+    return (value);
+}
+
+
+void changeinterface (int flag, gamestruct * curgame)
+{
+    listheader * loglines;
+    char * line,
+	tempstr[100];
+
+    if (flag == INTERFACE_PLAY)
+    {
+	/* interface items for playing */
+	count_lostwhite->hide();
+	count_lostblack->hide();
+	choice_piecetype->hide();
+	menu_piecetype->hide();
+
+	text_to->show();
+	text_from->show();
+	button_execute->show();
+
+	/* the browser widget for logging */
+	logbrowser->clear();
+	if (curgame != NULL)
+	{
+	    logbrowser->color (FL_WHITE);
+	    loglines = logtobrowser (curgame->movelog);
+	    while ((line = (char *) llrembynr (loglines, 1)) != NULL)
+	    {
+		logbrowser->add (line);
+		free (line);
+	    }
+	    free (loglines);
+	}
+	else
+	    logbrowser->color (FL_GRAY);
+	logbrowser->bottomline (logbrowser->size());
+
+	/* player names and timers */
+	if (curgame != NULL)
+	{
+	    whitename->value (curgame->player[0].name);
+	    blackname->value (curgame->player[1].name);
+	    if (curgame->player[0].fulltime == -1)
+	    {
+		whitetimer->value ("-:--:--");
+		blacktimer->value ("-:--:--");
+	    }
+	    else
+	    {
+		timertostr (curgame->player[0].timer, tempstr);
+		whitetimer->value (tempstr);
+		timertostr (curgame->player[1].timer, tempstr);
+		blacktimer->value (tempstr);
+	    }
+	    /* background color for player-names shows whose turn it is */
+	    if (curgame->state == GAME_GO)
+	    {
+		if (b_next_piece (curgame->boards[0]) == 'o')
+		{
+		    whitename->color (FL_RED);
+		    blackname->color (FL_GRAY);
+		}
+		else
+		{
+		    whitename->color (FL_GRAY);
+		    blackname->color (FL_RED);
+		}
+	    }
+	    else
+	    {
+		whitename->color (FL_GRAY);
+		blackname->color (FL_GRAY);
+	    }
+	    whitename->redraw ();
+	    blackname->redraw ();
+	}
+	else
+	{
+	    whitename->value ("");
+	    blackname->value ("");
+	    whitetimer->value ("");
+	    blacktimer->value ("");
+	    whitename->color (FL_GRAY);
+	    blackname->color (FL_GRAY);
+	    whitename->redraw ();
+	    blackname->redraw ();
+	}
+
+	/* menu items for playing */
+	menu_new->activate();
+	menu_loadgame->activate();
+	if (curgame != NULL)
+	{
+	    menu_savegame->activate();
+	    menu_savelog->activate();
+	    /*
+	    ** show the undo-button when there is a board to restore and
+	    ** when we are not playing a timed game
+	    */
+	    if ((curgame->boards[2] != NULL) &&
+		(curgame->player[0].fulltime == -1) &
+		(curgame->state == GAME_GO))
+		menu_undo->activate();
+	    else
+		menu_undo->deactivate();
+	}
+	else
+	{
+	    menu_savegame->deactivate();
+	    menu_savelog->deactivate();
+	    menu_undo->deactivate();
+	}
+	menu_edit->activate();
+	menu_start->deactivate();
+	menu_compumove->deactivate();
+	menu_clear->deactivate();
+	menu_restore->deactivate();
+	menu_loadboard->deactivate();
+
+	if (curgame == NULL)
+	    menu_saveboard->deactivate();
+	else
+	    menu_saveboard->activate();
+#ifdef HAVEGD
+	if (curgame == NULL)
+	    menu_makedrawing->deactivate();
+	else
+	    menu_makedrawing->activate();
+#else
+	menu_makedrawing->deactivate();
+#endif
+
+	/* state of the gameboard */
+	if ((curgame == NULL) ||
+	    (curgame->state == GAME_STOP))
+	{
+	    gameboard->setstate (BOARD_NONE);
+	}
+	else
+	{
+	    gameboard->setstate (BOARD_PLAY);
+	}
+    }
+    else
+    {
+	/* interface items for editing */
+	text_to->hide();
+	text_from->hide();
+	button_execute->hide();
+
+	count_lostwhite->show();
+	count_lostblack->show();
+	choice_piecetype->show();
+	menu_piecetype->show();
+
+	/* the browser widget for logging */
+	logbrowser->clear();
+	logbrowser->color (FL_GRAY);
+
+	/* player names and timers */
+	whitename->value ("");
+	blackname->value ("");
+	whitetimer->value ("");
+	blacktimer->value ("");
+	whitename->color (FL_GRAY);
+	blackname->color (FL_GRAY);
+	whitename->redraw ();
+	blackname->redraw ();
+
+	/* menu items for editing */
+	menu_new->deactivate();
+	menu_loadgame->deactivate();
+	menu_savegame->deactivate();
+	menu_savelog->deactivate();
+	menu_edit->deactivate();
+	menu_start->activate();
+	menu_compumove->activate();
+	menu_clear->activate();
+	menu_restore->activate();
+	menu_loadboard->activate();
+	menu_saveboard->activate();
+	menu_undo->deactivate();
+
+#ifdef HAVEGD
+	menu_makedrawing->activate();
+#else
+	menu_makedrawing->deactivate();
+#endif
+
+	/* state of the gameboard */
+	gameboard->setstate (BOARD_EDIT);
+    }
+
+    /* always allowed menu items */
+    menu_setup->activate();
+    menu_exit->activate();
+    menu_help->activate();
+    menu_about->activate();
+
+    /* problems with the UNDO-button if I don't do this */
+    menubar->redraw ();
+
+    return;
+}
+
+
+void setlostcounters (void)
+{
+    board * tempboard;
+
+    tempboard = gameboard->getboard ();
+
+    if (tempboard == NULL)
+    {
+	count_lostwhite->value (0);
+	count_lostblack->value (0);
+    }
+    else
+    {
+	count_lostwhite->value (b_white_lost (tempboard));
+	count_lostblack->value (b_black_lost (tempboard));
+    }
+
+    return;
+}
+
+
+void stop_thinking (Fl_Button * stopbutton, void * data)
+{
+    interrupt_computer = 1;
+
+    return;
+}
+
+
+Fl_Window * create_thinkwindow (void)
+{
+    Fl_Window * thinkwindow;
+    Fl_Widget * mainwin;
+
+    thinkwindow = make_thinkwindow ();
+    mainwin = logbrowser->parent ();
+    thinkwindow->position (logbrowser->x() + mainwin->x() + 10,
+			   logbrowser->y() + mainwin->y() + 10);
+    thinkwindow->show ();
+    Fl::check();
+
+    return (thinkwindow);
+}
+
+
+void timertostr (float newtimer, char * tempstr)
+{
+    int thetimer = (int) newtimer;
+
+    if (newtimer <= 0.0)
+    {
+	sprintf (tempstr, "YOULOSE");
+    }
+    else
+    {
+	sprintf (tempstr, "%d:%02d:%02d", 
+		 thetimer / 3600,
+		 (thetimer % 3600) / 60,
+		 thetimer % 60);
+    }
+
+    return;
+}
+
+
+Fl_Window * gf1_help (void)
+{
+    int i;
+    Fl_Window * helpw;
+
+    helpw = make_helpwindow ();
+
+    for (i = 0; i < NRHELPLINES; i++)
+    {
+	browser_help->add (helplines[i]);
+    }
+    browser_help->topline (1);
+
+    for (i = 0; i < NRSECTIONLINES; i++)
+    {
+	browser_sections->add (sectionlines[i].line);
+    }
+    browser_sections->topline (1);
+
+    return (helpw);
+}
+
+void showhelpsection (void)
+{
+    int val = browser_sections->value ();
+    if (val != 0)
+    {
+	browser_help->topline (sectionlines[val-1].offset);
+    }
+
+    return;
+}
+
+
+void setcurrentfilename (char * str)
+{
+    char tempstr[100],
+	* pos;
+
+    strcpy (currentfilename, str);
+    if (currentfilename[0] == '\0')
+    {
+	sprintf (tempstr, "Gipf for One");
+    }
+    else
+    {
+#ifdef MSWIN
+	if ((pos = strrchr (currentfilename, '\\')) != NULL)
+#else
+	if ((pos = strrchr (currentfilename, '/')) != NULL)
+#endif
+	    pos++;
+	else
+	    pos = currentfilename;
+	sprintf (tempstr, "Gipf for One (%s)", pos);
+    }
+
+    gf1_window->label (tempstr);
+    return;
+}
+
+char * getcurrentfilename (void)
+{
+    return (currentfilename);
+}
+
+char * file_chooser (char * windowtitle, char * pattern, char * path)
+{
+    char * filename = NULL;
+
+#ifdef NEWFILECHOOSER
+    FileIcon::load_system_icons();
+
+    FileChooser fc(path, pattern, FileChooser::CREATE, windowtitle);
+
+    fc.show();
+    while (fc.visible())
+	Fl::wait();
+
+    if (fc.count())
+	filename = fc.value();
+#else
+    filename = fl_file_chooser (windowtitle, pattern, path);
+#endif
+
+    return (filename);
+}
+@
+
+
+1.23
+log
+@added gf1_questionsave: yes or no question with the possibility to
+save the game.
+@
+text
+@d2 1
+a2 1
+** $Id: callbacks.cxx,v 1.22 1999/06/01 17:01:30 kurt Exp kurt $
+d27 6
+d39 1
+d487 55
+@
+
+
+1.22
+log
+@solved small problem with showing a timer when lower then 1 second
+@
+text
+@d2 1
+a2 1
+** $Id: callbacks.cxx,v 1.21 1999/05/09 18:34:00 kurt Exp kurt $
+d114 55
+@
+
+
+1.21
+log
+@move the logbrowser to the last line after every move.
+@
+text
+@d2 1
+a2 1
+** $Id: callbacks.cxx,v 1.20 1999/01/06 20:28:40 kurt Exp kurt $
+d378 1
+a378 1
+    if (thetimer <= 0)
+@
+
+
+1.20
+log
+@changed timekeeping.
+to improve the resolution of the clock, internally time is now kept as
+a float.
+time-measurements are done with gettimeofday() instead of time(), this
+allows (in principle) an accuracy of 1 usecond.
+@
+text
+@d2 1
+a2 1
+** $Id: callbacks.cxx,v 1.19 1998/12/13 15:49:25 kurt Exp kurt $
+d158 1
+a158 1
+//	logbrowser->topline (logbrowser->size());
+@
+
+
+1.19
+log
+@added the menu-option "make drawing"
+@
+text
+@d2 1
+a2 1
+** $Id: callbacks.cxx,v 1.18 1998/11/26 17:59:53 kurt Exp kurt $
+a91 2
+//    questionw->position (mainwin->x() + gameboard->x(),
+//			 mainwin->y() + gameboard->y() + gameboard->h() + 5);
+d374 1
+a374 1
+void timertostr (int newtimer, char * tempstr)
+d376 3
+a378 1
+    if (newtimer <= 0)
+d385 3
+a387 3
+		 newtimer / 3600,
+		 (newtimer % 3600) / 60,
+		 newtimer % 60);
+a411 2
+
+//    helpw->show ();
+@
+
+
+1.18
+log
+@changed gf1_help so the help window can stay open when playing the game.
+the option "Save board" can now be used during the a game.
+@
+text
+@d2 1
+a2 1
+** $Id: callbacks.cxx,v 1.17 1998/11/09 20:33:32 kurt Exp kurt $
+d248 8
+d307 6
+@
+
+
+1.17
+log
+@changed the position of the window created by gf1_question,
+it fits mostly inside the main window now, so you don't get problems
+in viewing the yes and no-button when you have maximized your
+main window.
+@
+text
+@d2 1
+a2 1
+** $Id: callbacks.cxx,v 1.16 1998/11/01 16:29:47 kurt Exp kurt $
+d243 5
+a247 1
+	menu_saveboard->deactivate();
+d380 1
+a380 1
+void gf1_help (void)
+d399 1
+a399 1
+    helpw->show ();
+d401 1
+a401 1
+    return;
+@
+
+
+1.16
+log
+@added copyright
+@
+text
+@d2 1
+a2 1
+** $Id: callbacks.cxx,v 1.15 1998/10/24 16:02:49 kurt Exp kurt $
+d92 2
+d95 1
+a95 1
+			 mainwin->y() + gameboard->y() + gameboard->h() + 5);
+@
+
+
+1.15
+log
+@added showhelpsections ()
+changed gf1_help, so it also shows a list of help-sections,
+when you select one of the sections, you immediatly move to the relevant
+part of the documentation.
+@
+text
+@d2 18
+a19 1
+** $Id: callbacks.cxx,v 1.14 1998/10/24 13:11:35 kurt Exp kurt $
+@
+
+
+1.14
+log
+@added gf1_help(), a function for showing the helpwindow.
+@
+text
+@d2 1
+a2 1
+** $Id: callbacks.cxx,v 1.13 1998/10/22 17:14:55 kurt Exp kurt $
+d368 7
+a375 1
+    browser_help->topline (1);
+d377 11
+@
+
+
+1.13
+log
+@show versiontext[] in the aboutwindow
+@
+text
+@d2 1
+a2 1
+** $Id: callbacks.cxx,v 1.12 1998/10/22 17:01:12 kurt Exp kurt $
+d12 1
+d352 19
+@
+
+
+1.12
+log
+@stop displaying one of the players names with a red background when
+the game has been stopped.
+@
+text
+@d2 1
+a2 1
+** $Id: callbacks.cxx,v 1.11 1998/10/20 20:07:47 kurt Exp kurt $
+d13 1
+d21 1
+@
+
+
+1.11
+log
+@changes for keeping a state for each game (GAME_GO, GAME_STOP)
+@
+text
+@d2 1
+a2 1
+** $Id: callbacks.cxx,v 1.10 1998/10/20 17:45:16 kurt Exp kurt $
+d158 1
+a158 1
+	    if (b_next_piece (curgame->boards[0]) == 'o')
+d160 10
+a169 2
+		whitename->color (FL_RED);
+		blackname->color (FL_GRAY);
+d174 1
+a174 1
+		blackname->color (FL_RED);
+@
+
+
+1.10
+log
+@added timertostr
+@
+text
+@d2 1
+a2 1
+** $Id: callbacks.cxx,v 1.9 1998/10/19 19:43:30 kurt Exp kurt $
+d195 2
+a196 1
+		(curgame->player[0].fulltime == -1))
+d214 11
+d265 3
+@
+
+
+1.9
+log
+@misc changes and updates
+added create_thinkwindow()
+@
+text
+@d2 1
+a2 1
+** $Id: callbacks.cxx,v 1.8 1998/10/18 18:03:38 kurt Exp kurt $
+d152 1
+a152 4
+		sprintf (tempstr, "%d:%02d:%02d", 
+			 curgame->player[0].timer / 3600,
+			 (curgame->player[0].timer % 3600) / 60,
+			 curgame->player[0].timer % 60);
+d154 1
+a154 4
+		sprintf (tempstr, "%d:%02d:%02d", 
+			 curgame->player[1].timer / 3600,
+			 (curgame->player[1].timer % 3600) / 60,
+			 curgame->player[1].timer % 60);
+d310 18
+@
+
+
+1.8
+log
+@added stop_thinking()
+@
+text
+@d2 1
+a2 1
+** $Id: callbacks.cxx,v 1.7 1998/10/15 16:30:45 kurt Exp kurt $
+d303 14
+@
+
+
+1.7
+log
+@moved setlostcounters () and changeinterface () from core.cxx to here
+@
+text
+@d2 1
+a2 1
+** $Id: callbacks.cxx,v 1.6 1998/10/05 15:19:21 kurt Exp kurt $
+d6 2
+d11 3
+d60 2
+d68 1
+d71 3
+d293 10
+@
+
+
+1.6
+log
+@added gf1_question
+@
+text
+@d2 1
+a2 1
+** $Id: callbacks.cxx,v 1.5 1998/09/27 18:24:10 kurt Exp kurt $
+d91 190
+@
+
+
+1.5
+log
+@added gf_alert, a simple function for showing messages
+@
+text
+@d2 1
+a2 1
+** $Id: callbacks.cxx,v 1.4 1998/09/22 17:01:59 kurt Exp kurt $
+d48 43
+@
+
+
+1.4
+log
+@removed show_new and put it in thegame.cxx
+@
+text
+@d2 1
+a2 1
+** $Id: callbacks.cxx,v 1.3 1998/09/21 19:50:41 kurt Exp kurt $
+d6 1
+d36 13
+@
+
+
+1.3
+log
+@removed show_setup()
+moved it to setup_win.cxx
+@
+text
+@d2 1
+a2 1
+** $Id: callbacks.cxx,v 1.2 1998/09/13 14:13:13 kurt Exp kurt $
+a34 24
+void show_new (Fl_Menu_ * o, void * v)
+{
+    Fl_Window * neww;
+
+    neww = make_newwindow ();
+    neww->show();
+
+    while (1)
+    {
+	Fl::wait();    
+
+	Fl_Widget *x;
+	while ((x = Fl::readqueue())) 
+	{
+	    if ((x == new_ok) || (x == new_cancel))
+	    {
+		delete neww;
+		return;
+	    }
+	}
+    }
+
+    return;
+}
+@
+
+
+1.2
+log
+@added show_about and remove_about for the splash/about window
+@
+text
+@d2 1
+a2 1
+** $Id$
+a33 26
+
+void show_setup (Fl_Menu_ * o, void * v)
+{
+    Fl_Window * setupw;
+
+    setupw = make_setupwindow ();
+    setupw->show();
+
+    while (1)
+    {
+	Fl::wait();    
+
+	Fl_Widget *x;
+	while ((x = Fl::readqueue())) 
+	{
+	    if ((x == setup_ok) || (x == setup_cancel))
+	    {
+		delete setupw;
+		return;
+	    }
+	}
+    }
+
+    return;
+}
+
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 3
+a5 1
+#include "gipf_ui.h"
+d7 1
+d9 1
+a9 1
+void show_about (Fl_Menu_ * o, void * v)
+d16 1
+a16 1
+    while (1)
+d18 2
+a19 11
+	Fl::wait();    
+
+	Fl_Widget *x;
+	while ((x = Fl::readqueue())) 
+	{
+	    if (x == about_hiddenbutton)
+	    {
+		delete aboutw;
+		return;
+	    }
+	}
+d25 9
+@

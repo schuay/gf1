@@ -1,0 +1,299 @@
+head	1.11;
+access;
+symbols
+	version_1_03:1.11
+	version_1_02:1.11
+	version_1_01:1.10
+	version_1_0_1:1.10
+	version_1_0:1.10
+	version_0_99_5:1.10
+	version_0_99_4:1.10
+	version_0_99_3:1.10
+	version_0_99_2:1.10
+	version_0_99_1:1.9;
+locks; strict;
+comment	@ * @;
+
+
+1.11
+date	2000.01.25.19.17.17;	author kurt;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	98.11.01.18.44.58;	author kurt;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	98.10.27.20.43.36;	author kurt;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	98.10.25.20.17.35;	author kurt;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	98.10.25.11.53.55;	author kurt;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	98.10.22.16.55.11;	author kurt;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	98.10.09.15.53.11;	author kurt;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	98.09.07.18.47.24;	author kurt;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	98.09.06.19.26.26;	author kurt;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	98.09.06.17.53.05;	author kurt;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	98.09.06.09.41.21;	author kurt;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.11
+log
+@new loading and saving code
+@
+text
+@/*
+** $Id: gamelog.h,v 1.10 1998/11/01 18:44:58 kurt Exp kurt $
+*/
+/*
+**    Copyright (C) 1998 Kurt Van den Branden
+**
+** This program is free software; you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation; either version 2 of the License, or
+** (at your option) any later version.
+** 
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+** 
+** You should have received a copy of the GNU General Public License
+** along with this program; if not, write to the Free Software
+** Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  
+*/
+
+#ifndef _GAMELOG_H_
+#define _GAMELOG_H_ 1
+
+#include "linklist.h"
+#include "xmlite.h"
+
+typedef struct {
+    char * gametype;
+    char * whitename;
+    char * blackname;
+    listheader * moves;
+} gamelog;
+
+typedef struct {
+    int type;           /* LOGMOVE, LOGREMGIPF, LOGREMROW */
+    char start[3];      /* from   ,           , startpos  */
+    char end[3];        /* endmove,           , endpos    */
+    char player;        /* piece  , owner     , owner     */
+    listheader * plist; /*        , pos       , pieces    */
+} logitem;
+
+#define LOGMOVE       1
+#define LOGREMGIPF    2
+#define LOGREMROW     3
+
+#define loglength(log)           lllength (log->moves)
+#define logitemnr(log,nr)        (logitem *) llitembynr (log->moves, nr)
+#define logitem_type(logitem)    logitem->type
+#define logitem_start(logitem)   logitem->start
+#define logitem_end(logitem)     logitem->end
+#define logitem_player(logitem)  logitem->player
+#define logitem_plist(logitem)   logitem->plist
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+gamelog * newlog (char * type, char * wname, char * bname);
+void deletelog (gamelog * log);
+int addtolog (gamelog * log, int type, char * data);
+int logtofile (gamelog * log, FILE * fp);
+xmlite_entity * logtoxml (gamelog * log);
+gamelog * logfromxml (xmlite_entity * root);
+gamelog * logfromfile (FILE * fp); 
+listheader * logtobrowser (gamelog * log);
+int remlastmove (gamelog * log);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif
+@
+
+
+1.10
+log
+@added copyright
+@
+text
+@d2 1
+a2 1
+** $Id: gamelog.h,v 1.9 1998/10/27 20:43:36 kurt Exp kurt $
+d26 1
+d63 2
+@
+
+
+1.9
+log
+@added another macro
+@
+text
+@d2 18
+a19 1
+** $Id: gamelog.h,v 1.8 1998/10/25 20:17:35 kurt Exp kurt $
+@
+
+
+1.8
+log
+@added macro's for getting information about an item from the gamelog
+@
+text
+@d2 1
+a2 1
+** $Id: gamelog.h,v 1.7 1998/10/25 11:53:55 kurt Exp kurt $
+d35 1
+@
+
+
+1.7
+log
+@added loglength (), a macro for getting the numer of items in the gamelog
+@
+text
+@d2 1
+a2 1
+** $Id: gamelog.h,v 1.6 1998/10/22 16:55:11 kurt Exp kurt $
+d29 6
+a34 1
+#define loglength(log)    lllength (log->moves)
+d47 1
+a47 1
+    
+@
+
+
+1.6
+log
+@added remlastmove (), removes the last move from a logfilestructure
+@
+text
+@d2 1
+a2 1
+** $Id: gamelog.h,v 1.5 1998/10/09 15:53:11 kurt Exp kurt $
+d28 2
+@
+
+
+1.5
+log
+@the use of the items from the logitem-structure was changed for a
+LOGREMGIPF
+@
+text
+@d2 1
+a2 1
+** $Id: gamelog.h,v 1.4 1998/09/07 18:47:24 kurt Exp kurt $
+d39 1
+@
+
+
+1.4
+log
+@added the #ifndef at the beginning of the include-file to avoid having
+it included several times.
+@
+text
+@d2 1
+a2 1
+** $Id: gamelog.h,v 1.3 1998/09/06 19:26:26 kurt Exp kurt $
+d19 1
+a19 1
+    char start[3];      /* from   , pos       , startpos  */
+d22 1
+a22 1
+    listheader * plist; /*        ,           , pieces    */
+d38 1
+@
+
+
+1.3
+log
+@changed the definition for addtolog
+@
+text
+@d2 1
+a2 1
+** $Id: gamelog.h,v 1.2 1998/09/06 17:53:05 kurt Exp kurt $
+d5 3
+d41 2
+@
+
+
+1.2
+log
+@first edits
+@
+text
+@d2 1
+a2 1
+** $Id: gamelog.h,v 1.1 1998/09/06 09:41:21 kurt Exp kurt $
+d26 1
+a26 1
+#ifndef __cplusplus
+d32 1
+a32 1
+int addtolog (int type, char * data);
+d36 1
+a36 1
+#ifndef __cplusplus
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+** $Id$
+d8 3
+d13 26
+@

@@ -1,0 +1,277 @@
+head	1.8;
+access;
+symbols
+	version_1_03:1.8
+	version_1_02:1.7
+	version_1_01:1.6
+	version_1_0_1:1.6
+	version_1_0:1.5
+	version_0_99_5:1.4
+	version_0_99_4:1.3
+	version_0_99_3:1.2
+	version_0_99_2:1.1;
+locks; strict;
+comment	@# @;
+
+
+1.8
+date	2000.02.28.19.48.31;	author kurt;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2000.01.25.19.11.52;	author kurt;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	99.07.11.16.07.31;	author kurt;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	99.06.01.17.10.08;	author kurt;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	99.05.18.19.03.59;	author kurt;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	99.03.22.19.40.00;	author kurt;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	98.11.27.15.45.18;	author kurt;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	98.11.15.12.14.49;	author kurt;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.8
+log
+@version 1.03
+@
+text
+@ v 1.03
+--------
+- a new way to execute a move has been added: if you now click on the
+  to-position when it has already been selected, your move gets executed.
+- added license-section to the about-box.
+- the main window titlebar will show the name of the file you loaded or
+  saved. when saving you can automatically use the same name as the 
+  previously loaded file.
+- started using a new filechooser widget. (should be easier for windows-users)
+- the file produced by the option "save log" now has the format specified
+  on the gipf website for writing down games.
+
+ v 1.02
+--------
+- new saved game fileformat, everything about a game is saved now.
+- possibility to save a game at any time, even at the moment when a player
+  is asked what row he wants to remove or if he wants to remove a gipf
+  (these changes should make it possible to use gf1 for playing by e-mail)
+- the about-window now shows that the program is postcardware, so maybe
+  I will receive some postcards now.
+- switch to gd-1.7.3 for producing a picture of the board-situation.
+  because of license-problems this library doesn't produce gif-files anymore
+  but png-files instead.
+
+ v 1.01
+--------
+- small performance problem: when a soft timeout occured, the best move
+  from the previous iteration was used, and not from the last one.
+- big performance improvement: better way of avoiding duplicate moves
+  (now a lot closer in speed to version 0.99.5)
+- instead of wasting time, the very first move of a game is now chosen at
+  random by the computer.
+- when creating a gif-file, you can now include a gipf-logo.
+- I've started using STL for some lists, so when you want to compile the
+  program yourself you need a compiler with a good STL implementation
+
+ v 1.0 (not beta anymore)
+-------
+- solved timing-problems on MS Windows (FLTK-problem)
+- new computer-player (slower than the previous one)
+- computer-player can now be interrupted immediatly
+- the computer-player takes time into account when playing a timed game
+
+ v 0.99.5 beta
+----------
+- fixed bug: program would crash if you clicked when not on one of the
+  known points (the bug was always there, but it only came to the surface
+  with v 0.99.4)
+- fixed bug: program would complete a computer-computer game even if you
+  killed the main window
+- small improvement: the logwindow will now scroll to the last line 
+  automatically
+- added an icon to the MS Windows version
+
+ v 0.99.4 beta
+----------
+- solved problem of moves not being animated correctly after an UNDO.
+- added the "Make drawing"-option to the edit-menu
+  this lets you save the current board-situation as a gif-file
+- internally, the resolution of the clock is now smaller than 1 second
+  (in principal, it is now 1 microsecond)
+    => can be important for computer-games
+- GF1 should now quit correctly on MS windows when you don't use the 
+  exit-menuoption. (bug reported by several people)
+- checked source for compilation with fltk 1.0
+
+ v 0.99.4.forum beta
+----------------
+- Only released to a very select group of people!
+
+ v 0.99.3 beta
+----------
+lots of updates and improvements
+
+- options "Start game" and "Computer move" implemented
+- the documentation is reasonably complete now
+- the help-window can be kept open now while playing the game.
+- included patches for compilation with the Irix compiler
+  (thanks to Bill Spitzak)
+- The option "Save board" can be used during a game.
+
+ v 0.99.2 beta
+----------
+The first version that is distributed with source-code and to the world.
+
+The userinterface has been completely rewritten to use FLTK now instead of
+V.
+
+ v 0.91b
+---------
+This is a bug-fix to solve a major problem that made the computer player
+very slow.
+
+ v 0.91
+--------
+This is a new version to solve some bugs and add some changes
+suggested by some of the users.
+
+- changed the search-algorithm from 'mtdf' to 
+  'minimax with alfa-beta pruning', this makes the searching
+  slower but it looks like it plays a little better.
+- give possibility to play at level 6
+- several bugs that occured when the computer plays at level 1
+  have been solved
+- position-names are now shown on the screen
+- when the computer finds several moves with the same value, he
+  will choose one at random. 
+- the default when starting a new game is now "tournament"
+
+Several people have asked for an undo-button.
+I'm still thinking about it, but I don't think I will implement it.
+It feels too much like cheating to me.
+If you've done a bad move, you've done a bad move and you have to
+play on from there. If you're playing against another player, you
+can not take back a move either.
+(If somebody has another point of view, please let me know)
+
+This version is still not ver general distribution.
+Only people that get the program directly from me should have it.
+
+ v 0.90
+--------
+First version to be distributed to a select group of people.
+The program is not ready for general distribution yet.
+
+*************************************************
+$Id: HISTORY.txt,v 1.7 2000/01/25 19:11:52 kurt Exp kurt $
+@
+
+
+1.7
+log
+@version 1.02
+@
+text
+@d1 12
+d127 1
+a127 1
+$Id: HISTORY.txt,v 1.6 1999/07/11 16:07:31 kurt Exp kurt $
+@
+
+
+1.6
+log
+@version 1.01
+@
+text
+@d1 12
+d115 1
+a115 1
+$Id: HISTORY.txt,v 1.5 1999/06/01 17:10:08 kurt Exp kurt $
+@
+
+
+1.5
+log
+@version 1.0
+@
+text
+@d1 13
+a13 1
+ v 1.0
+d103 1
+a103 1
+$Id: HISTORY.txt,v 1.4 1999/05/18 19:03:59 kurt Exp kurt $
+@
+
+
+1.4
+log
+@added changes for 0.99.5
+@
+text
+@d1 7
+d91 1
+a91 1
+$Id: HISTORY.txt,v 1.3 1999/03/22 19:40:00 kurt Exp kurt $
+@
+
+
+1.3
+log
+@updates for v 0.99.4
+@
+text
+@d1 11
+d84 1
+a84 1
+$Id: HISTORY.txt,v 1.2 1998/11/27 15:45:18 kurt Exp kurt $@
+
+
+1.2
+log
+@updates for v 0.99.3
+@
+text
+@d1 16
+d73 1
+a73 1
+$Id: HISTORY.txt,v 1.1 1998/11/15 12:14:49 kurt Exp kurt $@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 11
+d57 1
+a57 1
+$Id$@

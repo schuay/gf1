@@ -1,0 +1,1454 @@
+head	1.6;
+access;
+symbols
+	version_1_03:1.6
+	version_1_02:1.6
+	version_1_01:1.5
+	version_1_0_1:1.5
+	version_1_0:1.2
+	version_0_99_5:1.1
+	version_0_99_4:1.1;
+locks; strict;
+comment	@// @;
+
+
+1.6
+date	99.07.21.13.06.07;	author kurt;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	99.07.11.15.51.52;	author kurt;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	99.06.27.08.57.45;	author kurt;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	99.06.12.08.31.30;	author kurt;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	99.06.01.16.43.17;	author kurt;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	99.03.02.19.40.48;	author kurt;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.6
+log
+@File was missing the GPL copyright message
+@
+text
+@/*
+** $Id: ai_player.cxx,v 1.5 1999/07/11 15:51:52 kurt Exp kurt $
+*/
+/*
+**    Copyright (C) 1999 Kurt Van den Branden
+**
+** This program is free software; you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation; either version 2 of the License, or
+** (at your option) any later version.
+** 
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+** 
+** You should have received a copy of the GNU General Public License
+** along with this program; if not, write to the Free Software
+** Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  
+*/
+
+#include <iostream.h>
+#include <malloc.h>
+#include <stdlib.h>
+#include <time.h>
+#include <algorithm>
+#include "ai_player.h"
+
+
+// constructor
+ai_player::ai_player  ()
+{
+    maxdepth = 2;
+    maxtime = 0;
+    memorydepth = 0;
+    randomchoose = 1;
+    player = PLAYER1;
+    lastvalue = 0;
+    state = AI_OK;
+    stopnow = 0;
+
+    return;
+}
+
+
+// destructor
+ai_player::~ai_player ()
+{
+    return;
+}
+
+
+vector<basemove *> * ai_player::minimax_ab (void * startgame, int starttype)
+{
+    searchnode * firstnode;
+    vector<basemove *> * move;
+
+    state = AI_OK;
+    stopnow = 0;
+
+    if (randomchoose)
+	srand (time (NULL));
+
+    firstnode = new searchnode;
+
+    firstnode->gameposition = startgame;
+    firstnode->finished = 0;
+    firstnode->depth = 1; 
+    firstnode->value = 0;
+    firstnode->upper = 1001;
+    firstnode->lower = -1001;
+    firstnode->type = starttype;
+//    firstnode->movelist = NULL;
+//    firstnode->childlist = NULL;
+
+//    move = minimax_ab (firstnode, -1001, 1001);
+    move = ab_mem (firstnode, -1001, 1001);
+    lastvalue = firstnode->value;
+
+    delmemtree (firstnode, 0);
+    
+    if (move != NULL)
+	reverse (move->begin(), move->end());
+    return (move);
+}
+
+
+#if 0
+/* 
+** correct, but replaced by ab_mem
+*/
+listheader * ai_player::minimax_ab (searchnode * node, int alfa, int beta)
+{
+    int value,
+	counter,
+	ddelta,
+	chance = 1;
+    listheader * movel = NULL,
+	* newmovel;
+    void * moveitem;
+    searchnode * newnode;
+
+    // check for leafnode
+    // (end-of-game or maxdepth exceeded)
+    if ((node->finished) ||
+	(node->depth > maxdepth))
+    {
+	value = evalfunc (node->gameposition, player);
+
+	// create an empty move
+	movel = (listheader *) malloc (sizeof (listheader));
+	newlist (movel);
+    }
+    // search the tree
+    else
+    {
+	if (node->movelist == NULL)
+	{
+	    node->movelist = listfunc (node->gameposition);
+	    node->childlist = (listheader *) malloc (sizeof (listheader));
+	    newlist (node->childlist);
+	}
+
+	if (node->type == MAX)
+	{
+	    value = -1001;
+
+	    counter = 1;
+	    while ((moveitem = llitembynr (node->movelist, counter)) != NULL)
+	    {
+		// generate child (if necessary)
+		newnode = nodechild (node, counter);
+
+		counter++;
+
+		if (newnode->finished == -1)
+		{   // calculate new position
+		    newnode->finished = 0;
+		    newnode->gameposition = 
+			newfunc (node->gameposition, moveitem, 
+				 &(newnode->finished), &ddelta, 
+				 &(newnode->type));
+		    newnode->depth += ddelta;
+		}
+
+		if (newnode->gameposition == NULL)
+		    continue;
+
+		newmovel = minimax_ab (newnode, alfa, beta);
+
+		// is the new move better then the previous best
+//		if (equ_h (newnode->value, value, &chance))
+		if (((node->depth == 1) && 
+		     (equ_h (newnode->value, value, &chance))) ||
+		    ((node->depth > 1) && (newnode->value > value)))
+		{
+		    value = newnode->value;
+		    delmovelist (movel);
+		    movel = newmovel;
+		    unshiftll (movel, copymovefunc (moveitem));
+		}
+		else
+		{
+		    delmovelist (newmovel);
+		}
+
+		alfa = max (alfa, value);
+
+		if (value > beta)
+//		if (value >= beta)
+		{
+		    break;
+		}
+	    }
+	}
+	else // MIN
+	{
+	    value = 1001;
+
+	    counter = 1;
+	    while ((moveitem = llitembynr (node->movelist, counter)) != NULL)
+	    {
+		// generate child (if necessary)
+		newnode = nodechild (node, counter);
+
+		counter++;
+
+		if (newnode->finished == -1)
+		{   // calculate new position
+		    newnode->finished = 0;
+		    newnode->gameposition = 
+			newfunc (node->gameposition, moveitem, 
+				 &(newnode->finished), &ddelta, 
+				 &(newnode->type));
+		    newnode->depth += ddelta;
+		}
+
+		if (newnode->gameposition == NULL)
+		    continue;
+
+		newmovel = minimax_ab (newnode, alfa, beta);
+
+		// is the new move better then the previous best
+//		if (equ_l (newnode->value, value, &chance))
+		if (((node->depth == 1) && 
+		     (equ_l (newnode->value, value, &chance))) ||
+		    ((node->depth > 1) && (newnode->value < value)))
+		{
+		    value = newnode->value;
+		    delmovelist (movel);
+		    movel = newmovel;
+		    unshiftll (movel, copymovefunc (moveitem));
+		}
+		else
+		{
+		    delmovelist (newmovel);
+		}
+
+		beta = min (beta, value);
+
+		if (value < alfa)
+//		if (value <= alfa)
+		{
+		    break;
+		}
+	    }
+	}
+    }
+
+    node->value = value;
+
+    // cleanup children-nodes
+    while ((newnode = (searchnode *) llrembynr (node->childlist, 1))
+	   != NULL)
+    {
+	delmemtree (newnode);
+    }
+
+    // what if no valid move ?
+    // is it enough that movel contains NULL in that case ?
+
+    return (movel);
+}
+#endif
+
+
+vector<basemove *> * ai_player::ab_mem (searchnode * node, int alfa, int beta)
+{
+    int value,
+	ddelta,
+	chance = 1,
+	len, i,
+	a, b;
+    vector<basemove *> * movel = NULL,
+	* newmovel;
+    searchnode * newnode;
+
+    if (node->lower > beta)  // >=
+    {
+	node->value = node->lower;
+	// create an empty move
+	movel = new vector<basemove *>;
+	return (movel);
+    }
+    if (node->upper < alfa)  // <=
+    {
+	node->value = node->upper;
+	// create an empty move
+	movel = new vector<basemove *>;
+	return (movel);
+    }
+    alfa = max (alfa, node->lower);
+    beta = min (beta, node->upper);
+
+    // check for leafnode
+    // (end-of-game or maxdepth exceeded)
+    if ((node->finished == 1) ||
+	((node->depth > maxdepth) && (node->finished != 2)))
+    {
+	value = evalfunc (node->gameposition, player);
+
+	// create an empty move
+	movel = new vector<basemove *>;
+    }
+    // search the tree
+    else
+    {
+	if (node->movelist.empty())
+	{
+	    listfunc (node->gameposition, node->movelist);
+	}
+
+	if (node->type == MAX)
+	{
+	    value = -1001;
+	    a = alfa;
+
+	    len = node->movelist.size();
+	    for (i = 0; i < len; i++)
+//	    while ((moveitem = llitembynr (node->movelist, counter)) != NULL)
+	    {
+		// generate child (if necessary)
+		newnode = nodechild (node, i);
+
+		if (newnode->finished == -1)
+		{   // calculate new position
+		    newnode->finished = 0;
+		    newnode->gameposition = 
+			newfunc (node->gameposition, node->movelist[i], 
+				 &(newnode->finished), &ddelta, 
+				 &(newnode->type));
+		    newnode->depth += ddelta;
+		}
+
+		if (newnode->gameposition == NULL)
+		    continue;
+
+		newmovel = ab_mem (newnode, a, beta);
+
+		if (stopnow)
+		{
+		    delmovelist (movel);
+		    delmovelist (newmovel);
+		    return (NULL);
+		}
+		if (outoftime ())
+		{
+		    stopnow = 1;
+		    state = AI_TIMEUP;
+		    delmovelist (movel);
+		    delmovelist (newmovel);
+		    return (NULL);
+		}
+		if (stopfunc () == 1)
+		{
+		    state = AI_STOPPED;
+		    delmovelist (movel);
+		    delmovelist (newmovel);
+		    return (NULL);
+		}
+
+		// is the new move better then the previous best
+		if (((node->depth == 1) && 
+		     (equ_h (newnode->value, value, &chance))) ||
+		    ((node->depth > 1) && (newnode->value > value)))
+		{
+		    value = newnode->value;
+		    delmovelist (movel);
+		    movel = newmovel;
+//		    unshiftll (movel, node->movelist[i]->copy());
+		    movel->push_back (node->movelist[i]->copy());
+
+		    a = max (a, value);
+		    
+		    if (value > beta)
+		    {
+			break;
+		    }
+		}
+		else
+		{
+		    delmovelist (newmovel);
+		}
+	    }
+	}
+	else // MIN
+	{
+	    value = 1001;
+	    b = beta;
+
+	    len = node->movelist.size();
+	    for (i = 0; i < len; i++)
+//	    while ((moveitem = llitembynr (node->movelist, counter)) != NULL)
+	    {
+		// generate child (if necessary)
+		newnode = nodechild (node, i);
+
+		if (newnode->finished == -1)
+		{   // calculate new position
+		    newnode->finished = 0;
+		    newnode->gameposition = 
+			newfunc (node->gameposition, node->movelist[i], 
+				 &(newnode->finished), &ddelta, 
+				 &(newnode->type));
+		    newnode->depth += ddelta;
+		}
+
+		if (newnode->gameposition == NULL)
+		    continue;
+
+		newmovel = ab_mem (newnode, alfa, b);
+
+		if (stopnow)
+		{
+		    delmovelist (movel);
+		    delmovelist (newmovel);
+		    return (NULL);
+		}
+		if (outoftime ())
+		{
+		    stopnow = 1;
+		    state = AI_TIMEUP;
+		    delmovelist (movel);
+		    delmovelist (newmovel);
+		    return (NULL);
+		}
+		if (stopfunc () == 1)
+		{
+		    state = AI_STOPPED;
+		    delmovelist (movel);
+		    delmovelist (newmovel);
+		    return (NULL);
+		}
+
+		// is the new move better then the previous best
+//		if (equ_l (newnode->value, value, &chance))
+		if (((node->depth == 1) && 
+		     (equ_l (newnode->value, value, &chance))) ||
+		    ((node->depth > 1) && (newnode->value < value)))
+		{
+		    value = newnode->value;
+		    delmovelist (movel);
+		    movel = newmovel;
+//		    unshiftll (movel, node->movelist[i]->copy());
+		    movel->push_back (node->movelist[i]->copy());
+
+		    b = min (b, value);
+
+		    if (value < alfa)
+		    {
+			break;
+		    }
+		}
+		else
+		{
+		    delmovelist (newmovel);
+		}
+	    }
+	}
+    }
+
+    node->value = value;
+
+    if (value <= alfa)
+	node->upper = value;
+    if ((value > alfa) && (value < beta))
+	node->lower = node->upper = value;
+    if (value >= beta)
+	node->lower = value;
+
+    // cleanup children-nodes if past maximum memory-depth
+    if (node->depth > memorydepth)
+    {
+	for (int i = node->childlist.size() - 1; i >= 0; i--)
+	{
+	    delmemtree (node->childlist[i]);
+	    node->childlist.pop_back();
+	}
+    }
+
+    // what if no valid move ?
+    // is it enough that movel contains NULL in that case ?
+
+    return (movel);
+}
+
+
+vector<basemove *> * ai_player::mtdf (void * startgame, int starttype)
+{
+    searchnode * firstnode;
+    vector<basemove *> * move;
+
+    state = AI_OK;
+    stopnow = 0;
+
+    if (randomchoose)
+	srand (time (NULL));
+
+    firstnode = new searchnode;
+
+    firstnode->gameposition = startgame;
+    firstnode->finished = 0;
+    firstnode->depth = 1; 
+    firstnode->value = 0;
+    firstnode->upper = 1001;
+    firstnode->lower = -1001;
+    firstnode->type = starttype;
+//    firstnode->movelist = NULL;
+//    firstnode->childlist = NULL;
+
+    move = mtdf (firstnode);
+    lastvalue = firstnode->value;
+
+    delmemtree (firstnode, 0);
+
+    if (move != NULL)
+	reverse (move->begin(), move->end());
+    return (move);
+}
+
+
+vector<basemove *> * ai_player::mtdf (searchnode * node)
+{
+    int value,
+	upper,
+	lower,
+	gamma;
+    vector<basemove *> * bestmove = NULL;
+    
+    value = node->value;
+    upper = 1001;
+    lower = -1001;
+
+    while ((lower < upper) && (stopnow == 0))
+    {
+	if (value == lower)
+	{
+	    gamma = value + 1;
+	}
+	else
+	{
+	    gamma = value;
+	}
+
+	delmovelist (bestmove);
+
+//	bestmove = mt (node, gamma);  // werkt niet
+//	bestmove = minimax_ab (node, gamma-1, gamma); // werkt wel
+	bestmove = ab_mem (node, gamma-1, gamma);  // werkt ook, en goed
+	value = node->value;
+
+	if (value < gamma)
+	{
+	    upper = value;
+	}
+	else
+	{
+	    lower = value;
+	}
+    }
+
+    return (bestmove);
+}
+
+
+// iterative deepening mtdf
+vector<basemove *> * ai_player::mtdf_id (void * startgame, 
+					 int starttype = MAX, 
+					 float mtime = 0.0)
+{
+    searchnode * firstnode;
+    int oldvalue,
+	newvalue,
+	savedepth,
+	i;
+    vector<basemove *> * bestmove = NULL,
+	* newmove;
+    struct timezone tz;
+    
+    maxtime = mtime;
+    gettimeofday (&basetime, &tz);
+    state = AI_OK;
+    stopnow = 0;
+
+    if (randomchoose)
+	srand (time (NULL));
+
+    firstnode = new searchnode;
+
+    firstnode->gameposition = startgame;
+    firstnode->finished = 0;
+    firstnode->depth = 1; 
+    firstnode->value = 0;
+    firstnode->upper = 1001;
+    firstnode->lower = -1001;
+    firstnode->type = starttype;
+//    firstnode->movelist = NULL;
+//    firstnode->childlist = NULL;
+
+    savedepth = maxdepth;
+    oldvalue = newvalue = 0;
+    for (i = 1; i <= savedepth; i++)
+    {
+	maxdepth = i;
+	// each mtdf-call is not started with the value from the previous run
+	// but with the one before that
+	firstnode->value = oldvalue;
+	reset_ul (firstnode);
+
+	newmove = mtdf (firstnode);
+
+	if (stopnow)
+	{
+	    delmovelist (newmove);
+	    break;
+	}
+
+	oldvalue = newvalue;
+	newvalue = firstnode->value;
+	
+	delmovelist (bestmove);
+	bestmove = newmove;
+
+	if (halfoutoftime ())
+	{   /* soft timeout */
+	    state = AI_TIMEUP;
+	    break;
+	}
+    }
+
+    maxdepth = savedepth;
+    lastvalue = firstnode->value;
+
+    delmemtree (firstnode, 0);
+
+    if (bestmove != NULL)
+	reverse (bestmove->begin(), bestmove->end());
+
+    return (bestmove);
+}
+
+
+/*
+** if flag is 0, then the gameposition will not be deleted
+** this should be used for the root of the nodetree
+*/
+void ai_player::delmemtree (searchnode * node, int flag)
+{
+//    searchnode * child;
+//    void * moveitem;
+    int i, len;
+
+    if (flag)
+    {
+	delgamefunc (node->gameposition);
+    }
+
+    if (!node->movelist.empty())
+    {
+	len = node->movelist.size();
+	for (i = 0; i < len; i++)
+	{
+	    delete node->movelist[i];
+	}
+    }
+
+    if (!node->childlist.empty())
+    {
+	len = node->childlist.size();
+	for (i = 0; i < len; i++)
+	{
+	    delmemtree (node->childlist[i]);
+	}
+    }
+
+    delete node;
+
+    return;
+}
+
+
+/*
+** reset upper and lower limits in all nodes from the memory tree
+*/
+void ai_player::reset_ul (searchnode * node)
+{
+//    searchnode * child;
+    int i, len;
+
+    node->upper = 1001;
+    node->lower = -1001;
+
+    if (!node->childlist.empty())
+    {
+	len = node->childlist.size();
+	for (i = 0; i < len; i++)
+	{
+	    reset_ul (node->childlist[i]);
+	}
+    }
+
+    return;
+}
+
+
+inline void ai_player::delmovelist (vector<basemove *> * todel)
+{
+    if (todel != NULL)
+    {
+	int len = todel->size(),
+	    i;
+	
+	for (i = 0; i < len; i++)
+	    delete (*todel)[i];
+	
+	delete todel;
+    }
+
+    return;
+}
+
+
+/*
+** just like a normal compare (<)
+** returns:
+**   1 : nr1 < nr2
+**   0: nr1 > nr2
+**   0/1: when nr1 and nr2 are equal, chooses one at random
+**
+** chance is the chance that nr1 will be chosen if nr1 == nr2
+** this parameter will be incremented each time an equal occurs
+** and will be set to 1 if nr1 < nr2
+** (it should be initialised to 1 by the caller and then left alone)
+*/
+int ai_player::equ_l (int nr1, int nr2, int * chance)
+{
+    int randnr;
+
+    if (randomchoose == 0)
+	return (nr1 < nr2);
+
+    if (nr1 < nr2)
+    {
+ 	*chance = 1;
+	return (1);
+    }
+    if (nr1 > nr2)
+    {
+	return (0);
+    }
+
+    randnr = (int) ( (*chance + 1.0) * rand() / (RAND_MAX+1.0) );
+    (*chance)++;
+
+    if (randnr < 1)
+    {
+	return (1);
+    }
+
+    return (0);
+}
+
+
+/*
+** just like a normal compare (>)
+** returns:
+**   1 : nr1 > nr2
+**   0: nr1 < nr2
+**   0/1: when nr1 and nr2 are equal, chooses one at random
+**
+** chance is the chance that nr1 will be chosen if nr1 == nr2
+** this parameter will be incremented each time an equal occurs
+** and will be set to 1 if nr1 > nr2
+** (it should be initialised to 1 by the caller and then left alone)
+*/	
+int ai_player::equ_h (int nr1, int nr2, int * chance)
+{
+    int randnr;
+
+    if (randomchoose == 0)
+	return (nr1 > nr2);
+
+    if (nr1 > nr2)
+    {
+ 	*chance = 1;
+	return (1);
+    }
+    if (nr1 < nr2)
+    {
+	return (0);
+    }
+
+    randnr = (int) ( (*chance + 1.0) * rand() / (RAND_MAX+1.0) );
+    (*chance)++;
+
+    if (randnr < 1)
+    {
+	return (1);
+    }
+
+    return (0);
+}
+
+
+/*
+** check if a child-node already exists,
+** if not, create a new one
+*/
+inline searchnode * ai_player::nodechild (searchnode * node, int nr)
+{
+    searchnode * newnode;
+
+    if (nr < node->childlist.size())
+	return (node->childlist[nr]);
+
+
+#if 0
+/* just for testing */
+/* check if the previous nr exists, it should */
+if ((nr > 1) && (llitembynr (node->childlist, nr-1) == NULL))
+{
+    printf ("\nERROR: ai_player::nodechild\n\n");
+    exit (0);
+}
+#endif 
+
+    /* create a new node */
+    newnode = new searchnode;
+    newnode->gameposition = NULL;
+    newnode->finished = -1;
+    newnode->depth = node->depth;
+    newnode->value = 0;
+    newnode->upper = 1001;
+    newnode->lower = -1001;
+    newnode->type = node->type;
+//    newnode->movelist = NULL;
+//    newnode->childlist = NULL;
+
+    node->childlist.push_back (newnode);
+    
+    return (newnode);
+}
+
+
+inline int ai_player::outoftime ()
+{
+    struct timeval tv;
+    struct timezone tz;
+    float timedif;
+
+    if (maxtime == 0.0)
+	return (0);
+
+    gettimeofday (&tv, &tz);
+
+    timedif = (tv.tv_sec - basetime.tv_sec) +
+	(float) (tv.tv_usec - basetime.tv_usec) / 1000000;
+
+    if ((maxtime - timedif) < 0.0)
+    {
+//cout << "hard timeout\n";
+	return (1);
+    }
+
+    return (0);
+}
+
+
+inline int ai_player::halfoutoftime ()
+{
+    struct timeval tv;
+    struct timezone tz;
+    float timedif;
+
+    if (maxtime == 0.0)
+	return (0);
+
+    gettimeofday (&tv, &tz);
+
+    timedif = (tv.tv_sec - basetime.tv_sec) +
+	(float) (tv.tv_usec - basetime.tv_usec) / 1000000;
+
+    if ((maxtime/2 - timedif) < 0.0)
+    {
+//cout << "soft timeout\n";
+	return (1);
+    }
+
+    return (0);
+}
+@
+
+
+1.5
+log
+@I think I now removed all references to linklist.
+All lists are now made with vectors from STL.
+@
+text
+@d2 18
+a19 1
+** $Id: ai_player.cxx,v 1.4 1999/06/27 08:57:45 kurt Exp kurt $
+@
+
+
+1.4
+log
+@replaced the linklist of possible moves with an STL vector
+@
+text
+@d2 1
+a2 1
+** $Id: ai_player.cxx,v 1.3 1999/06/12 08:31:30 kurt Exp kurt $
+d9 1
+d36 1
+a36 1
+listheader * ai_player::minimax_ab (void * startgame, int starttype)
+d39 1
+a39 1
+    listheader * move;
+d57 1
+a57 1
+    firstnode->childlist = NULL;
+d64 3
+a66 1
+
+d230 1
+a230 1
+listheader * ai_player::ab_mem (searchnode * node, int alfa, int beta)
+d237 1
+a237 1
+    listheader * movel = NULL,
+d245 1
+a245 2
+	movel = (listheader *) malloc (sizeof (listheader));
+	newlist (movel);
+d252 1
+a252 2
+	movel = (listheader *) malloc (sizeof (listheader));
+	newlist (movel);
+d266 1
+a266 2
+	movel = (listheader *) malloc (sizeof (listheader));
+	newlist (movel);
+a273 2
+	    node->childlist = (listheader *) malloc (sizeof (listheader));
+	    newlist (node->childlist);
+d286 1
+a286 1
+		newnode = nodechild (node, i+1);
+a325 1
+//		if (equ_h (newnode->value, value, &chance))
+d333 2
+a334 2
+//		    unshiftll (movel, new basemove (*(node->movelist[i])));
+		    unshiftll (movel, node->movelist[i]->copy());
+a338 1
+//		    if (value >= beta)
+d359 1
+a359 1
+		newnode = nodechild (node, i+1);
+d407 2
+a408 2
+//		    unshiftll (movel, new basemove (*(node->movelist[i])));
+		    unshiftll (movel, node->movelist[i]->copy());
+a412 1
+//		    if (value <= alfa)
+d437 1
+a437 2
+	while ((newnode = (searchnode *) llrembynr (node->childlist, 1))
+	       != NULL)
+d439 2
+a440 1
+	    delmemtree (newnode);
+d451 1
+a451 1
+listheader * ai_player::mtdf (void * startgame, int starttype)
+d454 1
+a454 1
+    listheader * move;
+d472 1
+a472 1
+    firstnode->childlist = NULL;
+d479 2
+d485 1
+a485 1
+listheader * ai_player::mtdf (searchnode * node)
+d491 1
+a491 1
+    listheader * bestmove = NULL;
+d530 3
+a532 2
+listheader * ai_player::mtdf_id (void * startgame, int starttype = MAX, 
+				 float mtime = 0.0)
+d539 1
+a539 1
+    listheader * bestmove = NULL,
+d561 1
+a561 1
+    firstnode->childlist = NULL;
+d599 3
+d612 1
+a612 1
+    searchnode * child;
+d630 1
+a630 1
+    if (node->childlist != NULL)
+d632 2
+a633 2
+	while ((child = (searchnode *) llrembynr (node->childlist, 1)) 
+	       != NULL)
+d635 1
+a635 1
+	    delmemtree (child);
+a636 2
+
+	free (node->childlist);
+d650 2
+a651 2
+    searchnode * child;
+    int counter = 1;
+d656 4
+a659 3
+    if (node->childlist != NULL)
+	while ((child = (searchnode *) llitembynr (node->childlist, counter)) 
+	       != NULL)
+d661 1
+a661 2
+	    counter++;
+	    reset_ul (child);
+d663 1
+d669 1
+a669 1
+inline void ai_player::delmovelist (listheader * todel)
+d673 7
+a679 7
+	void * ptr;
+
+	while ((ptr = llrembynr (todel, 1)) != NULL)
+	    delete ptr;
+//	    delmovefunc (ptr);
+
+	free (todel);
+d776 3
+a778 5
+    newnode = (searchnode *) llitembynr (node->childlist, nr);
+    if (newnode != NULL)
+    {   /* this node has already been handled, return it */
+	return (newnode);
+    }
+d800 1
+a800 1
+    newnode->childlist = NULL;
+d802 1
+a802 1
+    pushll (node->childlist, newnode);
+@
+
+
+1.3
+log
+@small performance-problem solved: when a soft timeout occured, the best
+move from the previous iteration would be used, not from the last one.
+@
+text
+@d2 1
+a2 1
+** $Id: ai_player.cxx,v 1.2 1999/06/01 16:43:17 kurt Exp kurt $
+d55 1
+a55 1
+    firstnode->movelist = NULL;
+a229 1
+	counter,
+d232 1
+a235 1
+    void * moveitem;
+d271 1
+a271 1
+	if (node->movelist == NULL)
+d273 1
+a273 1
+	    node->movelist = listfunc (node->gameposition);
+d283 3
+a285 2
+	    counter = 1;
+	    while ((moveitem = llitembynr (node->movelist, counter)) != NULL)
+d288 1
+a288 3
+		newnode = nodechild (node, counter);
+
+		counter++;
+d294 1
+a294 1
+			newfunc (node->gameposition, moveitem, 
+d336 2
+a337 1
+		    unshiftll (movel, copymovefunc (moveitem));
+d358 3
+a360 2
+	    counter = 1;
+	    while ((moveitem = llitembynr (node->movelist, counter)) != NULL)
+d363 1
+a363 3
+		newnode = nodechild (node, counter);
+
+		counter++;
+d369 1
+a369 1
+			newfunc (node->gameposition, moveitem, 
+d411 2
+a412 1
+		    unshiftll (movel, copymovefunc (moveitem));
+d476 1
+a476 1
+    firstnode->movelist = NULL;
+d562 1
+a562 1
+    firstnode->movelist = NULL;
+d612 2
+a613 1
+    void * moveitem;
+d620 1
+a620 1
+    if (node->movelist != NULL)
+d622 2
+a623 1
+	while ((moveitem = llrembynr (node->movelist, 1)) != NULL)
+d625 1
+a625 1
+	    delmovefunc(moveitem);
+a626 2
+
+	free (node->movelist);
+d676 2
+a677 1
+	    delmovefunc (ptr);
+d801 1
+a801 1
+    newnode->movelist = NULL;
+@
+
+
+1.2
+log
+@updates for correct handling of timed games by the computerplayer
+@
+text
+@d2 1
+a2 1
+** $Id: ai_player.cxx,v 1.1 1999/03/02 19:40:48 kurt Exp kurt $
+a582 6
+	if (halfoutoftime ())
+	{   /* soft timeout */
+	    state = AI_TIMEUP;
+	    delmovelist (newmove);
+	    break;
+	}
+d589 6
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+** $Id: ai_player.cxx,v 1.5 1999/03/02 19:34:51 kurt Exp $
+d307 7
+a313 1
+		if ((stopnow) || (stopfunc () == 1))
+d316 7
+d339 8
+a351 8
+
+		a = max (a, value);
+
+		if (value > beta)
+//		if (value >= beta)
+		{
+		    break;
+		}
+d382 7
+a388 1
+		if ((stopnow) || (stopfunc () == 1))
+d391 7
+d414 8
+a426 8
+
+		b = min (b, value);
+
+		if (value < alfa)
+//		if (value <= alfa)
+		{
+		    break;
+		}
+d542 2
+a543 1
+    listheader * bestmove = NULL;
+a569 1
+	delmovelist (bestmove);
+d576 1
+a576 1
+	bestmove = mtdf (firstnode);
+d578 1
+a578 4
+	oldvalue = newvalue;
+	newvalue = firstnode->value;
+	
+	if (outoftime ())
+d580 1
+a580 1
+	    state = AI_TIMEUP;
+d583 4
+a586 2
+	if (stopnow)
+	{
+d589 6
+a605 186
+#if 0
+// implemented exactly like I found it in the document from Aske Plaat
+// but still doesn't work correctly
+listheader * ai_player::mt (searchnode * node, int gamma)
+{
+    int value,
+	counter,
+	ddelta,
+	chance = 1;
+    listheader * movel = NULL,
+	* newmovel;
+    void * moveitem;
+    searchnode * newnode;
+
+    // check for leafnode
+    // (end-of-game or maxdepth exceeded)
+    if ((node->finished) ||
+	(node->depth > maxdepth))
+    {
+	if ((node->lower == -1001) && (node->upper == 1001))
+	{
+	    value = evalfunc (node->gameposition, player);
+	}
+	else
+	{
+	    if (node->upper == 1001)
+		value = node->lower;
+	    else
+		value = node->upper;
+	}
+
+	// create an empty move
+	movel = (listheader *) malloc (sizeof (listheader));
+	newlist (movel);
+    }
+    // search the tree
+    else
+    {
+	if (node->movelist == NULL)
+	{
+	    node->movelist = listfunc (node->gameposition);
+	    node->childlist = (listheader *) malloc (sizeof (listheader));
+	    newlist (node->childlist);
+	}
+
+	if (node->type == MAX)
+	{
+	    value = -1001;
+
+	    counter = 1;
+	    while ((moveitem = llitembynr (node->movelist, counter)) != NULL)
+	    {
+		// generate child (if necessary)
+		newnode = nodechild (node, counter);
+
+		counter++;
+
+		if (newnode->finished == -1)
+		{   // calculate new position
+		    newnode->finished = 0;
+		    newnode->gameposition = 
+			newfunc (node->gameposition, moveitem, 
+				 &(newnode->finished), &ddelta, 
+				 &(newnode->type));
+		    newnode->depth += ddelta;
+		}
+
+		if (newnode->gameposition == NULL)
+		    continue;
+
+		// should we go deeper or can we cut off already
+		if (newnode->upper >= gamma)
+		    newmovel = mt (newnode, gamma);
+		else
+		{
+		    newnode->value = newnode->upper;
+		    newmovel = (listheader *) malloc (sizeof (listheader));
+		    newlist (newmovel);
+		}
+
+		// is the new move better then the previous best
+//		if (equ_h (newnode->value, value, &chance))
+		if (((node->depth == 1) && 
+		     (equ_h (newnode->value, value, &chance))) ||
+		    ((node->depth > 1) && (newnode->value > value)))
+		{
+		    value = newnode->value;
+		    delmovelist (movel);
+		    movel = newmovel;
+		    unshiftll (movel, copymovefunc (moveitem));
+		}
+		else
+		{
+		    delmovelist (newmovel);
+		}
+
+		if (value > gamma)
+//		if (value >= gamma)
+		{
+		    break;
+		}
+	    }
+	}
+	else // MIN
+	{
+	    value = 1001;
+
+	    counter = 1;
+	    while ((moveitem = llitembynr (node->movelist, counter)) != NULL)
+	    {
+		// generate child (if necessary)
+		newnode = nodechild (node, counter);
+
+		counter++;
+
+		if (newnode->finished == -1)
+		{   // calculate new position
+		    newnode->finished = 0;
+		    newnode->gameposition = 
+			newfunc (node->gameposition, moveitem, 
+				 &(newnode->finished), &ddelta, 
+				 &(newnode->type));
+		    newnode->depth += ddelta;
+		}
+
+		if (newnode->gameposition == NULL)
+		    continue;
+
+		// should we go deeper or can we cut off already
+		if (newnode->lower < gamma)
+		    newmovel = mt (newnode, gamma);
+		else
+		{
+		    newnode->value = newnode->lower;
+		    newmovel = (listheader *) malloc (sizeof (listheader));
+		    newlist (newmovel);
+		}
+
+		// is the new move better then the previous best
+//		if (equ_l (newnode->value, value, &chance))
+		if (((node->depth == 1) && 
+		     (equ_l (newnode->value, value, &chance))) ||
+		    ((node->depth > 1) && (newnode->value < value)))
+		{
+		    value = newnode->value;
+		    delmovelist (movel);
+		    movel = newmovel;
+		    unshiftll (movel, copymovefunc (moveitem));
+		}
+		else
+		{
+		    delmovelist (newmovel);
+		}
+
+		if (value < gamma)
+		{
+		    break;
+		}
+	    }
+	}
+    }
+
+    node->value = value;
+    if (value >= gamma)
+	node->lower = value;
+    else
+	node->upper = value;
+
+    // cleanup children-nodes if past maximum memory-depth
+    if (node->depth > memorydepth)
+    {
+	while ((newnode = (searchnode *) llrembynr (node->childlist, 1))
+	       != NULL)
+	{
+	    delmemtree (newnode);
+	}
+    }
+
+    // what if no valid move ?
+    // is it enough that movel contains NULL in that case ?
+
+    return (movel);
+}
+#endif
+
+
+d678 1
+a678 1
+//	emptyll (todel, delmovefunc);
+d810 1
+a810 1
+int ai_player::outoftime ()
+d824 8
+a831 1
+//  cout << timedif << "\n";
+d833 18
+a850 1
+    if ((maxtime - timedif) < 0.0)
+d852 1
+@

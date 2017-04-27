@@ -1,0 +1,8 @@
+/*
+** $Id: icons.rc,v 1.1 1999/05/17 18:54:05 kurt Exp $
+*/
+
+#define GF1_ICON	345
+
+GF1_ICON ICON "win_icon.ico"
+

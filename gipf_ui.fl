@@ -1,0 +1,914 @@
+# data file for the Fltk User Interface Designer (fluid)
+version 1.00 
+header_name {.H} 
+code_name {.C} 
+gridx 10 
+gridy 10 
+snap 3
+Function {create_mainwindow()} {} {
+  Fl_Window gf1_window {
+    label {Gipf for One}
+    callback {interrupt_computer = 1;
+stop_program = 1;;}
+    xywh {591 625 620 420} type Double color 44 hide resizable
+    code0 {extern int stop_program;}
+  } {
+    Fl_Menu_Bar menubar {open
+      xywh {0 -2 620 32}
+    } {
+      submenu {} {
+        label File open
+        xywh {0 0 100 20} labelfont 1
+      } {
+        menuitem menu_new {
+          label {New game}
+          xywh {0 0 100 20}
+        }
+        menuitem menu_loadgame {
+          label {Load game}
+          xywh {10 10 100 20}
+        }
+        menuitem menu_savegame {
+          label {Save game}
+          xywh {0 0 100 20}
+        }
+        menuitem menu_savelog {
+          label {Save log}
+          xywh {0 0 100 20}
+        }
+        menuitem menu_setup {
+          label Setup
+          xywh {0 0 100 20} divider
+        }
+        menuitem menu_exit {
+          label Exit
+          xywh {0 0 100 20}
+        }
+      }
+      submenu {} {
+        label Edit open
+        xywh {0 0 100 20} labelfont 1
+      } {
+        menuitem menu_edit {
+          label {Edit board}
+          xywh {0 0 100 20} divider
+        }
+        menuitem menu_start {
+          label {Start game}
+          xywh {20 20 100 20}
+        }
+        menuitem menu_compumove {
+          label {Computer move}
+          xywh {20 20 100 20} divider
+        }
+        menuitem menu_clear {
+          label {Clear board}
+          xywh {30 30 100 20}
+        }
+        menuitem menu_restore {
+          label {Restore board}
+          xywh {40 40 100 20} divider
+        }
+        menuitem menu_loadboard {
+          label {Load board}
+          xywh {50 50 100 20}
+        }
+        menuitem menu_saveboard {
+          label {Save board}
+          xywh {60 60 100 20} divider
+        }
+        menuitem menu_makedrawing {
+          label {Make drawing}
+          xywh {0 0 100 20}
+        }
+      }
+      menuitem menu_undo {
+        label UNDO
+        xywh {0 0 100 20} labelfont 1
+      }
+      submenu {} {
+        label Help open
+        xywh {0 0 100 20} labelfont 1
+      } {
+        menuitem menu_help {
+          label Help
+          xywh {0 0 100 20} divider
+        }
+        menuitem menu_about {
+          label About
+          xywh {0 0 100 20}
+        }
+      }
+    }
+    Fl_Box gameboard {
+      label {the gameboard}
+      xywh {80 40 300 320} box BORDER_FRAME color 0
+      code0 {\#include "fl_board.h"}
+      class fl_board
+    }
+    Fl_Group {} {
+      label white open
+      xywh {10 40 70 320} box BORDER_BOX align 17
+    } {
+      Fl_Output whitename {
+        xywh {10 40 70 20} box UP_BOX selection_color 47 textfont 1
+      }
+      Fl_Output whitetimer {
+        xywh {10 60 70 20} box BORDER_BOX textfont 4
+      }
+      Fl_Output lostwhite {
+        xywh {10 340 70 20} box BORDER_BOX selection_color 47
+      }
+      Fl_Output whitepieces {
+        xywh {30 310 30 20} align 0 textfont 1
+      }
+      Fl_Box drawwhite {
+        label {white pieces}
+        xywh {10 80 70 230} align 128 resizable
+        code0 {\#include "fl_pile.h"}
+        class fl_pile
+      }
+    }
+    Fl_Group {} {
+      label black open
+      xywh {380 40 70 320} box BORDER_BOX align 17
+    } {
+      Fl_Output blackname {
+        xywh {380 40 70 20} box UP_BOX selection_color 47 textfont 1
+      }
+      Fl_Output blacktimer {
+        xywh {380 60 70 20} box BORDER_BOX textfont 4
+      }
+      Fl_Output lostblack {
+        xywh {380 340 70 20} box BORDER_BOX selection_color 47
+      }
+      Fl_Output blackpieces {
+        xywh {400 310 30 20} align 0 textfont 1
+      }
+      Fl_Box drawblack {
+        label {black pieces}
+        xywh {380 80 70 230} align 128 resizable
+        code0 {\#include "fl_pile.h"}
+        class fl_pile
+      }
+    }
+    Fl_Browser logbrowser {
+      label {move log}
+      xywh {460 50 150 300} labelfont 1 align 1
+    }
+    Fl_Group interfacegroup1 {open
+      xywh {10 370 230 40}
+    } {
+      Fl_Counter count_lostwhite {
+        label {Lost white:}
+        xywh {160 370 70 20} type Simple labelfont 1 align 132 step 1
+        code0 {o->range(0,18);}
+      }
+      Fl_Counter count_lostblack {
+        label {Lost black:}
+        xywh {160 390 70 20} type Simple labelfont 1 align 132 step 1
+        code0 {o->range(0,18);}
+      }
+      Fl_Output text_to {
+        label {to:}
+        xywh {190 380 30 20} labelfont 1
+      }
+      Fl_Output text_from {
+        label {from:}
+        xywh {130 380 30 20} labelfont 1
+      }
+      Fl_Box {} {
+        xywh {10 370 10 40} resizable
+      }
+    }
+    Fl_Group interfacegroup2 {open
+      xywh {240 370 210 40}
+    } {
+      Fl_Box {} {
+        xywh {440 370 10 40} resizable
+      }
+      Fl_Return_Button button_execute {
+        label {Execute move}
+        xywh {240 370 120 40} align 128
+      }
+      Fl_Choice choice_piecetype {
+        label {Piece type:} open
+        xywh {240 380 120 30} labelfont 1 align 1 textfont 1
+      } {
+        menuitem choice_white {
+          label {White piece}
+          xywh {0 0 100 20}
+        }
+        menuitem choice_whitegipf {
+          label {White gipf}
+          xywh {10 10 100 20} divider
+        }
+        menuitem choice_black {
+          label {Black piece}
+          xywh {20 20 100 20}
+        }
+        menuitem choice_blackgipf {
+          label {Black gipf}
+          xywh {30 30 100 20}
+        }
+      }
+    }
+    Fl_Box {} {
+      label {gipflogo_small5.xpm}
+      xywh {490 360 100 50} box THIN_UP_BOX labeltype image
+    }
+    Fl_Menu_Button menu_piecetype {open
+      xywh {80 40 300 320} box NO_BOX resizable
+    } {
+      menuitem menu_white {
+        label {White piece}
+        xywh {10 10 100 20}
+      }
+      menuitem menu_whitegipf {
+        label {White gipf}
+        xywh {20 20 100 20} divider
+      }
+      menuitem menu_black {
+        label {Black piece}
+        xywh {30 30 100 20}
+      }
+      menuitem menu_blackgipf {
+        label {Black gipf}
+        xywh {40 40 100 20}
+      }
+    }
+  }
+} 
+
+Function {make_newwindow()} {} {
+  Fl_Window {} {
+    label {New game} open
+    xywh {466 400 479 374} hide modal
+  } {
+    Fl_Box {} {
+      label {New game}
+      xywh {160 10 160 40} box ROUND_DOWN_BOX hotspot
+    }
+    Fl_Group {} {
+      label {Game type:} open
+      xywh {100 60 130 70} labelfont 1 align 4
+    } {
+      Fl_Check_Button radio_basic {
+        label Basic
+        xywh {110 60 80 30} type Radio down_box DIAMOND_DOWN_BOX
+      }
+      Fl_Check_Button radio_standard {
+        label Standard
+        xywh {110 80 90 30} type Radio down_box DIAMOND_DOWN_BOX
+      }
+      Fl_Check_Button radio_tournament {
+        label Tournament
+        xywh {110 100 120 30} type Radio down_box DIAMOND_DOWN_BOX
+      }
+    }
+    Fl_Group {} {
+      label {White:} open
+      xywh {10 160 220 140} box THIN_DOWN_BOX labelfont 1 align 5
+    } {
+      Fl_Check_Button radio_whuman {
+        label Human
+        xywh {20 170 100 30} type Radio down_box DIAMOND_DOWN_BOX
+      }
+      Fl_Check_Button radio_wcompu {
+        label Computer
+        xywh {110 170 100 30} type Radio down_box DIAMOND_DOWN_BOX
+      }
+      Fl_Input whiteplayername {
+        label {Player name:}
+        xywh {120 210 90 30}
+        code0 {o->value ("White");}
+      }
+      Fl_Counter whitetime {
+        label {time:}
+        xywh {60 256 150 24} align 4 minimum 1 maximum 120 step 1 value 20
+        code0 {o->lstep (10);}
+      }
+    }
+    Fl_Group {} {
+      label {Black:} open
+      xywh {250 160 220 140} box THIN_DOWN_BOX labelfont 1 align 5
+    } {
+      Fl_Check_Button radio_bhuman {
+        label Human
+        xywh {260 170 90 30} type Radio down_box DIAMOND_DOWN_BOX
+      }
+      Fl_Check_Button radio_bcompu {
+        label Computer
+        xywh {350 170 90 30} type Radio down_box DIAMOND_DOWN_BOX
+      }
+      Fl_Input blackplayername {
+        label {Player name:}
+        xywh {360 210 90 30}
+        code0 {o->value ("Black");}
+      }
+      Fl_Counter blacktime {
+        label {time:}
+        xywh {300 256 150 24} align 4 minimum 1 maximum 120 step 1 value 20
+        code0 {o->lstep (10);}
+      }
+    }
+    Fl_Return_Button new_ok {
+      label OK
+      xywh {120 324 100 36}
+    }
+    Fl_Button new_cancel {
+      label Cancel
+      xywh {260 324 100 36}
+    }
+    Fl_Check_Button toggle_timedgame {
+      label {Timed game:}
+      xywh {380 80 30 30} down_box ROUND_DOWN_BOX labelfont 1 align 4
+    }
+  }
+} 
+
+Function {make_questionwindow()} {} {
+  Fl_Window {} {
+    label {Question?} open
+    xywh {432 146 460 90} hide modal
+  } {
+    Fl_Box {} {
+      label {question.xpm}
+      xywh {0 0 60 90} labeltype image
+    }
+    Fl_Button button_qyes {
+      label {&Yes}
+      xywh {140 50 90 30} hotspot
+    }
+    Fl_Button button_qno {
+      label {&No}
+      xywh {300 50 90 30}
+    }
+    Fl_Box qtext1 {
+      label {Player xxxxx, do you want to remove}
+      xywh {80 0 370 20} labelfont 1
+    }
+    Fl_Box qtext2 {
+      label {the row from xx to xx ?}
+      xywh {80 20 370 20} labelfont 1
+    }
+  }
+} 
+
+Function {make_setupwindow()} {} {
+  Fl_Window setupwindow {
+    label Setup open
+    xywh {22 511 370 400} hide modal
+  } {
+    Fl_Group {} {
+      label {Computer strength:} open
+      xywh {160 70 200 90} box THIN_DOWN_BOX labelfont 1 align 4
+    } {
+      Fl_Check_Button level2 {
+        label {level 2}
+        xywh {170 90 90 30} type Radio down_box DIAMOND_DOWN_BOX
+      }
+      Fl_Check_Button level3 {
+        label {level 3}
+        xywh {170 110 90 30} type Radio down_box DIAMOND_DOWN_BOX
+      }
+      Fl_Check_Button level5 {
+        label {level 5}
+        xywh {270 70 80 30} type Radio down_box DIAMOND_DOWN_BOX
+      }
+      Fl_Check_Button level4 {
+        label {level 4}
+        xywh {170 130 80 30} type Radio down_box DIAMOND_DOWN_BOX
+      }
+      Fl_Check_Button level6 {
+        label {level 6}
+        xywh {270 90 80 30} type Radio down_box DIAMOND_DOWN_BOX
+      }
+      Fl_Check_Button level1 {
+        label {level 1}
+        xywh {170 70 100 30} type Radio down_box DIAMOND_DOWN_BOX
+      }
+      Fl_Check_Button level7 {
+        label {level 7}
+        xywh {270 110 80 30} type Radio down_box DIAMOND_DOWN_BOX
+      }
+      Fl_Check_Button level8 {
+        label {level 8}
+        xywh {270 130 80 30} type Radio down_box DIAMOND_DOWN_BOX
+      }
+    }
+    Fl_Group {} {
+      label {Move animation:} open
+      xywh {160 170 200 50} box THIN_DOWN_BOX labelfont 1 align 4
+    } {
+      Fl_Check_Button ani_none {
+        label { None}
+        xywh {170 170 100 30} type Radio down_box DIAMOND_DOWN_BOX
+      }
+      Fl_Check_Button ani_slow {
+        label { Slow}
+        xywh {170 190 90 30} type Radio down_box DIAMOND_DOWN_BOX
+      }
+      Fl_Check_Button ani_medium {
+        label { Medium}
+        xywh {270 170 80 30} type Radio down_box DIAMOND_DOWN_BOX
+      }
+      Fl_Check_Button ani_fast {
+        label { Fast}
+        xywh {270 190 80 30} type Radio down_box DIAMOND_DOWN_BOX
+      }
+    }
+    Fl_Value_Slider slider_computer {
+      label {Wait before computer move (seconds):}
+      xywh {220 237 140 23} type {Horz Knob} labelfont 1 align 132 maximum 10 step 1 value 2
+    }
+    Fl_Value_Slider slider_remove {
+      label {Wait before removing a row/gipf (seconds):}
+      xywh {220 277 140 23} type {Horz Knob} labelfont 1 align 132 maximum 10 step 1 value 3
+    }
+    Fl_Return_Button setup_ok {
+      label OK
+      xywh {60 350 110 40}
+    }
+    Fl_Button setup_cancel {
+      label Cancel
+      xywh {210 350 110 40}
+    }
+    Fl_Box {} {
+      label Setup
+      xywh {110 10 160 40} box ROUND_DOWN_BOX hotspot
+    }
+    Fl_Round_Button check_posname {
+      label {Show position names}
+      xywh {330 310 30 30} down_box ROUND_DOWN_BOX labelfont 1 align 4
+    }
+  }
+} 
+
+Function {make_thinkwindow()} {} {
+  Fl_Window {} {
+    label {Stop thinking} open
+    xywh {420 828 110 160} hide modal
+  } {
+    Fl_Box {} {
+      label {thinking2.xpm}
+      xywh {10 10 90 90} box UP_FRAME labeltype image
+    }
+    Fl_Button {} {
+      label {Stop thinking}
+      callback stop_thinking
+      xywh {10 110 90 40} labelfont 1 align 128
+      code0 {\#include "callbacks.h"}
+    }
+  }
+} 
+
+Function {make_helpwindow()} {} {
+  Fl_Window {} {
+    label {GF1 help} open
+    xywh {448 309 550 420} type Double hide resizable
+  } {
+    Fl_Group {} {open
+      xywh {10 370 530 50}
+    } {
+      Fl_Return_Button {} {
+        label Close
+        callback {o->window()->hide();}
+        xywh {10 380 110 30}
+      }
+      Fl_Box {} {
+        label {gipflogo_small5.xpm}
+        xywh {440 370 100 50} box THIN_UP_BOX labeltype image
+      }
+      Fl_Box {} {
+        label label
+        xywh {200 370 30 50} labeltype NO_LABEL resizable
+      }
+    }
+    Fl_Tile {} {open
+      xywh {10 10 530 360} resizable
+    } {
+      Fl_Browser browser_help {
+        xywh {10 100 530 270}
+      }
+      Fl_Browser browser_sections {
+        callback {showhelpsection ();}
+        xywh {10 10 530 90} type Hold hotspot
+      }
+    }
+  }
+} 
+
+Function {make_startwindow()} {} {
+  Fl_Window {} {
+    label {Start game from an edited gameboard} open
+    xywh {383 291 480 340} hide
+  } {
+    Fl_Box {} {
+      label {Start game from an edited gameboard}
+      xywh {100 10 280 40} box ROUND_DOWN_BOX hotspot
+    }
+    Fl_Group {} {
+      label {First player:} open
+      xywh {230 60 130 50} labelfont 1 align 4
+    } {
+      Fl_Check_Button radio_white {
+        label White
+        xywh {240 60 80 30} type Radio down_box DIAMOND_DOWN_BOX
+      }
+      Fl_Check_Button radio_black {
+        label Black
+        xywh {240 80 90 30} type Radio down_box DIAMOND_DOWN_BOX
+      }
+    }
+    Fl_Group {} {
+      label {White:} open
+      xywh {10 140 220 130} box THIN_DOWN_BOX labelfont 1 align 5
+    } {
+      Fl_Check_Button radio_s_whuman {
+        label Human
+        xywh {20 150 100 30} type Radio down_box DIAMOND_DOWN_BOX
+      }
+      Fl_Check_Button radio_s_wcompu {
+        label Computer
+        xywh {110 150 100 30} type Radio down_box DIAMOND_DOWN_BOX
+      }
+      Fl_Input s_whiteplayername {
+        label {Player name:}
+        xywh {120 190 90 30}
+        code0 {o->value ("White");}
+      }
+      Fl_Round_Button toggle_s_whitegipf {
+        label {Add GIPF possible:}
+        xywh {180 230 30 30} down_box ROUND_DOWN_BOX align 4
+      }
+    }
+    Fl_Group {} {
+      label {Black:} open
+      xywh {250 140 220 130} box THIN_DOWN_BOX labelfont 1 align 5
+    } {
+      Fl_Check_Button radio_s_bhuman {
+        label Human
+        xywh {260 150 90 30} type Radio down_box DIAMOND_DOWN_BOX
+      }
+      Fl_Check_Button radio_s_bcompu {
+        label Computer
+        xywh {350 150 90 30} type Radio down_box DIAMOND_DOWN_BOX
+      }
+      Fl_Input s_blackplayername {
+        label {Player name:}
+        xywh {360 190 90 30}
+        code0 {o->value ("Black");}
+      }
+      Fl_Round_Button toggle_s_blackgipf {
+        label {Add GIPF possible:}
+        xywh {420 230 30 30} down_box ROUND_DOWN_BOX align 4
+      }
+    }
+    Fl_Return_Button start_ok {
+      label OK
+      xywh {120 294 100 36}
+    }
+    Fl_Button start_cancel {
+      label Cancel
+      xywh {260 294 100 36}
+    }
+  }
+} 
+
+Function {make_onemovewindow()} {} {
+  Fl_Window {} {
+    label {Computer move} open
+    xywh {272 736 320 310} hide
+  } {
+    Fl_Box {} {
+      label {Computer move}
+      xywh {90 10 140 40} box ROUND_DOWN_BOX
+    }
+    Fl_Group {} {
+      label {Player:} open
+      xywh {30 80 90 50} box THIN_DOWN_FRAME labelfont 1 align 5
+    } {
+      Fl_Check_Button radio_c_white {
+        label White
+        xywh {40 80 70 30} type Radio down_box DIAMOND_DOWN_BOX
+      }
+      Fl_Check_Button radio_c_black {
+        label Black
+        xywh {40 100 70 30} type Radio down_box DIAMOND_DOWN_BOX
+      }
+    }
+    Fl_Group {} {
+      label {Strength:} open
+      xywh {190 80 100 170} box THIN_DOWN_FRAME labelfont 1 align 5
+    } {
+      Fl_Check_Button c_level1 {
+        label {level 1}
+        xywh {200 80 80 30} type Radio down_box DIAMOND_DOWN_BOX
+      }
+      Fl_Check_Button c_level2 {
+        label {level 2}
+        xywh {200 100 80 30} type Radio down_box DIAMOND_DOWN_BOX
+      }
+      Fl_Check_Button c_level3 {
+        label {level 3}
+        xywh {200 120 80 30} type Radio down_box DIAMOND_DOWN_BOX
+      }
+      Fl_Check_Button c_level4 {
+        label {level 4}
+        xywh {200 140 80 30} type Radio down_box DIAMOND_DOWN_BOX
+      }
+      Fl_Check_Button c_level5 {
+        label {level 5}
+        xywh {200 160 80 30} type Radio down_box DIAMOND_DOWN_BOX
+      }
+      Fl_Check_Button c_level6 {
+        label {level 6}
+        xywh {200 180 80 30} type Radio down_box DIAMOND_DOWN_BOX
+      }
+      Fl_Check_Button c_level7 {
+        label {level 7}
+        xywh {200 200 80 30} type Radio down_box DIAMOND_DOWN_BOX
+      }
+      Fl_Check_Button c_level8 {
+        label {level 8}
+        xywh {200 220 80 30} type Radio down_box DIAMOND_DOWN_BOX
+      }
+    }
+    Fl_Return_Button one_ok {
+      label OK
+      xywh {40 264 100 36}
+    }
+    Fl_Button one_cancel {
+      label Cancel
+      xywh {180 264 100 36}
+    }
+  }
+} 
+
+Function {make_gifwindow()} {} {
+  Fl_Window {} {
+    label {Make drawing} open
+    xywh {492 152 361 341} hide
+  } {
+    Fl_Box {} {
+      label {Make drawing}
+      xywh {100 10 160 40} box ROUND_DOWN_BOX
+    }
+    Fl_Input gif_filename {
+      label {Filename:}
+      xywh {90 70 160 30} labelfont 1
+    }
+    Fl_Button gif_choose {
+      label {Choose ...}
+      xywh {260 70 80 30} labelfont 1
+    }
+    Fl_Value_Slider gif_size {
+      label {Size:}
+      xywh {60 120 280 30} type {Horz Knob} labelfont 1 align 4 minimum 100 maximum 800 step 10 value 300
+    }
+    Fl_Input gif_extratext {
+      label {Extra text:}
+      xywh {20 220 320 60} type Multiline labelfont 1 align 5
+    }
+    Fl_Return_Button gif_ok {
+      label OK
+      xywh {40 290 110 40}
+    }
+    Fl_Button gif_cancel {
+      label Cancel
+      xywh {210 290 110 40}
+    }
+    Fl_Group {} {open
+      xywh {20 160 320 30} box THIN_DOWN_FRAME
+    } {
+      Fl_Check_Button gif_colour {
+        label Colour
+        xywh {30 160 30 30} type Radio down_box DIAMOND_DOWN_BOX labelfont 1
+      }
+      Fl_Check_Button gif_bw {
+        label {Black/White}
+        xywh {170 160 30 30} type Radio down_box DIAMOND_DOWN_BOX labelfont 1
+      }
+    }
+  }
+} 
+
+Function {make_questionsavewindow()} {} {
+  Fl_Window {} {
+    label {QuestionSave?} open
+    xywh {432 265 460 90} hide modal
+  } {
+    Fl_Box {} {
+      label {question.xpm}
+      xywh {0 0 60 90} labeltype image
+    }
+    Fl_Button button_qsyes {
+      label {&Yes}
+      xywh {70 50 90 30} hotspot
+    }
+    Fl_Button button_qsno {
+      label {&No}
+      xywh {170 50 90 30}
+    }
+    Fl_Box qstext1 {
+      label {Player xxxxx, do you want to remove}
+      xywh {80 0 370 20} labelfont 1
+    }
+    Fl_Box qstext2 {
+      label {the row from xx to xx ?}
+      xywh {80 20 370 20} labelfont 1
+    }
+    Fl_Button button_qssave {
+      label {&Save game}
+      xywh {360 50 90 30} labelfont 2
+    }
+  }
+} 
+
+Function {make_aboutwindow()} {open
+} {
+  Fl_Window {} {
+    label {Gipf for One} open
+    xywh {162 442 400 380} color 8 hide
+  } {
+    Fl_Button about_hiddenbutton {
+      callback {remove_about ((void *) o->parent());}
+      xywh {0 0 400 380} box NO_BOX shortcut 0xff0d
+      code0 {\#include "callbacks.h"}
+    }
+    Fl_Tabs tabs {open
+      xywh {10 10 380 360}
+      code0 {o->value (tab_image);}
+    } {
+      Fl_Group tab_image {
+        label {Gipf for One} open
+        xywh {10 30 380 340} hide
+      } {
+        Fl_Box {} {
+          label {splash2.xpm}
+          xywh {20 35 360 235} labeltype image
+        }
+        Fl_Box box_versiontext {
+          label {Gipf for one v x.xx}
+          xywh {20 280 360 30} box THIN_DOWN_FRAME labeltype EMBOSSED_LABEL hotspot
+        }
+        Fl_Box {} {
+          label {(c) 1998-2000, Kurt Van den Branden}
+          xywh {20 320 360 20} labelfont 2
+        }
+        Fl_Box {} {
+          label {kurtvdb@village.uunet.be}
+          xywh {20 340 360 20} box FLAT_BOX labelfont 2
+        }
+      }
+      Fl_Group tab_license {
+        label License open
+        xywh {10 30 380 340} hide
+      } {
+        Fl_Box {} {
+          label {Public License as published by the Free Software}
+          xywh {20 90 350 20} align 20
+        }
+        Fl_Box {} {
+          label {Foudation; either version 2 of the License, or (at your}
+          xywh {20 110 350 20} align 20
+        }
+        Fl_Box {} {
+          label {option) any later version.}
+          xywh {20 130 350 20} align 20
+        }
+        Fl_Box {} {
+          label {for details, see the COPYING.txt file.}
+          xywh {20 320 350 20} labelfont 2 align 20
+        }
+        Fl_Box {} {
+          label {This program is free software; you can redistribute it}
+          xywh {20 50 350 20} align 20
+        }
+        Fl_Box {} {
+          label {and/or modify it under the terms of the GNU General}
+          xywh {20 70 350 20} align 20
+        }
+        Fl_Box {} {
+          label {This program is distributed in the hope that it will be}
+          xywh {20 170 350 20} align 20
+        }
+        Fl_Box {} {
+          label {useful, but WITHOUT ANY WARRANTY: without even}
+          xywh {20 190 350 20} align 20
+        }
+        Fl_Box {} {
+          label {the implied warranty of MERCHANTABILITY or}
+          xywh {20 210 350 20} align 20
+        }
+        Fl_Box {} {
+          label {FITNESS FOR A PARTICULAR PURPOSE. See the}
+          xywh {20 230 350 20} align 20
+        }
+        Fl_Box {} {
+          label {GNU General Public License for more details.}
+          xywh {20 250 350 20} align 20
+        }
+      }
+      Fl_Group {} {
+        label Acknowledgements open selected
+        xywh {10 30 380 340}
+      } {
+        Fl_Box {} {
+          label {This program wouldn't have been possible without}
+          xywh {20 40 360 30} align 20
+        }
+        Fl_Box {} {
+          label {these other pieces of fine software.}
+          xywh {20 60 350 30} align 20
+        }
+        Fl_Box {} {
+          label {- The FLTK GUI library}
+          xywh {30 90 330 30} labelfont 1 align 20
+        }
+        Fl_Box {} {
+          label {- the GD image creation library}
+          xywh {30 130 330 30} labelfont 1 align 20
+        }
+        Fl_Box {} {
+          label {- libpng}
+          xywh {30 170 330 30} labelfont 1 align 20
+        }
+        Fl_Box {} {
+          label {- zlib}
+          xywh {30 210 330 30} labelfont 1 align 20
+        }
+        Fl_Box {} {
+          label {- the FileChooser widget}
+          xywh {30 250 330 30} labelfont 1 align 20
+        }
+        Fl_Box {} {
+          label {(c) Bill Spitzak and others}
+          xywh {70 110 240 20} align 20
+        }
+        Fl_Box {} {
+          label {(c) Thomas Boutell and others}
+          xywh {70 150 240 20} align 20
+        }
+        Fl_Box {} {
+          label {(c) the png-group}
+          xywh {70 190 250 20} align 20
+        }
+        Fl_Box {} {
+          label {(c) Jean-loup Gailly and Mark Adler}
+          xywh {70 230 250 20} align 20
+        }
+        Fl_Box {} {
+          label {(c) Michael Sweet}
+          xywh {70 270 250 20} align 20
+        }
+      }
+      Fl_Group tab_postcard {
+        label {Send me a postcard} open
+        xywh {10 30 380 340} labelfont 1 hide
+      } {
+        Fl_Box {} {
+          label {Please send me a (paper) postcard if you like GF1.}
+          xywh {20 40 360 30} labelfont 1 align 20
+        }
+        Fl_Box {} {
+          label {This will show to me that people appreciate the work I}
+          xywh {20 80 360 30} align 20
+        }
+        Fl_Group {} {open
+          xywh {110 160 180 90} box UP_BOX color 55 labelcolor 7
+        } {
+          Fl_Box {} {
+            label {Kurt Van den Branden}
+            xywh {120 160 170 30} align 20
+          }
+          Fl_Box {} {
+            label {Heiveldstraat 72}
+            xywh {120 180 170 30} align 20
+          }
+          Fl_Box {} {
+            label {B-9120 Beveren}
+            xywh {120 200 170 30} align 20
+          }
+          Fl_Box {} {
+            label Belgium
+            xywh {120 220 170 30} align 20
+          }
+        }
+        Fl_Box {} {
+          label {PS: If you really like GF1,}
+          xywh {30 310 340 30} labelfont 2 align 20
+        }
+        Fl_Box {} {
+          label {       you can also send me money ;-)}
+          xywh {30 330 340 30} labelfont 2 align 20
+        }
+        Fl_Box {} {
+          label {put into it.}
+          xywh {20 100 350 30} align 20
+        }
+      }
+    }
+  }
+} 

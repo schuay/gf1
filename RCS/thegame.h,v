@@ -1,0 +1,388 @@
+head	1.16;
+access;
+symbols
+	version_1_03:1.16
+	version_1_02:1.16
+	version_1_01:1.15
+	version_1_0_1:1.15
+	version_1_0:1.15
+	version_0_99_5:1.15
+	version_0_99_4:1.15
+	version_0_99_3:1.13
+	version_0_99_2:1.12
+	version_0_99_1:1.10;
+locks; strict;
+comment	@ * @;
+
+
+1.16
+date	2000.01.25.19.18.47;	author kurt;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	99.01.06.20.29.27;	author kurt;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	98.12.13.15.49.02;	author kurt;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	98.11.26.18.03.03;	author kurt;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	98.11.15.17.55.07;	author kurt;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	98.11.01.16.27.56;	author kurt;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	98.10.29.17.30.55;	author kurt;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	98.10.27.20.45.00;	author kurt;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	98.10.25.20.18.45;	author kurt;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	98.10.20.20.08.07;	author kurt;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	98.10.19.19.44.06;	author kurt;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	98.10.18.18.02.45;	author kurt;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	98.10.14.19.11.46;	author kurt;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	98.09.27.18.40.41;	author kurt;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	98.09.24.17.42.43;	author kurt;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	98.09.22.19.20.07;	author kurt;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.16
+log
+@new loading and saving code
+@
+text
+@/*
+** $Id: thegame.h,v 1.15 1999/01/06 20:29:27 kurt Exp kurt $
+**
+** structures for playing a gipf-game
+*/
+/*
+**    Copyright (C) 1998 Kurt Van den Branden
+**
+** This program is free software; you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation; either version 2 of the License, or
+** (at your option) any later version.
+** 
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+** 
+** You should have received a copy of the GNU General Public License
+** along with this program; if not, write to the Free Software
+** Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  
+*/
+
+#ifndef _NEWGAME_H_
+#define _NEWGAME_H_ 1
+
+#include "board.h"
+#include "gamelog.h"
+#include "setup_win.h"
+
+enum {
+    GAME_GO,
+    GAME_STOP
+};
+
+typedef struct {
+    struct {
+	int type;
+	char name[40];
+	int fulltime;    // in seconds
+	float timer;     // in seconds
+	void * self;
+    } player [2];
+    
+    int game_type;
+    int state;           // GAME_GO, GAME_STOP
+    board * boards[3];   // 0-> current board, 1->previous board, ...
+    gamelog * movelog;
+    int movecounter;     // last item from the movelog checked with
+                         // analysemove
+    configvalues * config;
+} gamestruct;
+
+gamestruct * show_new (gamestruct *);
+gamestruct * show_start (board *);
+gamestruct * show_onemove (board *, configvalues * conf);
+board * verify_board (board * sboard);
+void delete_game (gamestruct * gameptr);
+void savegame (gamestruct * gameptr);
+gamestruct * oldloadgame (char * filename);
+gamestruct * loadgame (void);
+void setupmove (gamestruct * thegame);
+void gipf_questions (gamestruct * thegame);
+void row_questions (gamestruct * thegame);
+void computermove (gamestruct * thegame);
+int humanmove (gamestruct * thegame);
+void analysemove (gamestruct * thegame, int playertype);
+void showmove (gamestruct * thegame, int playertype, logitem * item);
+void showremgipf (gamestruct * thegame, int playertype, logitem * item);
+void showremrow (gamestruct * thegame, int playertype, logitem * item);
+
+void updatetimer (void * data);
+void stoptimer (gamestruct * thegame);
+void starttimer (gamestruct * thegame, char color);
+
+void show_makegif (board * game);
+
+#endif
+@
+
+
+1.15
+log
+@changed timekeeping.
+to improve the resolution of the clock, internally time is now kept as
+a float.
+time-measurements are done with gettimeofday() instead of time(), this
+allows (in principle) an accuracy of 1 usecond.
+@
+text
+@d2 1
+a2 1
+** $Id: thegame.h,v 1.14 1998/12/13 15:49:02 kurt Exp kurt $
+d60 1
+@
+
+
+1.14
+log
+@added show_makegif for saving the board-position as a gif-file
+@
+text
+@d2 1
+a2 1
+** $Id: thegame.h,v 1.13 1998/11/26 18:03:03 kurt Exp kurt $
+d40 2
+a41 2
+	int fulltime;
+	int timer;       // in seconds
+@
+
+
+1.13
+log
+@small changes
+@
+text
+@d2 1
+a2 1
+** $Id: thegame.h,v 1.12 1998/11/15 17:55:07 kurt Exp kurt $
+d74 2
+@
+
+
+1.12
+log
+@added show_start and show_onemove
+@
+text
+@d2 1
+a2 1
+** $Id: thegame.h,v 1.11 1998/11/01 16:27:56 kurt Exp kurt $
+d56 2
+a57 1
+gamestruct * show_onemove (board *);
+@
+
+
+1.11
+log
+@added copyright
+@
+text
+@d2 1
+a2 1
+** $Id: thegame.h,v 1.10 1998/10/29 17:30:55 kurt Exp kurt $
+d55 2
+@
+
+
+1.10
+log
+@added pointer to gamestruct for configvalues
+@
+text
+@d2 1
+a2 1
+** $Id: thegame.h,v 1.9 1998/10/27 20:45:00 kurt Exp kurt $
+d5 17
+@
+
+
+1.9
+log
+@lots of changes for making it possible to show what happened since the
+last move to the user.
+@
+text
+@d2 1
+a2 1
+** $Id: thegame.h,v 1.8 1998/10/25 20:18:45 kurt Exp kurt $
+d12 1
+d34 1
+@
+
+
+1.8
+log
+@added analysemove ()
+@
+text
+@d2 1
+a2 1
+** $Id: thegame.h,v 1.7 1998/10/20 20:08:07 kurt Exp kurt $
+d45 3
+@
+
+
+1.7
+log
+@changes for keeping a state for each game (GAME_GO, GAME_STOP)
+@
+text
+@d2 1
+a2 1
+** $Id: thegame.h,v 1.6 1998/10/19 19:44:06 kurt Exp kurt $
+d31 2
+d44 1
+@
+
+
+1.6
+log
+@misc changes and updates
+removed some variables from gamestruct
+@
+text
+@d2 1
+a2 1
+** $Id: thegame.h,v 1.5 1998/10/18 18:02:45 kurt Exp kurt $
+d13 5
+d28 1
+@
+
+
+1.5
+log
+@misc. changes angd bugfixes
+@
+text
+@d2 1
+a2 1
+** $Id: thegame.h,v 1.4 1998/10/14 19:11:46 kurt Exp kurt $
+a24 4
+
+    int pendingnew;
+    int pendingexit;
+    int computerthinking;
+@
+
+
+1.4
+log
+@added functions for really playing the game
+@
+text
+@d2 1
+a2 1
+** $Id: thegame.h,v 1.3 1998/09/27 18:40:41 kurt Exp kurt $
+d41 3
+@
+
+
+1.3
+log
+@added savegame and loadgame
+@
+text
+@d2 1
+a2 1
+** $Id: thegame.h,v 1.2 1998/09/24 17:42:43 kurt Exp kurt $
+d25 4
+d35 6
+@
+
+
+1.2
+log
+@small changes: added fulltime to the gamestructure
+@
+text
+@d2 1
+a2 1
+** $Id: thegame.h,v 1.1 1998/09/22 19:20:07 kurt Exp kurt $
+d23 1
+a23 1
+    board * boards[3];   // 0-> current move, 1->previous move, ...
+d28 3
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+** $Id$
+d17 1
+@

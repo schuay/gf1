@@ -1,0 +1,474 @@
+/*
+** $Id: xmlite.cxx,v 1.2 2000/01/25 19:01:48 kurt Exp $
+**
+** code for reading and writing data in an xml-like format
+*/
+/*
+**    Copyright (C) 2000 Kurt Van den Branden
+**
+** This program is free software; you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation; either version 2 of the License, or
+** (at your option) any later version.
+** 
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+** 
+** You should have received a copy of the GNU General Public License
+** along with this program; if not, write to the Free Software
+** Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  
+*/
+
+
+#include <fstream.h>
+#include "xmlite.h"
+
+xmlite_entity::xmlite_entity (const char * ename):
+    name (ename)
+{
+    return;
+}
+
+xmlite_entity::xmlite_entity (const string & ename):
+    name (ename)
+{
+    return;
+}
+
+xmlite_entity::~xmlite_entity ()
+{
+    vector<xmlite_entity *>::iterator todel;
+
+    for (todel = contents.begin(); todel != contents.end(); todel++)
+    {
+	delete (*todel);
+    }
+
+    return;
+}
+
+xmlite_entity & xmlite_entity::operator= (const xmlite_entity & source)
+{
+    vector<xmlite_entity *>::iterator todel;
+    vector<xmlite_entity * const>::iterator tocopy; // I don't understand this
+
+    // delete contents before copying
+    for (todel = contents.begin(); todel != contents.end(); todel++)
+    {
+	delete (*todel);
+    }
+    contents.clear();
+
+    // delete attributes before copying
+    attributes.clear();
+
+    name = source.name;
+    value = source.value;
+    attributes = source.attributes; // I hope this works correctly
+    for (tocopy = source.contents.begin(); tocopy != source.contents.end(); 
+	 tocopy++)
+    {
+	contents.push_back (new xmlite_entity (**tocopy));
+    }
+
+    return (*this);
+}
+
+
+int xmlite_entity::addcontent (xmlite_entity * newcontent)
+{
+    if (value.length() != 0)
+    {
+	cerr << "\nERROR: can't add content\n\n";
+	return (0);
+    }
+
+    contents.push_back (newcontent);
+
+    return (1);
+}
+
+
+int xmlite_entity::addattribute (const string & aname, const string & avalue)
+{
+    attributes[aname] = avalue;
+
+    return (1);
+}
+
+
+int xmlite_entity::setvalue (const string & newvalue)
+{
+    if (! contents.empty())
+    {
+	cerr << "\nERROR: Can't set value\n\n";
+	return (0);
+    }
+
+    value = newvalue;
+
+    return (1);
+}
+
+
+int xmlite_entity::writetofile (const char * filename)
+{
+    ofstream outputfile (filename);
+
+    return (writetostream (outputfile));
+}
+
+
+int xmlite_entity::writetostream (ostream & ostr)
+{
+    hash_map<string, string, stringhash, eqstring>::iterator attributeit;
+    vector<xmlite_entity *>::iterator contentit;
+    string * tempstr;
+
+    ostr << "<" << name;
+    for (attributeit = attributes.begin(); 
+	 attributeit != attributes.end(); attributeit++)
+    {
+	tempstr = escapechars ((const string) (*attributeit).second);
+	ostr << ' ' << (*attributeit).first << "=\"" << *tempstr << "\"";
+	delete (tempstr);
+    }
+
+    if ((value.length() == 0) && (contents.empty()))
+    {   // empty entity
+	ostr << " />\n";
+    }
+    else
+    {
+	ostr << ">\n";
+
+	if (value.length() == 0)
+	{
+	    for (contentit = contents.begin(); contentit != contents.end(); 
+		 contentit++)
+	    {
+		if (! (*contentit)->writetostream (ostr))
+		    return (0);
+	    }
+	}
+	else
+	{
+	    tempstr = escapechars ((const string) value);
+	    ostr << (*tempstr);
+	    delete (tempstr);
+	}
+
+	ostr << "\n</" << name << ">\n";
+    }
+
+    return (1);
+}
+
+
+// replaces and returns a new string
+string * xmlite_entity::escapechars (const string & instring)
+{
+    string * newstring = new string (instring);
+
+    escapechars (*newstring);
+
+    return (newstring);
+}
+
+// replaces in the existing string
+void xmlite_entity::escapechars (string & instring)
+{
+    replaceall (instring, "&", "&amp;"); // must be replaced first
+    replaceall (instring, "<", "&lt;");
+    replaceall (instring, ">", "&gt;");
+    replaceall (instring, "\"", "&quot;");
+    replaceall (instring, "'", "&apos;");
+
+    return;
+}
+
+// replaces and returns a new string
+string * xmlite_entity::unescapechars (const string & instring)
+{
+    string * newstring = new string (instring);
+
+    unescapechars (*newstring);
+
+    return (newstring);
+}
+
+// replaces in the existing string
+void xmlite_entity::unescapechars (string & instring)
+{
+    replaceall (instring, "&lt;", "<");
+    replaceall (instring, "&gt;", ">");
+    replaceall (instring, "&quot;", "\"");
+    replaceall (instring, "&apos;", "'");
+    replaceall (instring, "&amp;", "&"); // must be replaced last
+
+    return;
+}
+
+
+/*
+** replace all occurances of the string 'from' with the string 'to'
+*/
+void xmlite_entity::replaceall (string & input, const string & from, 
+				const string & to)
+{
+    int startpos = 0;
+    int pos;
+
+    while ((pos = input.find (from, startpos)) != string::npos)
+    {
+	input.replace (pos, from.size(), to);
+	startpos = pos + to.size();
+    }
+
+    return;
+}
+
+
+// returns a pointer to an element from the contents
+// returns NULL if not found
+// parameter:
+//    nr of the element to return (starts at 0)
+xmlite_entity * xmlite_entity::getcontentbynr (const int nr)
+{
+    if (nr >= contents.size())
+	return (NULL);
+
+    return (contents[nr]);
+}
+
+
+// returns a pointer to an element from the contents with a specific name
+// returns NULL if not found
+// parameter:
+//    name to look for
+//    nr of the element to return if more than one has the same name
+//        (starts at 0)
+xmlite_entity * xmlite_entity::getcontentbyname (const string & name,
+						 const int nr)
+{
+    vector<xmlite_entity *>::iterator contentit;
+    int counter = 0;
+
+    if (nr >= contents.size())
+	return (NULL);
+
+    contentit = contents.begin();
+    while (contentit != contents.end())
+    {
+	if ((*contentit)->name == name)
+	{
+	    if (counter == nr)
+		return (*contentit);
+	    counter++;
+	}
+	contentit++;
+    }
+
+    return (NULL);
+}
+
+/*
+*********************************************************************
+*********************************************************************
+** this is the parser-code
+*/
+
+xmlite_parser::xmlite_parser (const char * filename):
+    mystream (true)
+{
+    istr = new ifstream (filename);
+
+    parseerror = "no parsing done yet.";
+
+    return;
+}
+
+
+xmlite_entity * xmlite_parser::parse ()
+{
+    xmlite_entity * ent = NULL;
+
+    parseerror = "parsing in progress.";
+    getnextc ();
+
+    try 
+    {
+	ent = readentity ("");
+	parseerror = "parsing finished.";
+    }
+    catch (...)
+    {
+	// parse error
+	cerr << "\nERROR: parse error\n";
+    }
+
+    return (ent);
+};
+
+
+xmlite_entity * xmlite_parser::readentity (const string & startname)
+{
+    string name, value, newname;
+    xmlite_entity * newentity,
+	* ent;
+    int pos;
+
+    if (startname == "")
+    {
+	skipwhitespace ();
+
+	if (nextc != '<')
+	{
+	    throw ("invalid character looking for start of entity");
+	}
+
+	getnextc ();
+	readstring (name, "/> \t\n");
+    }
+    else
+    {
+	name = startname;
+    }
+
+    newentity = new xmlite_entity (name);
+
+    // look for attributes
+    while (1)
+    {
+	skipwhitespace ();
+
+	if ((nextc == '/') || (nextc == '>'))
+	    break;
+
+	if ((isalnum (nextc)) || (nextc == '_'))
+	{   // start of attribute
+	    readattribute (newentity);
+	    continue;
+	}
+
+	throw ("invalid character looking for attributes");
+    }
+
+    // check for empty entity
+    if (nextc == '/')
+    {
+	getnextc ();
+	getnextc (); // skip over "/>"
+	return (newentity);
+    }
+
+    getnextc (); // skip over '>'
+
+    // look for closing tag, look for contained entities or value-string
+    while (1)
+    {
+	// skip past all whitespace following the startag
+	// this means that whitespace at the start of the value is not kept
+	skipwhitespace ();
+
+	if (nextc != '<')
+	{   // this entity contains a value
+	    readstring (value, "<");
+
+	    // remove whitespace at the end of the value
+	    if ((pos = value.find_last_not_of (" \t\n")) != string::npos)
+		value.resize (pos+1);
+
+	    newentity->unescapechars (value);
+	    newentity->setvalue (value);
+
+	    // skip past '<' and break out of loop
+	    getnextc ();
+	    break;
+	}
+
+	getnextc ();
+
+	if (nextc == '/')
+	    break;
+
+	// a new entity begins here, lets go recursive
+	readstring (newname, "/> \t\n");
+	ent = readentity (newname);
+	newentity->addcontent (ent);
+    }
+
+    // check if we have the correct endtag
+    if (nextc != '/')
+	throw ("I expected a / here");
+
+    getnextc ();
+    readstring (newname, ">");
+    getnextc ();
+
+    if (name != newname)
+        throw ("starttag different from endtag");
+
+    return (newentity);
+}
+
+
+void xmlite_parser::getnextc ()
+{
+// I should check for EOF here
+    istr->get (nextc);
+
+    return;
+}
+
+
+void xmlite_parser::skipwhitespace ()
+{
+    while (isspace (nextc))
+    {
+	getnextc ();
+    }
+
+    return;
+}
+
+
+void xmlite_parser::readstring (string & str, const char * endchar)
+{
+    str = "";
+
+    while (strchr (endchar, nextc) == NULL)
+    {
+	str += nextc;
+	getnextc ();
+    }
+
+    return;
+}
+
+
+void xmlite_parser::readattribute (xmlite_entity * ent)
+{
+    string name, value;
+
+    // read the name of the attribute
+    readstring (name, "= \t\n");
+
+    skipwhitespace ();
+    getnextc (); // skip '='
+    skipwhitespace ();
+    getnextc (); // skip '"'
+
+    // read the value of the attribute
+    readstring (value, "\"");
+    ent->unescapechars (value);
+    getnextc (); // skip '"'
+
+    ent->addattribute (name, value);
+
+    return;
+}
+
+

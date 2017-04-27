@@ -1,0 +1,37 @@
+- ask for confirmation of exit or when pressing ESC
+  subclassing of Fl_Window necessary (I think)
+
+- ask for confirmation when starting a new game if a game
+  is already in progress.
+
+- add setup for the computer player -> advanced settings
+     + separate settings for white and black computer-player
+     + nr of gipf-pieces for tournament-game
+     + memory-depth (only for ai_mtdf)
+     + random choose
+
+- update the computer player to use a transposition table
+  (should improve the speed, but I'm not sure)
+
+- make a network playable version: this means changes to GF1 and
+  a new program to work as server.
+
+  features of the server:
+     + play a game
+     + messages between players
+     + save games played via the server
+     + always play against first available player, or possibility
+       to choose opponent?
+       when connection is made, list connected players (without a game)
+       3 possibilities:
+          - choose player
+          - choose random player
+          - wait (added to list of connected player)
+            => maybe this doesn't have to be an explicit option.
+               just update the list every minute or so and always add
+               the player to the connected list immediatly
+
+- show the gipf-board using openGL to add a nice 3D-look
+
+**************
+$Id: TODO.txt,v 1.9 2000/01/25 19:13:54 kurt Exp $

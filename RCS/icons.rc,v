@@ -1,0 +1,37 @@
+head	1.1;
+access;
+symbols
+	version_1_03:1.1
+	version_1_02:1.1
+	version_1_01:1.1
+	version_1_0_1:1.1
+	version_1_0:1.1
+	version_0_99_5:1.1;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	99.05.17.18.54.05;	author kurt;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@/*
+** $Id$
+*/
+
+#define GF1_ICON	345
+
+GF1_ICON ICON "win_icon.ico"
+
+@
